@@ -1,6 +1,8 @@
 <?php
 class System {
 	private $baseConfig;
+	private $mapperCache;
+	private $db;
 
 	public function __construct(array $config) {
 		ini_set('unserialize_callback_func', 'spl_autoload_call');
@@ -8,11 +10,13 @@ class System {
 		
 		//initialize stuff
 		$this->baseConfig = $config;
+		$this->mapperCache = array();
+		$this->db = new System_Database_Database();
 	}
 	
 	public function run() {
 		//run it!
-		$requestedPage = $_SERVER['PATH_INFO'];
+		$requestedPage = (isset($_SERVER['PATH_INFO'])?$_SERVER['PATH_INFO']:null);
 		$pathInfo = explode('/', $requestedPage);
 		array_shift($pathInfo);
 		
@@ -30,6 +34,19 @@ class System {
 				$controller->$function();
 			}
 		}
+	}
+	
+	public function getMapper($name) {
+		$mapperClassName = ucfirst($name).'_Mapper';
+		if (!isset($this->mapperCache[$mapperClassName])) {
+			if (is_file($mapperFile = './'.$this->baseConfig['applicationPath'].'models/'.ucfirst($name).'.inc')) {
+				require_once($mapperFile);
+				$this->mapperCache[$mapperClassName] = new $mapperClassName($this->db);
+			} else {
+				return false;
+			}
+		}
+		return $this->mapperCache[$mapperClassName];
 	}
 	
 	private function autoload($class)
