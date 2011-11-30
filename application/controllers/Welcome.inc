@@ -1,8 +1,11 @@
 <?php
 class Welcome extends System_Controller {	
 	public function index() {
-		echo 'test';
-		$this->system->getMapper('user');
+		$this->mapper('user');
+		echo $this->t()->render('test.html', array(
+			'pageTitle' => 'Titeltje!',
+			'hello' => 'GLaDOS 123',
+		));
 	}
 }
 ?>

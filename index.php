@@ -3,6 +3,8 @@
 $config = array(
 	'applicationPath' => 'application/',
 	'systemPath' => 'system/',
+	'libraryPath' => 'libraries/',
+	'contentPath' => 'content/',
 );
 require_once('./'.$config['systemPath'].'System.inc');
 $system = new System($config);

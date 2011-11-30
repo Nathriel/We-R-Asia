@@ -3,6 +3,7 @@ class System {
 	private $baseConfig;
 	private $mapperCache;
 	private $db;
+	private $templateEngine;
 
 	public function __construct(array $config) {
 		ini_set('unserialize_callback_func', 'spl_autoload_call');
@@ -59,5 +60,18 @@ class System {
             require $file;
         }
     }
+	
+	public function getTemplateEngineInstance() {
+		if ($this->templateEngine == null) {
+			require_once './'.$this->baseConfig['libraryPath'].'/Twig/Autoloader.php';
+			Twig_Autoloader::register();
+			
+			$loader = new Twig_Loader_Filesystem('./'.$this->baseConfig['applicationPath'].'views/');
+			$this->templateEngine = new Twig_Environment($loader, array(
+				'cache' => './'.$this->baseConfig['contentPath'].'cache/twig/',
+			));			
+		}
+		return $this->templateEngine;
+	}
 }
 ?>
