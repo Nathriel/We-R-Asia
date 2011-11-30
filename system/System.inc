@@ -12,7 +12,7 @@ class System {
 		//initialize stuff
 		$this->baseConfig = $config;
 		$this->mapperCache = array();
-		$this->db = new System_Database_Database();
+		$this->db = new System_Database_Database(include './'.$this->baseConfig['applicationPath'].'config/db.inc');
 	}
 	
 	public function run() {
