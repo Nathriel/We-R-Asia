@@ -1,10 +1,14 @@
 <?php
 class System {
 	private $baseConfig;
+	private $applicationConfig;
 	private $mapperCache;
 	private $db;
 	private $templateEngine;
 
+	/**
+	 * @param $config array an array with the configuration of the System, only the info it needs to even run, the rest should be configured in the application itself
+	 */
 	public function __construct(array $config) {
 		ini_set('unserialize_callback_func', 'spl_autoload_call');
         spl_autoload_register(array($this, 'autoload'));
@@ -13,8 +17,12 @@ class System {
 		$this->baseConfig = $config;
 		$this->mapperCache = array();
 		$this->db = new System_Database_Database(include './'.$this->baseConfig['applicationPath'].'config/db.inc');
+		$this->applicationConfig = include './'.$this->baseConfig['applicationPath'].'config/config.inc';
 	}
 	
+	/**
+	 * This runs the page, easy as that
+	 */
 	public function run() {
 		//run it!
 		$requestedPage = (isset($_SERVER['PATH_INFO'])?$_SERVER['PATH_INFO']:null);
@@ -23,20 +31,33 @@ class System {
 		
 		if (isset($pathInfo[0])) {
 			$controllerName = $pathInfo[0];
-			if (is_file($controllerFile = './'.$this->baseConfig['applicationPath'].'controllers/'.ucfirst($controllerName).'.inc')) {
-				if (isset($pathInfo[1])) {
-					$function = $pathInfo[1];
-				} else {
-					$function = 'index';
-				}
-				require($controllerFile);
-				
-				$controller = new $controllerName($this);
-				$controller->$function();
+		} else {
+			$controllerName = $this->applicationConfig['homeController'];
+		}
+		if (is_file($controllerFile = './'.$this->baseConfig['applicationPath'].'controllers/'.ucfirst($controllerName).'.inc')) {
+			if (isset($pathInfo[1])) {
+				$function = $pathInfo[1];
+			} else {
+				$function = 'index';
 			}
+			require($controllerFile);
+			
+			$controller = new $controllerName($this);
+			if (method_exists($controller, $function)) {
+				$controller->$function();
+			} else {
+				$controller->notFound();
+			}			
+		} else {
+			//TODO: 404 with no controller found
+			
 		}
 	}
 	
+	/**
+	 * This gives you a mapper class, when called 2 times on different places, it will still return the same instance of the mapper.
+	 * @param $name string the name of the mapper you want to get(excluding the _Mapper part)
+	 */
 	public function getMapper($name) {
 		$mapperClassName = ucfirst($name).'_Mapper';
 		if (!isset($this->mapperCache[$mapperClassName])) {
@@ -50,6 +71,9 @@ class System {
 		return $this->mapperCache[$mapperClassName];
 	}
 	
+	/**
+	 * Should only be used to autoload the system classes.
+	 */
 	private function autoload($class)
     {
         if (0 !== strpos($class, 'System_')) {
@@ -61,6 +85,10 @@ class System {
         }
     }
 	
+	/**
+	 * Gives you an instance of the template engine
+	 * TODO: Make the template engine you want to use configurable.
+	 */
 	public function getTemplateEngineInstance() {
 		if ($this->templateEngine == null) {
 			require_once './'.$this->baseConfig['libraryPath'].'/Twig/Autoloader.php';

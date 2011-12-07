@@ -4,6 +4,14 @@ class User_Mapper extends System_Mapper {
 		parent::__construct($db);
 		echo 'User Mapper Loaded';
 	}
+	
+	public function doFind($id) {
+		return null;
+	}
+	
+	public function doDelete($id) {
+		return null;
+	}
 }
 
 class User_Model extends System_Model {
