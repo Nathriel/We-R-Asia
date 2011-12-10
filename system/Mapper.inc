@@ -2,11 +2,22 @@
 abstract class System_Mapper {
 	protected $db;
 	private $cache;
+	private $system;
 	
-	public function __construct(System_Database_Database $db) {
+	public function __construct(System_Database_Database $db, System $system) {
 		$this->db = $db;
 		$this->cache = array();
+		$this->system = $system;
 	}
+	
+	/**
+	* @see System::getMapper()
+	*/
+	public function mapper($name) {
+		return $this->system->getMapper($name);
+	}
+	
+	protected abstract function init();
 	
 	/**
 	 * Finds an instance of the Model that matches the given id, this is cached

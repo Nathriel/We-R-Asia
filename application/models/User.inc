@@ -1,8 +1,8 @@
 <?php
 class User_Mapper extends System_Mapper {
-	public function __construct(System_Database_Database $db) {
-		parent::__construct($db);
-		echo 'User Mapper Loaded';
+	
+	protected function init() {
+		
 	}
 	
 	public function doFind($id) {

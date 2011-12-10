@@ -63,7 +63,7 @@ class System {
 		if (!isset($this->mapperCache[$mapperClassName])) {
 			if (is_file($mapperFile = './'.$this->baseConfig['applicationPath'].'models/'.ucfirst($name).'.inc')) {
 				require_once($mapperFile);
-				$this->mapperCache[$mapperClassName] = new $mapperClassName($this->db);
+				$this->mapperCache[$mapperClassName] = new $mapperClassName($this->db, $this);
 			} else {
 				return false;
 			}
