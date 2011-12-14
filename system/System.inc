@@ -5,6 +5,7 @@ class System {
 	private $mapperCache;
 	private $db;
 	private $templateEngine;
+	private $multiLanguage;
 
 	/**
 	 * @param $config array an array with the configuration of the System, only the info it needs to even run, the rest should be configured in the application itself
@@ -44,13 +45,17 @@ class System {
 			
 			$controller = new $controllerName($this);
 			if (method_exists($controller, $function)) {
-				$controller->$function();
+				try {
+					$controller->$function();
+				} catch (Exception $e) {
+					header('HTTP/1.0 500 Internal Server Error');
+				}
 			} else {
+				header('HTTP/1.0 404 Not Found');
 				$controller->notFound();
 			}			
 		} else {
-			//TODO: 404 with no controller found
-			
+			header('HTTP/1.0 404 Not Found');
 		}
 	}
 	
@@ -100,6 +105,15 @@ class System {
 			));			
 		}
 		return $this->templateEngine;
+	}
+	
+	public function getMultiLanguage() {
+		if ($this->multiLanguage == null) {
+			$className = $this->applicationConfig['multiLanguage'];
+			require_once './'.$this->baseConfig['applicationPath'].$className.'.inc';
+			$this->multiLanguage = new $className($this);
+		}
+		return $this->multiLanguage;
 	}
 }
 ?>

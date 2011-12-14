@@ -9,7 +9,7 @@ abstract class System_Controller {
 	/**
 	 * @see System::getMapper()
 	 */
-	public function mapper($name) {
+	protected function mapper($name) {
 		return $this->system->getMapper($name);
 	}
 	
@@ -17,14 +17,14 @@ abstract class System_Controller {
 	 * short syntax version of System_Controller::templateEngine()
 	 * @see System_Controller::templateEngine()
 	 */
-	public function t() {
+	protected function t() {
 		return $this->templateEngine();
 	}
 	
 	/**
 	 * @see System::getTemplateEngineInstance()
 	 */
-	public function templateEngine() {
+	protected function templateEngine() {
 		return $this->system->getTemplateEngineInstance();
 	}
 	
@@ -33,6 +33,14 @@ abstract class System_Controller {
 	 */
 	public function notFound() {
 		//TODO: Redirect to the standard 404 if the controller doesn't override this
+	}
+	
+	protected function multiLanguage() {
+		return $this->system->getMultiLanguage();
+	}
+	
+	protected function m() {
+		return $this->multiLanguage();
 	}
 }
 ?>
