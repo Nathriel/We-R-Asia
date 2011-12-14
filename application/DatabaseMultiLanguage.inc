@@ -1,6 +1,7 @@
 <?php
 class DatabaseMultiLanguage extends System_MultiLanguage {
 	protected function getCurrentLanguage() {
+		echo 'it works!';
 		return null;
 	}
 	

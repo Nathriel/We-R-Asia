@@ -102,7 +102,8 @@ class System {
 			$loader = new Twig_Loader_Filesystem('./'.$this->baseConfig['applicationPath'].'views/');
 			$this->templateEngine = new Twig_Environment($loader, array(
 				'cache' => './'.$this->baseConfig['contentPath'].'cache/twig/',
-			));			
+			));	
+			$this->templateEngine->addExtension(new System_Twig_SystemTwigExtension($this));
 		}
 		return $this->templateEngine;
 	}
