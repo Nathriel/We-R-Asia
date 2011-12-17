@@ -10,18 +10,18 @@ class System_Twig_SystemTwigExtension extends Twig_Extension {
 		return 'SystemTwig';
 	}
 	
-	public function getTokenParsers() {
-		return array(new System_Twig_TokenParserTrans());
-	}
-	
-	public function getFilters() {
+	public function getFunctions() {
 		return array(
-			'trans' => new Twig_Filter_Function(array($this, 'translate')),
+			'trans' => new Twig_Function_Method($this, 'translate'),
 		);
 	}
 	
 	public function translate($string) {
-		return $this->system->getMultiLanguage()->c($string);
+		$realargs = func_get_args();
+		array_shift($realargs);
+		$args = array($this->system->getMultiLanguage()->c($string));
+		$args = array_merge($args, $realargs);
+		return call_user_func_array('sprintf', $args);
 	}
 }
 ?>

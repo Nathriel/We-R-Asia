@@ -1,12 +1,17 @@
 <?php
 class DatabaseMultiLanguage extends System_MultiLanguage {
 	protected function getCurrentLanguage() {
-		echo 'it works!';
-		return null;
+		return 'nl';
 	}
 	
 	protected function translate($string, $language) {
-		return null;
+		$temporaryTranslateArray = array(
+			'hello' => array(
+				'nl' => 'Hallo %1$s!',
+				'en' => 'Hello %1$s',
+			),
+		);
+		return $temporaryTranslateArray[$string][$language];
 	}
 }
 ?>

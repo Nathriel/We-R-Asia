@@ -1,7 +1,7 @@
 <?php
 
 /* test.html */
-class __TwigTemplate_7bf5fce439de4bafe7296324aec9c347 extends Twig_Template
+class __TwigTemplate_476dbe8be89303113105722353375184 extends Twig_Template
 {
     protected function doGetParent(array $context)
     {
@@ -17,13 +17,12 @@ class __TwigTemplate_7bf5fce439de4bafe7296324aec9c347 extends Twig_Template
 \t<head>
 \t\t<title>";
         // line 3
-        echo strtr(gettext("%pageTitle%"), array("%pageTitle%" => $this->getContext($context, "pageTitle"), ));
-        // line 5
+        echo twig_escape_filter($this->env, $this->getContext($context, "pageTitle"), "html", null, true);
         echo "</title>
 \t</head>
 \t<body>Dit is een zin met een variabele: ";
-        // line 7
-        echo twig_escape_filter($this->env, Array($this->getContext($context, "hello")), "html", null, true);
+        // line 5
+        echo twig_escape_filter($this->env, $this->env->getExtension('SystemTwig')->translate("hello", $this->getContext($context, "username")), "html", null, true);
         echo "</body>
 </html>";
     }

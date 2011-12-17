@@ -1,8 +1,6 @@
 <html>
 	<head>
-		<title>{% trans %}
-			{{ pageTitle }}
-		{% endtrans %}</title>
+		<title>{{ pageTitle }}</title>
 	</head>
-	<body>Dit is een zin met een variabele: {{ hello | trans }}</body>
+	<body>Dit is een zin met een variabele: {{ trans("hello",username) }}</body>
 </html>

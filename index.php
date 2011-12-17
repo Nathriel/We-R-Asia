@@ -1,4 +1,5 @@
 <?php
+global $system;
 //this should only call the system class, since we want to program Object-Oriented, just like Java :)
 $config = array(
 	'applicationPath' => 'application/',

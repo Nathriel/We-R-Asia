@@ -48,6 +48,8 @@ class System {
 				try {
 					$controller->$function();
 				} catch (Exception $e) {
+					echo '<pre>';
+					var_dump($e);
 					header('HTTP/1.0 500 Internal Server Error');
 				}
 			} else {
@@ -96,14 +98,22 @@ class System {
 	 */
 	public function getTemplateEngineInstance() {
 		if ($this->templateEngine == null) {
+			$tplDir = './'.$this->baseConfig['applicationPath'].'views';
+			
 			require_once './'.$this->baseConfig['libraryPath'].'/Twig/Autoloader.php';
 			Twig_Autoloader::register();
 			
-			$loader = new Twig_Loader_Filesystem('./'.$this->baseConfig['applicationPath'].'views/');
+			$loader = new Twig_Loader_Filesystem($tplDir);
 			$this->templateEngine = new Twig_Environment($loader, array(
 				'cache' => './'.$this->baseConfig['contentPath'].'cache/twig/',
 			));	
 			$this->templateEngine->addExtension(new System_Twig_SystemTwigExtension($this));
+			
+			foreach (new RecursiveIteratorIterator(new RecursiveDirectoryIterator($tplDir), RecursiveIteratorIterator::LEAVES_ONLY) as $file)
+			{
+				// force compilation
+				$this->templateEngine->loadTemplate(str_replace($tplDir.'\\', '', $file));
+			}
 		}
 		return $this->templateEngine;
 	}

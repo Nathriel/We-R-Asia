@@ -4,7 +4,7 @@ class Welcome extends System_Controller {
 		$this->mapper('user');
 		echo $this->t()->render('test.html', array(
 			'pageTitle' => 'Titeltje!',
-			'hello' => 'GLaDOS 123',
+			'username' => 'GLaDOS 123',
 		));
 	}
 }
