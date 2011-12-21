@@ -7,7 +7,7 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL';
 -- Table `language`
 -- -----------------------------------------------------
 CREATE  TABLE IF NOT EXISTS `language` (
-  `id` INT NOT NULL ,
+  `id` INT NOT NULL AUTO_INCREMENT,
   `code` VARCHAR(255) NOT NULL ,
   PRIMARY KEY (`id`) )
 ENGINE = InnoDB;
@@ -41,7 +41,7 @@ ENGINE = InnoDB;
 -- Table `translatable`
 -- -----------------------------------------------------
 CREATE  TABLE IF NOT EXISTS `translatable` (
-  `id` INT NOT NULL ,
+  `id` INT NOT NULL AUTO_INCREMENT,
   `sentence` VARCHAR(255) NULL ,
   PRIMARY KEY (`id`) )
 ENGINE = InnoDB;
@@ -51,7 +51,7 @@ ENGINE = InnoDB;
 -- Table `translation`
 -- -----------------------------------------------------
 CREATE  TABLE IF NOT EXISTS `translation` (
-  `id` INT NOT NULL ,
+  `id` INT NOT NULL AUTO_INCREMENT,
   `translation` TEXT NOT NULL ,
   `translatable_id` INT NOT NULL ,
   `language_id` INT NOT NULL ,
@@ -75,7 +75,7 @@ ENGINE = InnoDB;
 -- Table `status`
 -- -----------------------------------------------------
 CREATE  TABLE IF NOT EXISTS `status` (
-  `id` INT NOT NULL ,
+  `id` INT NOT NULL AUTO_INCREMENT,
   `translatable_id` INT NOT NULL ,
   PRIMARY KEY (`id`) ,
   INDEX `fk_status_translatable1` (`translatable_id` ASC) ,
@@ -91,7 +91,7 @@ ENGINE = InnoDB;
 -- Table `project`
 -- -----------------------------------------------------
 CREATE  TABLE IF NOT EXISTS `project` (
-  `id` INT NOT NULL ,
+  `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(255) NOT NULL ,
   `finished` TINYINT(1) NOT NULL ,
   `status_id` INT NOT NULL ,
@@ -109,7 +109,7 @@ ENGINE = InnoDB;
 -- Table `product`
 -- -----------------------------------------------------
 CREATE  TABLE IF NOT EXISTS `product` (
-  `id` INT NOT NULL ,
+  `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(255) NOT NULL ,
   `project_id` INT NOT NULL ,
   `status_id` INT NOT NULL ,
@@ -133,7 +133,7 @@ ENGINE = InnoDB;
 -- Table `document`
 -- -----------------------------------------------------
 CREATE  TABLE IF NOT EXISTS `document` (
-  `id` INT NOT NULL ,
+  `id` INT NOT NULL AUTO_INCREMENT,
   `file_location` VARCHAR(255) NOT NULL ,
   `product_id` INT NOT NULL ,
   `project_id` INT NOT NULL ,
@@ -157,7 +157,7 @@ ENGINE = InnoDB;
 -- Table `invoices`
 -- -----------------------------------------------------
 CREATE  TABLE IF NOT EXISTS `invoices` (
-  `id` INT NOT NULL ,
+  `id` INT NOT NULL AUTO_INCREMENT,
   `file_location` VARCHAR(255) NOT NULL ,
   `project_id` INT NOT NULL ,
   PRIMARY KEY (`id`) ,
@@ -174,7 +174,7 @@ ENGINE = InnoDB;
 -- Table `right`
 -- -----------------------------------------------------
 CREATE  TABLE IF NOT EXISTS `right` (
-  `id` INT NOT NULL ,
+  `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(255) NOT NULL ,
   PRIMARY KEY (`id`) )
 ENGINE = InnoDB;

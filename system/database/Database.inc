@@ -16,7 +16,7 @@ class System_Database_Database extends PDO {
 		if (!isset($this->prepareCache[$name])) {
 			$this->prepareCache[$name] = $this->prepare($query);
 		}
-		return $this->prepareCache;
+		return $this->prepareCache[$name];
 	}
 }
 ?>

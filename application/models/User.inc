@@ -6,11 +6,34 @@ class User_Mapper extends System_Mapper {
 	}
 	
 	public function doFind($id) {
-		return null;
+		$query = $this->db->prepareCached('findUser',
+			'SELECT id,username,name,address,residence,email,company,language_id
+			FROM user
+			WHERE id = ?');
+		$query->execute(array($id));
+		$row = $query->fetch(PDO::FETCH_ASSOC);
+		if (!$row) {
+			return null;
+		}
+		$user = new User_Model($this);
+		$user
+			->setId($row['id'])
+			->setUsername($row['username']);
+		return $user;
 	}
 	
 	public function doDelete($id) {
 		return null;
+	}
+	
+	public function findByUsername($username) {
+		$query = $this->db->prepareCached('findUsername',
+			'SELECT id
+			FROM user
+			WHERE username = ?');
+		$query->execute(array($username));
+		$row = $query->fetch(PDO::FETCH_ASSOC);
+		return $this->find($row['id']);
 	}
 }
 
