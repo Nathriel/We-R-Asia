@@ -1,6 +1,5 @@
 body {
-	background-image: url('./content/images/bg.png');
-	background-color: green;
+	background-image: url('../content/images/bg.png');
 	font-family: Arial;
 	font-size: 12pt;
 	color: #000;
@@ -59,7 +58,7 @@ h1 {
 	width : 300px;
 	color: #FFF;
 	height:95px;
-	background-image: url('./images/logo.png');
+	background-image: url('../content/images/logo.png');
 	background-repeat: no-repeat;
 }
 
@@ -85,7 +84,7 @@ h1 {
 	display: block;
 	width: 10px;
 	height: 10px;
-	content: url('./images/key.png');
+	content: url('../content/images/key.png');
 	margin-right: 2px;
 }
 
