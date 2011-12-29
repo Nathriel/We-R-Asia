@@ -105,7 +105,7 @@ class System {
 			
 			$loader = new Twig_Loader_Filesystem($tplDir);
 			$this->templateEngine = new Twig_Environment($loader, array(
-				'cache' => './'.$this->baseConfig['contentPath'].'cache/twig/',
+				//'cache' => './'.$this->baseConfig['contentPath'].'cache/twig/', //<-- Enable when not developing
 			));	
 			$this->templateEngine->addExtension(new System_Twig_SystemTwigExtension($this));
 			$this->templateEngine->addGlobal('baseHref', 'http://'.$_SERVER['HTTP_HOST'].str_replace('index.php','',$_SERVER['SCRIPT_NAME']));
