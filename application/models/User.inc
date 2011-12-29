@@ -35,11 +35,28 @@ class User_Mapper extends System_Mapper {
 		$row = $query->fetch(PDO::FETCH_ASSOC);
 		return $this->find($row['id']);
 	}
+	
+	public function tryLogin($username, $password) {
+		$user = $this->findByUsername($username);
+		if (!$user) {
+			return false;
+		}
+		
+		$passwordDb = hash('sha256', $password.$user->getSalt());
+		
+		if ($passwordDb == $user->getPassword()) {
+			return $user;
+		} else {
+			return false;
+		}
+	}
 }
 
 class User_Model extends System_Model {
 	private $id;
 	private $username;
+	private $password;
+	private $salt;
 	
 	public function getId() {
 		return $this->id;
@@ -56,6 +73,24 @@ class User_Model extends System_Model {
 	
 	public function setUsername($username) {
 		$this->username = $username;
+		return $this;
+	}
+	
+	public function getPassword() {
+		return $this->password;
+	}
+	
+	public function setPassword($password) {
+		$this->password = $password;
+		return $this;
+	}
+	
+	public function getSalt() {
+		return $this->salt;
+	}
+	
+	public function setSalt($salt) {
+		$this->salt = $salt;
 		return $this;
 	}
 }
