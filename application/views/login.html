@@ -18,12 +18,19 @@
 		<br />
 		
 		<div id="loginbox">
-			<form method="post" action="#">
+			<form method="post" action="{{ loginForm.action }}" id="loginForm">
 				<input type="text" name="username" placeholder="Username"/>
-				<input type="password" name="password" placeholder="Password"/>
+				<input type="password" name="password" placeholder="Password" />
 				<input type="submit" name="submit" value="Log in"/>
 			</form>
 			<a href="#" class="forget">Forgot your password?</a>
 		</div>
+		<script type="text/javascript" src="./js/libs/jsl.min.js"></script>
+		<script type="text/javascript">
+		   jsl.add('https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js');
+		   jsl.add('./js/libs/sha256.js');
+		   jsl.add('./js/login.js');
+		   jsl.load();
+		</script>
 	</body>
 </html>
