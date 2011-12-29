@@ -4,17 +4,23 @@
 		<title>{{ pageTitle }}</title>
 		<base href="{{ baseHref }}" />
 		<link rel="stylesheet" media="screen" href="css/default.css">
+		{% include 'js.html' %}
 	</head>
 	<body>
 		<div id="header">
 		
-			<a href="#" id="menu"></a>
+			<a href="#" id="menu">Menu</a>
 			
+			<ul id="drop_menu">
+				<li><a href="Facturen">Facturen</a></li>
+				<li><a href="Projecten">Projecten</a></li>
+				<li><a href="Profiel">Profiel</a></li>
+			</ul>
 		</div>
 		
 		<div id="content">
 		
-			<h1>Projects</h1>
+			<h1>Projecten</h1>
 			
 			<table id="project_list">
 				<thead>
@@ -39,5 +45,8 @@
 			</table>
 			
 		</div>
+		<script type="text/javascript">
+			jsl.load('./js/projecten.js');
+		</script>
 	</body>
 </html>

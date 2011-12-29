@@ -6,7 +6,7 @@ body {
 	margin: 0;
 }
 
-a {
+#loginbox a {
 	-webkit-transition-property: all;
 	-webkit-transition-duration: 1s;
 	color: #333;
@@ -127,6 +127,38 @@ h1 {
 	background-position: center;
 	display: block;
 	border-right: 1px solid white;
+	text-indent: -9000px;
+}
+
+#menu:hover {
+	display: block;
+}
+
+#drop_menu {
+	list-style: none;
+	border: 1px solid white;
+	width: 299px;
+	padding: 0;
+	margin: 0;
+	text-align: center;
+	display: none;
+}
+
+#drop_menu a {
+	text-decoration: none;
+	font-family: Verdana;
+	font-weight: bold;
+	font-size: 23px;
+	color: white;
+	background-color: #b7a985;
+	display: block;
+	width: 100%;
+	height: 100%;
+	padding: 10px 0;
+}
+
+#drop_menu a:hover {
+	background-color: #665f4a;
 }
 
 #content {
