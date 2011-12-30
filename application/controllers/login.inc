@@ -17,8 +17,9 @@ class Login extends System_Controller {
 		$password = $_POST['password']; // sha256 encoded
 		
 		$userMapper = $this->mapper('user');
-		if ($userMapper->tryLogin($username, $password)) {
+		if ($user = $userMapper->tryLogin($username, $password)) {
 			// succesful login
+			$_SESSION['userId'] = $user->getId();
 			echo 1;
 		} else {
 			// wrong username/password

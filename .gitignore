@@ -8,3 +8,4 @@
 /nbproject
 
 /content/cache/
+/application/config/db.inc # prevent accidental password submission
