@@ -1,0 +1,38 @@
+{% include 'header.html' %}
+<div id="content">
+
+	<h1>Edit Profile</h1>
+	
+	<div id="profile_labels">
+		<label for="username">Username:</label>
+		<label for="name">Name:</label>
+		<label for="email">Email:</label>
+		<label for="password">Password:</label>
+		<label for="password_again">Password again:</label>
+		<label for="address">Address:</label>
+		<label for="postal">Postal code/City:</label>
+		<label for="phone">Phone:</label>
+	</div>
+	
+	<form method="post" action="" id="ProfileForm">
+		<div id="profile_input">
+			<input type="text" name="username" id="username" />
+			<input type="text" name="name" id="name" />
+			<input type="text" name="email" id="email" />
+			<input type="text" name="password" id="password" />
+			<input type="text" name="password_again" id="password_again" />
+			<input type="text" name="address" id="address" />
+			<input type="text" name="postal" id="postal" />
+			<input type="text" name="phone" id="phone" />
+		</div>
+		
+		<div class="clear"></div>
+		
+		<div id="profile_buttons">
+			<input id="profile_submit" type="submit" name="submit" value="Save"/>
+			<input id="profile_submit" type="reset" name="reset" value="Cancel"/>
+		</div>
+	</form>
+	
+</div>
+{% include 'footer.html' %}
