@@ -30,12 +30,20 @@ class User_Mapper extends System_Mapper {
 			->setId($row['id'])
 			->setUsername($row['username'])
 			->setPassword($row['password'])
-			->setSalt($row['password_salt']);
+			->setSalt($row['password_salt'])
+			->setName($row['name'])
+			->setAddress($row['address'])
+			->setResidence($row['residence'])
+			->setEmail($row['email'])
+			->setCompany($row['company'])
+			->setLanguageId($row['language_id']);
 		return $user;
 	}
 	
 	public function doDelete($id) {
-		return null;
+		$query = $this->db->prepareCached('deleteUser',
+			'DELETE FROM user WHERE id = ?');
+		$query->execute(array($id));
 	}
 	
 	public function findByUsername($username) {
@@ -62,6 +70,33 @@ class User_Mapper extends System_Mapper {
 			return false;
 		}
 	}
+	
+	public function doSave(User_Model $user) {
+		$args = array();
+		if ($user->getId()) {
+			$args[] = $user->getId();
+			$query = $this->db->prepareCached('updateUser',
+				'UPDATE user
+				SET username=?,password=?,salt=?,name=?,address=?,residence=?,email=?,company=?,language_id=?
+				WHERE id=?');
+		} else {
+			$query = $this->db->prepareCached('insertUser',
+				'INSERT INTO user
+				SET username=?,password=?,salt=?,name=?,address=?,residence=?,email=?,company=?,language_id=?');
+		}
+		$args = array_merge(array(
+			$user->getUsername(),
+			$user->getPassword(),
+			$user->getSalt(),
+			$user->getName(),
+			$user->getAddress(),
+			$user->getResidence(),
+			$user->getEmail(),
+			$user->getCompany(),
+			$user->getLanguage()->getId()
+		), $args);
+		$query->execute($args);
+	}
 }
 
 class User_Model extends System_Model {
@@ -69,6 +104,13 @@ class User_Model extends System_Model {
 	private $username;
 	private $password;
 	private $salt;
+	private $name;
+	private $address;
+	private $residence;
+	private $email;
+	private $company;
+	private $languageId;
+	private $language;
 	
 	public function getId() {
 		return $this->id;
@@ -103,6 +145,74 @@ class User_Model extends System_Model {
 	
 	public function setSalt($salt) {
 		$this->salt = $salt;
+		return $this;
+	}
+	
+	public function getName() {
+		return $this->name;
+	}
+	
+	public function setName($name) {
+		$this->name = $name;
+		return $this;
+	}
+	
+	public function getAddress() {
+		return $this->address;
+	}
+	
+	public function setAddress($address) {
+		$this->address = $address;
+		return $this;
+	}
+	
+	public function getResidence() {
+		return $this->residence;
+	}
+	
+	public function setResidence($residence) {
+		$this->residence = $residence;
+		return $this;
+	}
+	
+	public function getEmail() {
+		return $this->email;
+	}
+	
+	public function setEmail($email) {
+		$this->email = $email;
+		return $this;
+	}
+	
+	public function getCompany() {
+		return $this->company;
+	}
+	
+	public function setCompany($company) {
+		$this->company = $company;
+		return $this;
+	}
+	
+	public function getLanguageId() {
+		return $this->languageId;
+	}
+	
+	public function setLanguageId($languageId) {
+		$this->languageId = $languageId;
+		$this->language = null;
+		return $this;
+	}
+	
+	public function getLanguage() {
+		if ($this->language == null && $this->getLanguageId()) {
+			$this->language = $this->mapper->mapper('language')->find($this->getLanguageId());
+		}
+		return $this->language;
+	}
+	
+	public function setLanguage($language) {
+		$this->language = $language;
+		$this->languageId = $this->language->getId();
 		return $this;
 	}
 }
