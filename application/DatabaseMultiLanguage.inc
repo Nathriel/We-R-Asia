@@ -1,7 +1,11 @@
 <?php
 class DatabaseMultiLanguage extends System_MultiLanguage {
 	protected function getCurrentLanguage() {
-		return 'nl';
+		if (isset($_SESSION['userId'])) {
+			return $this->mapper('user')->find($_SESSION['userId'])->getLanguage();
+		} else {
+			return $this->mapper('language')->find(1);
+		}
 	}
 	
 	protected function translate($string, $language) {
