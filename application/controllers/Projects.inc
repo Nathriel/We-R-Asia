@@ -17,7 +17,7 @@ class Projects extends System_Controller {
 			);
 		}
 		echo $this->t()->render('projects.html', array(
-			'pageTitle' => 'We R Asia | Projecten',
+			'pageTitle' => 'We R Asia | Projects',
 			'projects' => $tplProjects,
 		));
 	}

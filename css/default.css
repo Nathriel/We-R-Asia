@@ -152,6 +152,10 @@ h1 {
 	color: #332f25;
 }
 
+#content .single_col td {
+	width: 830px;
+}
+
 input {
 	width: 100%;
 	min-height: 60px;
