@@ -18,7 +18,7 @@ class Login extends System_Controller {
 		
 		$userMapper = $this->mapper('user');
 		if ($user = $userMapper->tryLogin($username, $password)) {
-			// succesful login
+			// successful login
 			$_SESSION['userId'] = $user->getId();
 			echo 1;
 		} else {

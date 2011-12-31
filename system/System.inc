@@ -26,6 +26,8 @@ class System {
 	 */
 	public function run() {
 		//run it!
+		session_start();
+		
 		$requestedPage = (isset($_SERVER['PATH_INFO'])?$_SERVER['PATH_INFO']:null);
 		$pathInfo = explode('/', $requestedPage);
 		array_shift($pathInfo);

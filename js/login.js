@@ -12,8 +12,8 @@ $(function() {
 			'type': 'POST',
 			'success': function(data) {
 				if (data == 1) {
-					// succesful login!
-					alert('succesful login!');
+					// successful login!
+					alert('successful login!');
 				} else {
 					// you dumbass used the wrong username or password!
 					alert('you dumbass used the wrong username or password!');
