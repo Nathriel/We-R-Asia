@@ -97,6 +97,14 @@ class User_Mapper extends System_Mapper {
 		), $args);
 		$query->execute($args);
 	}
+	
+	public function getLoggedInUser() {
+		if (isset($_SESSION['userId'])) {
+			return $this->find($_SESSION['userId']);
+		} else {
+			return null;
+		}
+	}
 }
 
 class User_Model extends System_Model {
@@ -214,6 +222,10 @@ class User_Model extends System_Model {
 		$this->language = $language;
 		$this->languageId = $this->language->getId();
 		return $this;
+	}
+	
+	public function getProjects() {
+		return $this->mapper->mapper('project')->findByUser($this);
 	}
 }
 ?>

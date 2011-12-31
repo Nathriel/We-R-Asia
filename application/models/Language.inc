@@ -21,6 +21,16 @@ class Language_Mapper extends System_Mapper {
 		return $language;
 	}
 	
+	public function findByCode($code) {
+		$query = $this->db->prepareCached('findLanguageByCode',
+					'SELECT id
+					FROM language
+					WHERE code = ?');
+		$query->execute(array($code));
+		$row = $query->fetch(PDO::FETCH_ASSOC);
+		return $this->find($row['id']);
+	}
+	
 	public function doDelete($id) {
 		return null;
 	}

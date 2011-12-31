@@ -4,7 +4,7 @@ class DatabaseMultiLanguage extends System_MultiLanguage {
 		if (isset($_SESSION['userId'])) {
 			return $this->mapper('user')->find($_SESSION['userId'])->getLanguage();
 		} else {
-			return $this->mapper('language')->find(2);
+			return $this->mapper('language')->findByCode('nl');
 		}
 	}
 	
