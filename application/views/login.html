@@ -21,7 +21,7 @@
 		<div id="loginbox">
 			<form method="post" action="{{ loginForm.action }}" id="loginForm">
 				<input type="text" name="username" placeholder="Username"/>
-				<input type="password" name="password" placeholder="Password" />
+				<input type="password" name="password" placeholder="{{ trans("password") }}" />
 				<input type="submit" name="submit" value="Log in"/>
 			</form>
 			<a href="#" class="forget">Forgot your password?</a>

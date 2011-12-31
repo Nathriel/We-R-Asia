@@ -28,7 +28,13 @@ class Translation_Mapper extends System_Mapper {
 			'SELECT id
 			FROM translation
 			WHERE language_id = ? AND translatable_id = ?');
-		$query->execute(array($language->getId(), $translatable->getId()));
+		if (is_object($language) && is_object($translatable)) {
+			$query->execute(array($language->getId(), $translatable->getId()));
+		} elseif (is_int($language) && is_object($translatable)) {
+			$query->execute(array($language, $translatable));
+		} else {
+			return null;
+		}
 		$row = $query->fetch(PDO::FETCH_ASSOC);
 		return $this->find($row['id']);
 	} 
@@ -64,6 +70,15 @@ class Translation_Model extends System_Model {
 		return $this;
 	}
 	
+	public function getTranslatableId() {
+		return $this->translatableId;
+	}
+	
+	public function setTranslatableId($translatableId) {
+		$this->translatableId = $translatableId;
+		return $this;
+	}
+	
 	public function getTranslatable() {
 		if ($this->translatable == null && $this->getTranslatableId()) {
 			$this->translatable = $this->mapper->mapper('translatable')->find($this->getTranslatableId());
@@ -74,6 +89,15 @@ class Translation_Model extends System_Model {
 	public function setTranslatable($translatable) {
 		$this->translatable = $translatable;
 		$this->translatableId = $this->translatable->getId();
+		return $this;
+	}
+	
+	public function getLanguageId() {
+		return $this->languageId;
+	}
+	
+	public function setLanguageId($languageId) {
+		$this->languageId = $languageId;
 		return $this;
 	}
 	

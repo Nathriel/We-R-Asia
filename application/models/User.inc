@@ -47,7 +47,7 @@ class User_Mapper extends System_Mapper {
 	}
 	
 	public function findByUsername($username) {
-		$query = $this->db->prepareCached('findUsername',
+		$query = $this->db->prepareCached('findUserByUsername',
 			'SELECT id
 			FROM user
 			WHERE username = ?');
