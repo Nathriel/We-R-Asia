@@ -58,6 +58,7 @@ class Project_Model extends System_Model {
 	private $name;
 	private $finished;
 	private $statusId;
+	private $status;
 	
 	public function getId() {
 		return $this->id;
@@ -92,6 +93,20 @@ class Project_Model extends System_Model {
 	
 	public function setStatusId($statusId) {
 		$this->statusId = $statusId;
+		$this->status = null;
+		return $this;
+	}
+	
+	public function getStatus() {
+		if ($this->status == null && $this->getStatusId()) {
+			$this->status = $this->mapper->mapper('status')->find($this->getStatusId());
+		}
+		return $this->status;
+	}
+	
+	public function setStatus($status) {
+		$this->status = $status;
+		$this->statusId = $status->getId();
 		return $this;
 	}
 }
