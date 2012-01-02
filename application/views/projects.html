@@ -8,10 +8,10 @@
 			<tr>
 				<th>Name</th>
 				<th>Status</th>
-		<thead>
+		</thead>
 		<tbody>
 			{% for project in projects %}
-			<tr>
+			<tr{% if loop.index is even %} class="evenrow"{% endif %}>
 				<td><a href="projects/project/{{project.id}}">{{project.name}}</a></td>
 				<td>{{project.status}}</td>
 			</tr>

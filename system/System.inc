@@ -38,7 +38,7 @@ class System {
 			$controllerName = $this->applicationConfig['homeController'];
 		}
 		if (is_file($controllerFile = './'.$this->baseConfig['applicationPath'].'controllers/'.ucfirst($controllerName).'.inc')) {
-			if (isset($pathInfo[1])) {
+			if (isset($pathInfo[1]) && $pathInfo[1]) {
 				$function = $pathInfo[1];
 			} else {
 				$function = 'index';

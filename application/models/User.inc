@@ -15,7 +15,7 @@ class User_Mapper extends System_Mapper {
 		
 	}
 	
-	public function doFind($id) {
+	protected function doFind($id) {
 		$query = $this->db->prepareCached('findUser',
 			'SELECT id,username,password,password_salt,name,address,residence,email,company,language_id
 			FROM user
@@ -40,7 +40,7 @@ class User_Mapper extends System_Mapper {
 		return $user;
 	}
 	
-	public function doDelete($id) {
+	protected function doDelete($id) {
 		$query = $this->db->prepareCached('deleteUser',
 			'DELETE FROM user WHERE id = ?');
 		$query->execute(array($id));
@@ -71,7 +71,7 @@ class User_Mapper extends System_Mapper {
 		}
 	}
 	
-	public function doSave(User_Model $user) {
+	protected function doSave(User_Model $user) {
 		$args = array();
 		if ($user->getId()) {
 			$args[] = $user->getId();

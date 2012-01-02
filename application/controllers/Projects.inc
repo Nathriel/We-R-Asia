@@ -25,6 +25,7 @@ class Projects extends System_Controller {
 				'status' => 'moet nog',
 			);
 		}
+		
 		echo $this->t()->render('projects.html', array(
 			'pageTitle' => 'We R Asia | Projects',
 			'projects' => $tplProjects,
