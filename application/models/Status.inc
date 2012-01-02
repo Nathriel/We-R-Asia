@@ -4,7 +4,7 @@ class Status_Mapper extends System_Mapper {
 	
 	}
 	
-	public function doFind($id) {
+	protected function doFind($id) {
 		$query = $this->db->prepareCached('findStatus',
 				'SELECT id,translatable_id
 				FROM status
@@ -21,7 +21,7 @@ class Status_Mapper extends System_Mapper {
 		return $status;
 	}
 	
-	public function doDelete($id) {
+	protected function doDelete($id) {
 		return null;
 	}
 }

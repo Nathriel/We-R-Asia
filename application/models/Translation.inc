@@ -4,7 +4,7 @@ class Translation_Mapper extends System_Mapper {
 	
 	}
 	
-	public function doFind($id) {
+	protected function doFind($id) {
 		$query = $this->db->prepareCached('findTranslation',
 				'SELECT id,translation,translatable_id,language_id
 				FROM translation
@@ -39,7 +39,7 @@ class Translation_Mapper extends System_Mapper {
 		return $this->find($row['id']);
 	} 
 	
-	public function doDelete($id) {
+	protected function doDelete($id) {
 		return null;
 	}
 }
