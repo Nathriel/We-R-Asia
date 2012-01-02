@@ -1,5 +1,14 @@
 <?php
-class Projects extends System_Controller {	
+class Projects extends System_Controller {
+    
+    public function init(){
+        $user = $this->mapper('user')->getLoggedinUser();
+        echo "asdsadas";
+        if(!$user){
+            header("Location: index.php");
+        }
+    }
+    
 	public function index() {
 		$user = $this->mapper('user')->getLoggedinUser();
 		if ($user) {

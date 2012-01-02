@@ -1,12 +1,19 @@
 <?php
 class Login extends System_Controller {	
 	public function index() {
-		echo $this->t()->render('login.html', array(
-			'pageTitle' => 'We R Asia | Login',
-			'loginForm' => array(
-				'action' => './login/processLogin/',
-			),
-		));
+	   $user = $this->mapper('user')->getLoggedinUser();
+       if($user){
+            header("location: projects");
+       }
+       else
+       {
+    		echo $this->t()->render('login.html', array(
+    			'pageTitle' => 'We R Asia | Login',
+    			'loginForm' => array(
+    				'action' => './login/processLogin/',
+    			),
+    		));
+        }
 	}
 	
 	/**

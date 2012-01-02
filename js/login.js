@@ -14,6 +14,9 @@ $(function() {
 				if (data == 1) {
 					// successful login!
 					alert('successful login!');
+                    //window.location='';
+                    var url = window.location;
+                    window.location = url + 'projects'
 				} else {
 					// you dumbass used the wrong username or password!
 					alert('you dumbass used the wrong username or password!');

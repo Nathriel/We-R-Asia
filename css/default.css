@@ -61,9 +61,17 @@ h1 {
 	margin: 0;
 	text-align: center;
 	display: none;
+    z-index:999;
+    position:relative;
+}
+
+#drop_menu li{
+    z-index:999;
+    position:relative;
 }
 
 #drop_menu a {
+    z-index:999;
 	text-decoration: none;
 	font-family: Verdana;
 	font-weight: bold;
@@ -91,6 +99,7 @@ h1 {
 	border-radius: 7px;
 	border: 1px solid #FFF;
 	box-shadow: 0px 0px 10px #000;
+    z-index:-99999;
 }
 
 #content h1 {
