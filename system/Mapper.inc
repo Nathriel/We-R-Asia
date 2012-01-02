@@ -49,6 +49,6 @@ abstract class System_Mapper {
 	 * Implementation of delete(), this should never be called directly
 	 * @param $id int
 	 */
-	public abstract function doDelete($id);
+	protected abstract function doDelete($id);
 }
 ?>
