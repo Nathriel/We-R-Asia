@@ -1,3 +1,4 @@
+/* basic content */
 html {
 	overflow-x: hidden;
 	overflow-y: scroll;
@@ -30,57 +31,6 @@ h1 {
 	font-size: 200%;
 }
 
-/* header */
-#header {
-	background-color: #b7a985;
-	width: 100%;
-	height: 55px;
-	border-bottom: 1px solid white;
-}
-
-#menu {
-	width: 300px;
-	height: 55px;
-	background-image: url('../content/images/menu_button.png');
-	background-repeat: no-repeat;
-	background-position: center;
-	display: block;
-	border-right: 1px solid white;
-	text-indent: -9000px;
-}
-
-#menu:hover {
-	display: block;
-}
-
-#drop_menu {
-	list-style: none;
-	border: 1px solid white;
-	width: 299px;
-	padding: 0;
-	margin: 0;
-	text-align: center;
-	display: none;
-}
-
-#drop_menu a {
-	text-decoration: none;
-	font-family: Verdana;
-	font-weight: bold;
-	font-size: 23px;
-	color: white;
-	background-color: #b7a985;
-	display: block;
-	width: 100%;
-	height: 100%;
-	padding: 10px 0;
-}
-
-#drop_menu a:hover {
-	background-color: #665f4a;
-}
-
-/* basic content */
 #content {
 	width: 874px;
 	min-height: 200px;
@@ -166,13 +116,13 @@ h1 {
 	border-right: 1px solid #4d4738;
 }
 #content .four_col td:last-child  {
-	width: 108x;
+	width: 108px;
 }
 
-input {
+input, select {
 	width: 100%;
 	height: 60px;
-	font-size: 200%;
+	font-size: 30px;
 	border-radius: 5px;
 	border: 1px solid #9e9e9e;
 }
@@ -204,9 +154,67 @@ input {
 	float: left;
 	margin-right: 20px;
 }
+#option_archive {
+	background-image: url('../content/images/archive.png');
+	text-indent: -9000px;
+	display: block;
+	width: 16px;
+	height: 16px;
+	float: left;
+}
 
 .clear {
 	clear: both;
+}
+
+/* header */
+#header {
+	background-color: #b7a985;
+	width: 100%;
+	height: 55px;
+	border-bottom: 1px solid white;
+}
+
+#menu {
+	width: 300px;
+	height: 55px;
+	background-image: url('../content/images/menu_button.png');
+	background-repeat: no-repeat;
+	background-position: center;
+	display: block;
+	border-right: 1px solid white;
+	text-indent: -9000px;
+}
+
+#menu:hover {
+	display: block;
+}
+
+#drop_menu {
+	list-style: none;
+	border: 1px solid white;
+	width: 299px;
+	padding: 0;
+	margin: 0;
+	text-align: center;
+	display: none;
+}
+
+#drop_menu a {
+	text-decoration: none;
+	font-family: Verdana;
+	font-weight: bold;
+	font-size: 23px;
+	color: white;
+	background-color: #b7a985;
+	display: block;
+	width: 100%;
+	height: 100%;
+	padding: 10px 0;
+}
+
+#drop_menu a:hover {
+	background-color: #665f4a;
 }
 
 /* Login page */
@@ -310,7 +318,7 @@ input {
 	font-weight: bold;
 }
 
-#upload_button {
+#regular_button {
 	float: right;
 	background-color: #968b6e;
 	display: block;
@@ -326,7 +334,7 @@ input {
 	text-align: center;
 	cursor: pointer;
 }
-#upload_button:hover {
+#regular_button:hover {
 	background-color: #665f4a;
 }
 
@@ -336,6 +344,12 @@ input {
 	color: #26241c;
 	float: right;
 	margin: -35px 2px 0 0;
+}
+#content .doc_options td:first-child {
+	width: 531px;
+}
+#content .doc_options td:last-child {
+	width: 124px;
 }
 
 /* profile page */
@@ -359,7 +373,7 @@ input {
 	width: 670px;
 	margin-top: 25px;
 }
-#profile_input input {
+#profile_input input, #profile_input select {
 	width: 100%;
 	height: 43px;
 	font-size: 28px;
@@ -367,6 +381,10 @@ input {
 	border: 1px solid #9e9e9e;
 	padding: 0 10px;
 	margin-bottom: 7px;
+}
+#profile_input select {
+	width: 692px;
+	padding-right: 0px;
 }
 
 #profile_buttons {
