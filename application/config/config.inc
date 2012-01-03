@@ -1,6 +1,6 @@
 <?php
 return array(
-	'homeController' => 'login',
+	'homeController' => 'home',
 	'multiLanguage' => 'DatabaseMultiLanguage',
 );
 ?>
