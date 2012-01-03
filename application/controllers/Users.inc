@@ -6,8 +6,7 @@ class Users extends System_Controller {
 		));
 	}
 	
-	public function edit($id) {
-	   $id = 1;
+	public function edit($id = false) {
 	   $args = array(
 			'pageTitle' => 'We R Asia | Edit User',
 		);

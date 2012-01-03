@@ -3,7 +3,7 @@ return array(
 	'host' => 'localhost',
 	'port' => null,
 	'username' => 'root',
-	'password' => '',
+	'password' => 'wachtwoord',
 	'database' => 'WeRAsia',
 );
 ?>
