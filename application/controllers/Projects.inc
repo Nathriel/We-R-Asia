@@ -25,7 +25,13 @@ class Projects extends System_Controller {
 	
 	public function project() {
 		echo $this->t()->render('project.html', array(
-			'pageTitle' => 'We R Asia | project',
+			'pageTitle' => 'We R Asia | Project',
+		));
+	}
+	
+	public function upload() {
+		echo $this->t()->render('doc_upload.html', array(
+			'pageTitle' => 'We R Asia | Upload Document',
 		));
 	}
 }
