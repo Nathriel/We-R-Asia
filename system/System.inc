@@ -47,13 +47,15 @@ class System {
 			
 			$controller = new $controllerName($this);
 			if (method_exists($controller, $function)) {
-				//try {
-					$controller->$function();
-				/*} catch (Exception $e) {
+				try {
+					$args = $pathInfo;
+					array_shift($args);array_shift($args);
+					call_user_func_array(array($controller, $function),  $args);
+				} catch (Exception $e) {
 					echo '<pre>';
 					var_dump($e);
 					header('HTTP/1.0 500 Internal Server Error');
-				}*/
+				}
 			} else {
 				header('HTTP/1.0 404 Not Found');
 				$controller->notFound();
