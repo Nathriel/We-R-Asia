@@ -1,0 +1,32 @@
+{% include 'header.html' %}
+<div id="content">
+
+	<h1><a href="projects">Projects</a> > <a href="projects/project/1">Project_name</a> > Edit Project</h1>
+	
+	<div id="profile_labels">
+		<label for="name">Project Name:</label>
+		<label for="number">Projectnumber:</label>
+		<label for="done">Done?:</label>
+		<label for="permissions">Permissions:</label>
+	</div>
+	
+	<form method="post" action="" id="ProfileForm">
+		<div id="profile_input">
+			<input type="text" name="name" id="name" value="" />
+			<input type="text" name="number" id="number" value="" />
+			<input type="checkbox" name="done" id="done" value="" /><br />
+			<input type="checkbox" name="permissions" value="user_1" />User 1<br />
+			<input type="checkbox" name="permissions" value="user_2" />User 2<br />
+			<input type="checkbox" name="permissions" value="user_3" />User 3<br />
+		</div>
+		
+		<div class="clear"></div>
+		
+		<div id="profile_buttons">
+			<input id="profile_submit" type="submit" name="submit" value="Save"/>
+			<input id="profile_submit" type="reset" name="reset" value="Cancel"/>
+		</div>
+	</form>
+	
+</div>
+{% include 'footer.html' %}

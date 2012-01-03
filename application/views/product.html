@@ -1,40 +1,72 @@
 {% include 'header.html' %}
 <div id="content">
 
-	<h1><a href="projects">Projects</a> > <a href="projects/project">Project_name</a> > Product_name</h1>
+	<h1><a href="projects">Projects</a> > <a href="projects/project/1">Project_name</a> > Product_name</h1>
 	<p id="project_number">project_number</p>
 	
 	<p id="project_status">Project status: In development</p>
+	
+	<h2>Status</h2>
 	
 	<table id="table">
 		<thead>
 			<tr>
 				<th>Name</th>
 				<th>Status</th>
+				<th>Options</th>
 		</thead>
 		<tbody>
 			<tr>
 				<td>In afwachting blauwdruk</td>
 				<td>21-12-2011</td>
+				<td>
+					<input type="checkbox" id="option_visible" name="visible" value="yes" />
+					<a id="option_edit" href="projects/edit_product/1">edit</a>
+					<a id="option_delete" href="#">delete</a>
+				</td>
 			</tr>
 			<tr class="evenrow">
 				<td>Een andere status</td>
 				<td>22-12-2011</td>
+				<td>
+					<input type="checkbox" id="option_visible" name="visible" value="yes" />
+					<a id="option_edit" href="projects/edit_product/1">edit</a>
+					<a id="option_delete" href="#">delete</a>
+				</td>
 			</tr>
 			<tr>
 				<td>Nog een status</td>
 				<td>05-01-2012</td>
+				<td>
+					<input type="checkbox" id="option_visible" name="visible" value="yes" />
+					<a id="option_edit" href="projects/edit_product/1">edit</a>
+					<a id="option_delete" href="#">delete</a>
+				</td>
 			</tr>
 			<tr class="evenrow">
 				<td>Een eentje dan</td>
 				<td>10-01-2012</td>
+				<td>
+					<input type="checkbox" id="option_visible" name="visible" value="yes" />
+					<a id="option_edit" href="projects/edit_product/1">edit</a>
+					<a id="option_delete" href="#">delete</a>
+				</td>
 			</tr>
 			<tr>
 				<td>Completed</td>
 				<td>15-01-2012</td>
+				<td>
+					<input type="checkbox" id="option_visible" name="visible" value="yes" />
+					<a id="option_edit" href="projects/edit_product/1">edit</a>
+					<a id="option_delete" href="#">delete</a>
+				</td>
 			</tr>
 		</tbody>
 	</table>
+	
+	<a href="status/add" id="regular_button">New Status</a>
+	
+	<div class="clear"></div>
 	
 </div>
 {% include 'footer.html' %}

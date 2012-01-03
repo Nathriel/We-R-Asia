@@ -1,0 +1,44 @@
+{% include 'header.html' %}
+<div id="content">
+
+	<h1><a href="users">User</a> > Edit User</h1>
+	
+	<div id="profile_labels">
+		<label for="username">Username:</label>
+		<label for="name">Name:</label>
+		<label for="email">Email:</label>
+		<label for="password">Password:</label>
+		<label for="password_again">Password again:</label>
+		<label for="type">Type:</label>
+		<label for="address">Address:</label>
+		<label for="residence">City:</label>
+		<label for="company">Company:</label>
+	</div>
+	
+	<form method="post" action="" id="ProfileForm">
+		<div id="profile_input">
+			<input type="text" name="username" id="username" value="{{ username }}" />
+			<input type="text" name="name" id="name" value="{{ name }}" />
+			<input type="text" name="email" id="email" value="{{ email }}" />
+			<input type="text" name="password" id="password" value="wtf? waarom wachtwoord?" />
+			<input type="text" name="password_again" id="password_again" value="wtf? waarom wachtwoord?" />
+			<select type="text" name="type" id="type" />
+				<option value="user">User</option>
+				<option value="moderator">Moderator</option>
+				<option value="admin">Admin</option>
+			</select>
+			<input type="text" name="address" id="address" value="{{ address }}" />
+			<input type="text" name="residence" id="residence" value="{{ residence }}" />
+			<input type="text" name="company" id="company" value="{{ company }}" />
+		</div>
+		
+		<div class="clear"></div>
+		
+		<div id="profile_buttons">
+			<input id="profile_submit" type="submit" name="submit" value="Save"/>
+			<input id="profile_submit" type="reset" name="reset" value="Cancel"/>
+		</div>
+	</form>
+	
+</div>
+{% include 'footer.html' %}

@@ -1,7 +1,7 @@
 {% include 'header.html' %}
 <div id="content">
 
-	<h1><a href="projects">Projects</a> > Project_name</h1>
+	<h1><a href="projects">Projects</a> > <a href="projects/project/1">Project_name</a> > Upload</h1>
 	<p id="project_number">project_number</p>
 	
 	<h2>Upload New Document</h2>
@@ -9,7 +9,7 @@
 	<form method="post" action="" id="uploadDocForm">
 		<input name="file_upload" id="file_upload" type="text" />
 		<input name="file_input" id="file_input" type="file" />
-		<input name="file_submit" id="upload_button" type="submit" value="Upload" />
+		<input name="file_submit" id="regular_button" type="submit" value="Upload" />
 	</form>
 	
 	<br />
@@ -28,8 +28,6 @@
 			</tr>
 		</tbody>
 	</table>
-	
-	<div class="clear"></div>
 	
 	<script type="text/javascript">
 		jsl.load('./js/upload.js');
