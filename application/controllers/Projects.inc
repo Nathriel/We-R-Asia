@@ -29,6 +29,24 @@ class Projects extends System_Controller {
 		));
 	}
 	
+	public function edit_project() {
+		echo $this->t()->render('edit_project.html', array(
+			'pageTitle' => 'We R Asia | Edit Project',
+		));
+	}
+	
+	public function product() {
+		echo $this->t()->render('product.html', array(
+			'pageTitle' => 'We R Asia | Product',
+		));
+	}
+	
+	public function edit_product() {
+		echo $this->t()->render('edit_product.html', array(
+			'pageTitle' => 'We R Asia | Edit Product',
+		));
+	}
+	
 	public function upload() {
 		echo $this->t()->render('doc_upload.html', array(
 			'pageTitle' => 'We R Asia | Upload Document',

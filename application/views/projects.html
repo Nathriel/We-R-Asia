@@ -8,12 +8,18 @@
 			<tr>
 				<th>Name</th>
 				<th>Status</th>
+				<th>Options</th>
 		</thead>
 		<tbody>
 			{% for project in projects %}
 			<tr{% if loop.index is even %} class="evenrow"{% endif %}>
 				<td><a href="projects/project/{{project.id}}">{{project.name}}</a></td>
 				<td>{{project.status}}</td>
+				<td>
+					<a id="option_info" href="#">info</a>
+					<a id="option_edit" href="projects/edit_project/1">edit</a>
+					<a id="option_delete" href="#">delete</a>
+				</td>
 			</tr>
 			{% endfor %}
 		</tbody>
