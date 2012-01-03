@@ -4,6 +4,11 @@ abstract class System_Controller {
 	
 	public function __construct(System $system) {
 		$this->system = $system;
+		$this->init();
+	}
+	
+	public function init() {
+		// design-technically this should be an abstract function, but it would be annoying.
 	}
 	
 	/**

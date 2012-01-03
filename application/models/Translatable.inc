@@ -6,7 +6,7 @@ class Translatable_Mapper extends System_Mapper {
 		$this->sentenceCache = array();
 	}
 	
-	public function doFind($id) {
+	protected function doFind($id) {
 		$query = $this->db->prepareCached('findTranslatable',
 				'SELECT id,sentence
 				FROM translatable
@@ -36,7 +36,7 @@ class Translatable_Mapper extends System_Mapper {
 		return $this->sentenceCache[$sentence];
 	}
 	
-	public function doDelete($id) {
+	protected function doDelete($id) {
 		return null;
 	}
 }

@@ -4,7 +4,7 @@ class Project_Mapper extends System_Mapper {
 	
 	}
 	
-	public function doFind($id) {
+	protected function doFind($id) {
 		$query = $this->db->prepareCached('findProject',
 				'SELECT id,name,finished,status_id
 				FROM project
@@ -48,7 +48,7 @@ class Project_Mapper extends System_Mapper {
 		return $result;
 	}
 	
-	public function doDelete($id) {
+	protected function doDelete($id) {
 		return null;
 	}
 }
