@@ -1,0 +1,26 @@
+{% include 'header.html' %}
+<div id="content">
+
+	<h1><a href="projects">Projects</a> > <a href="projects/project/1">Project_name</a> > Add Product</h1>
+	
+	<div id="profile_labels">
+		<label for="product">Product Name:</label>
+		<label for="done">Done?:</label>
+	</div>
+	
+	<form method="post" action="" id="AddProductForm">
+		<div id="profile_input">
+			<input type="text" name="product" id="product" value="" />
+			<input type="checkbox" name="done" id="done" value="" />
+		</div>
+		
+		<div class="clear"></div>
+		
+		<div id="profile_buttons">
+			<input id="profile_submit" type="submit" name="submit" value="Save"/>
+			<input id="profile_submit" type="reset" name="reset" value="Cancel"/>
+		</div>
+	</form>
+	
+</div>
+{% include 'footer.html' %}

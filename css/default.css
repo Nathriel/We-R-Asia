@@ -160,6 +160,9 @@ h1 {
 #table a {
 	color: #332f25;
 }
+#table td.options_td {
+	width: 145px;
+}
 
 #content .single_col td {
 	width: 830px;
@@ -189,15 +192,6 @@ input, select {
 
 #option_visible {
 	background-image: url('../content/images/visible.png');
-	text-indent: -9000px;
-	display: block;
-	width: 16px;
-	height: 16px;
-	float: left;
-	margin-right: 20px;
-}
-#option_info {
-	background-image: url('../content/images/info.png');
 	text-indent: -9000px;
 	display: block;
 	width: 16px;
@@ -415,10 +409,25 @@ input, select {
 	margin: -35px 2px 0 0;
 }
 #content .doc_options td:first-child {
-	width: 531px;
+	width: 520px;
 }
-#content .doc_options td:last-child {
+#content .doc_options .date {
+	width: 102px;
+}
+#content .doc_options .options_td:last-child {
 	width: 124px;
+}
+
+#permissions_bg {
+	border-radius: 5px;
+	border: 1px solid #9e9e9e;
+	background-color: white;
+	width: 650px;
+	padding: 10px;
+}
+#permissions_bg label {
+	position: absolute;
+	margin: 16px 0 0 5px;
 }
 
 /* profile page */
@@ -451,6 +460,7 @@ input, select {
 	padding: 0 10px;
 	margin-bottom: 7px;
 }
+
 #profile_input select {
 	width: 692px;
 	padding-right: 0px;
@@ -458,7 +468,7 @@ input, select {
 #profile_input input[type="checkbox"] {
 	width: 20px;
 	height: 20px;
-	margin-top: 20px;
+	margin: 15px 0 0 0;
 }
 
 #profile_buttons {

@@ -31,6 +31,12 @@ class Projects extends System_Controller {
 		));
 	}
 	
+	public function add() {
+		echo $this->t()->render('add_project.html', array(
+			'pageTitle' => 'We R Asia | Add Project',
+		));
+	}
+	
 	public function project() {
 		echo $this->t()->render('project.html', array(
 			'pageTitle' => 'We R Asia | Project',
@@ -46,6 +52,12 @@ class Projects extends System_Controller {
 	public function product() {
 		echo $this->t()->render('product.html', array(
 			'pageTitle' => 'We R Asia | Product',
+		));
+	}
+	
+	public function add_product() {
+		echo $this->t()->render('add_product.html', array(
+			'pageTitle' => 'We R Asia | Add Product',
 		));
 	}
 	
