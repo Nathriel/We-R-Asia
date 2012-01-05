@@ -278,7 +278,8 @@ input, select {
 	cursor: pointer;
 	height: 30px;
 	width: 80px;
-	margin: auto;
+	float: right;
+	margin-right: 20px;
 }
 #dialog_bg {
 	width: 100%;

@@ -8,17 +8,34 @@ $(function() {
 	});
 	
 	/* dialog_box */
-	$('#dialog_box a').click(function() {
-		$('#dialog_box').hide();
-		$('#dialog_bg').hide();
-		$('#dialog_box p').empty();
-	});
 	
-	function showDialog(text) {
-		$('#dialog_box p').prepend(text);
+	function showDialog(text, type) {
+		$('#dialog_box').prepend('<p>' + text + '</p>');
 		$('#dialog_bg').show();
+		if(type == 'ok') {
+			$('#dialog_box').append('<a id="dialog_ok">OK</a><a id="dialog_cancel">Cancel</a>');
+		} else {
+			$('#dialog_box').append('<a id="dialog_cancel">Cancel</a>');
+		}
 		$('#dialog_box').show();
+		
+		$('#dialog_box #dialog_ok').click(function() {
+			/* ok button process */
+			return false;
+		});
+		
+		$('#dialog_box #dialog_cancel').click(function() {
+			$('#dialog_box').hide();
+			$('#dialog_bg').hide();
+			$('#dialog_box').empty();
+			return false;
+		});
 	}
+	
+	$('.option_delete').click(function(){
+		showDialog('Are you sure you want to delete this?', 'ok');
+		return false;
+	});
 	
 	/* login */
 	$('#loginForm').submit(function(e) {
@@ -40,7 +57,7 @@ $(function() {
                     window.location = url + 'projects'
 				} else {
 					// you dumbass used the wrong username or password!
-					showDialog('you dumbass used the wrong username or password!');
+					showDialog('You dumbass used the wrong username or password!', 'cancel');
 				}
 			}
 		});
