@@ -165,7 +165,11 @@ h1 {
 }
 
 #content .single_col td {
+	font-size: 20px;
 	width: 830px;
+}
+#content .double_col td:first-child {
+	width: 642px;
 }
 
 #content .four_col th:first-child {
@@ -190,7 +194,7 @@ input, select {
 	border: 1px solid #9e9e9e;
 }
 
-#option_visible {
+.option_visible {
 	background-image: url('../content/images/visible.png');
 	text-indent: -9000px;
 	display: block;
@@ -199,7 +203,7 @@ input, select {
 	float: left;
 	margin-right: 20px;
 }
-#option_edit {
+.option_edit {
 	background-image: url('../content/images/edit.png');
 	text-indent: -9000px;
 	display: block;
@@ -208,7 +212,7 @@ input, select {
 	float: left;
 	margin-right: 20px;
 }
-#option_delete {
+.option_delete {
 	background-image: url('../content/images/delete.png');
 	text-indent: -9000px;
 	display: block;
@@ -217,16 +221,17 @@ input, select {
 	float: left;
 	margin-right: 20px;
 }
-#option_archive {
+.option_archive {
 	background-image: url('../content/images/archive.png');
 	text-indent: -9000px;
 	display: block;
 	width: 16px;
 	height: 16px;
 	float: left;
+	margin-right: 20px;
 }
 
-#regular_button {
+.regular_button {
 	float: right;
 	background-color: #968b6e;
 	display: block;
@@ -242,7 +247,7 @@ input, select {
 	text-align: center;
 	cursor: pointer;
 }
-#regular_button:hover, #dialog_box a:hover  {
+.regular_button:hover, #dialog_box a:hover  {
 	background-color: #665f4a;
 }
 
@@ -440,13 +445,17 @@ input, select {
 	font-weight: bold;
 }
 
-#to_invoices {
+#to_invoices, #to_archive {
 	font-size: 17px;
 	font-weight: bold;
 	color: #26241c;
 	float: right;
-	margin: -35px 2px 0 0;
+	margin: -45px 2px 0 0;
 }
+#to_archive {
+	margin-top: -20px;
+}
+
 #content .doc_options td:first-child {
 	width: 520px;
 }
@@ -510,14 +519,14 @@ input, select {
 	margin: 15px 0 0 0;
 }
 
-#profile_buttons {
+#center_buttons {
 	margin: auto;
 	display: block;
 	width: 404px;
 	margin-top: 20px;
 }
 
-#profile_submit {
+.center_button {
 	background-color: #b2a481;
 	border: 1px solid #665f4a;
 	font-weight: bold;
@@ -525,7 +534,7 @@ input, select {
 	width: 200px;
 	cursor: pointer;
 }
-#profile_submit:hover {
+.center_button:hover {
 	background-color: #968b6e;
 }
 

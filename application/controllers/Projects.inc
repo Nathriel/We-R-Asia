@@ -67,6 +67,12 @@ class Projects extends System_Controller {
 		));
 	}
 	
+	public function archive() {
+		echo $this->t()->render('archive.html', array(
+			'pageTitle' => 'We R Asia | Archive',
+		));
+	}
+	
 	public function upload() {
 		echo $this->t()->render('doc_upload.html', array(
 			'pageTitle' => 'We R Asia | Upload Document',

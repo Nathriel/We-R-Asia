@@ -16,15 +16,15 @@
 				<td><a href="projects/project/{{project.id}}">{{project.name}}</a></td>
 				<td>{{project.status}}</td>
 				<td class="options_td">
-					<a id="option_edit" href="projects/edit_project/1">edit</a>
-					<a id="option_delete" href="#">delete</a>
+					<a class="option_edit" href="projects/edit_project/1">edit</a>
+					<a class="option_delete" href="#">delete</a>
 				</td>
 			</tr>
 			{% endfor %}
 		</tbody>
 	</table>
 	
-	<a href="projects/add" id="regular_button">Add Project</a>
+	<a href="projects/add" class="regular_button">Add Project</a>
 	
 	<div class="clear"></div>
 	
