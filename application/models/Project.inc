@@ -53,7 +53,7 @@ class Project_Mapper extends System_Mapper {
 		return null;
 	}
 	
-	protected function doSave(Project_Model $project) {
+	protected function doSave(Model $project) {
 		$args = array();
 		if ($project->getId()) {
 			$args[] = $project->getId();
