@@ -1,13 +1,13 @@
 {% include 'header.html' %}
 <div id="content">
 
-	<h1><a href="projects">Projects</a> > Project_name</h1>
-	<p id="project_number">project_number</p>
+	<h1><a href="projects">Projects</a> > {{ project.name }}</h1>
+	<p id="project_number">{{ project.id }}</p>
 	
 	<p id="project_status">Status: In development</p>
 	
-	<a id="to_invoices" href="invoices/overview/1">To invoices ></a>
-	<a id="to_archive" href="projects/archive/1">To Archive ></a>
+	<a id="to_invoices" href="invoices/overview/{{ project.id }}">To invoices ></a>
+	<a id="to_archive" href="projects/archive/{{ project.id }}">To Archive ></a>
 	
 	<table id="table">
 		<thead>
@@ -17,30 +17,27 @@
 				<th>Options</th>
 		</thead>
 		<tbody>
+			{% for product in products %}
+			<tr{% if loop.index is even %} class="evenrow"{% endif %}>
+				<td><a href="projects/product/1"></a></td>
+				<td></td>
+				<td class="options_td">
+					<a class="option_edit" href="projects/edit_project/1">edit</a>
+					<a class="option_delete" href="#">delete</a>
+				</td>
+			</tr>
+			{% endfor %}
+			
+			<!--temporary row until above bit works -->
 			<tr>
-				<td><a href="projects/product/1">T-shirts</a></td>
-				<td>In Transit</td>
+				<td></td>
+				<td></td>
 				<td class="options_td">
 					<a class="option_edit" href="projects/edit_project/1">edit</a>
 					<a class="option_delete" href="#">delete</a>
 				</td>
 			</tr>
-			<tr class="evenrow">
-				<td>Bumpersticker</td>
-				<td>Completed</td>
-				<td class="options_td">
-					<a class="option_edit" href="projects/edit_project/1">edit</a>
-					<a class="option_delete" href="#">delete</a>
-				</td>
-			</tr>
-			<tr>
-				<td>USB sticks</td>
-				<td>Completed</td>
-				<td class="options_td">
-					<a class="option_edit" href="projects/edit_project/1">edit</a>
-					<a class="option_delete" href="#">delete</a>
-				</td>
-			</tr>
+			
 		</tbody>
 	</table>
 	

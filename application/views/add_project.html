@@ -10,11 +10,11 @@
 		<label for="permissions">Permissions:</label>
 	</div>
 	
-	<form method="post" action="" id="AddProjectForm">
+	<form method="post" action="{{ AddProjectForm.action }}" id="AddProjectForm">
 		<div id="profile_input">
-			<input type="text" name="name" id="name" value="" />
-			<input type="text" name="number" id="number" value="" />
-			<input type="checkbox" name="done" id="done" value="" /><br />
+			<input type="text" name="name" id="name" />
+			<input type="text" name="number" id="number" />
+			<input type="checkbox" name="done" id="done" /><br />
 			<div id="permissions_bg">
 				<input type="checkbox" name="permissions" value="user_1" /><label>User 1</label><br />
 				<input type="checkbox" name="permissions" value="user_2" /><label>User 2</label><br />

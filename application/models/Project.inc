@@ -51,6 +51,28 @@ class Project_Mapper extends System_Mapper {
 	protected function doDelete($id) {
 		return null;
 	}
+	
+	protected function doSave(Project_Model $project) {
+		$args = array();
+		if ($project->getId()) {
+			$args[] = $project->getId();
+			$query = $this->db->prepareCached('updateUser',
+				'UPDATE project
+				SET id=?,name=?,finished=?,status_id=?
+				WHERE id=?');
+		} else {
+			$query = $this->db->prepareCached('insertUser',
+				'INSERT INTO project
+				SET id=?,name=?,finished=?,status_id=?');
+		}
+		$args = array_merge(array(
+			$project->getId(),
+			$project->getName(),
+			$project->getfinished(),
+			$project->getstatusId(),
+		), $args);
+		$query->execute($args);
+	}
 }
 
 class Project_Model extends System_Model {

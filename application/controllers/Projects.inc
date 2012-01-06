@@ -31,16 +31,37 @@ class Projects extends System_Controller {
 		));
 	}
 	
-	public function add() {
+	public function add_project() {
 		echo $this->t()->render('add_project.html', array(
 			'pageTitle' => 'We R Asia | Add Project',
+			'AddProjectForm' => array(
+    				'action' => './projects/processAddProject/',
+    			),
 		));
 	}
+	public function processAddProject() {
+		$projectMapper = $this->mapper('project');
+		
+	}
 	
-	public function project() {
-		echo $this->t()->render('project.html', array(
-			'pageTitle' => 'We R Asia | Project',
-		));
+	public function project($id = false) {
+		if($id)
+		{
+			
+			$project = $this->mapper('project')->find($id);
+			
+			$CurrentProject = array(
+				'id' => $project->getId(),
+				'name' => $project->getName(),
+			);
+			
+			echo $this->t()->render('project.html', array(
+				'pageTitle' => 'We R Asia | Project',
+				'project' => $CurrentProject,
+			));
+		} else {
+			//leeg
+		}
 	}
 	
 	public function edit_project() {
