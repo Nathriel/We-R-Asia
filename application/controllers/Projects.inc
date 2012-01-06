@@ -41,7 +41,13 @@ class Projects extends System_Controller {
 	}
 	public function processAddProject() {
 		$projectMapper = $this->mapper('project');
-		
+		$project = new Project_Model($projectMapper);
+		$project->setName($_POST['name']);
+		$project->setCode($_POST['code']);
+		$project->setFinished(0);
+		$project->setStatusId(1);
+		$project->save();
+		header('location: ../../');
 	}
 	
 	public function project($id = false) {
@@ -50,15 +56,27 @@ class Projects extends System_Controller {
 			
 			$project = $this->mapper('project')->find($id);
 			
-			$CurrentProject = array(
+			$CurProject = array(
 				'id' => $project->getId(),
 				'name' => $project->getName(),
 				'code' => $project->getCode(),
 			);
+			/*
+			$products = $this->mapper('product')->findAll();
+			
+			$tplProducts = array();
+			foreach ($products as $product) {
+				$tplProducts[] = array(
+					'id' => $product->getId(),
+					'name' => $product->getName(),
+				);
+			}
+			*/
 			
 			echo $this->t()->render('project.html', array(
 				'pageTitle' => 'We R Asia | Project',
-				'project' => $CurrentProject,
+				'project' => $CurProject,
+				//'product' => $tplProducts,
 			));
 		} else {
 			//leeg
