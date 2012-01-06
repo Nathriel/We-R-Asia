@@ -7,9 +7,7 @@ abstract class System_Model {
 	}
 	
 	public function save() {
-		if (method_exists($this->mapper, 'doSave')) {
-			$this->mapper->doSave($this);
-		}
+		$this->mapper->save($this);
 	}
 }
 ?>

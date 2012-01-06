@@ -50,5 +50,11 @@ abstract class System_Mapper {
 	 * @param $id int
 	 */
 	protected abstract function doDelete($id);
+	
+	public function save(Model $model) {
+		$this->doSave($model);
+	}
+	
+	protected abstract function doSave(Model $model);
 }
 ?>
