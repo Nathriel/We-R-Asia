@@ -74,7 +74,9 @@ class Project_Mapper extends System_Mapper {
 			$project->getStatusId(),
 		), $args);
 		$query->execute($args);
-		$project->setId($this->db->lastInsertId());
+		if (!$project->getId()) {
+			$project->setId($this->db->lastInsertId());
+		}
 	}
 }
 
