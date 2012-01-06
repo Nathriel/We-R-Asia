@@ -56,22 +56,23 @@ class Project_Mapper extends System_Mapper {
 		$args = array();
 		if ($project->getId()) {
 			$args[] = $project->getId();
-			$query = $this->db->prepareCached('updateUser',
+			$query = $this->db->prepareCached('updateProject',
 				'UPDATE project
 				SET id=?,name=?,finished=?,status_id=?
 				WHERE id=?');
 		} else {
-			$query = $this->db->prepareCached('insertUser',
+			$query = $this->db->prepareCached('insertProject',
 				'INSERT INTO project
 				SET id=?,name=?,finished=?,status_id=?');
 		}
 		$args = array_merge(array(
 			$project->getId(),
 			$project->getName(),
-			$project->getfinished(),
-			$project->getstatusId(),
+			$project->getFinished(),
+			$project->getStatusId(),
 		), $args);
 		$query->execute($args);
+		$project->setId($this->db->lastInsertId());
 	}
 }
 
