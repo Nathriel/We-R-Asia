@@ -42,6 +42,10 @@ class Translation_Mapper extends System_Mapper {
 	protected function doDelete($id) {
 		return null;
 	}
+	
+	protected function doSave(System_Model $model) {
+		return null;
+	}
 }
 
 class Translation_Model extends System_Model {

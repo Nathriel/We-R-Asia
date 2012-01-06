@@ -34,6 +34,10 @@ class Language_Mapper extends System_Mapper {
 	protected function doDelete($id) {
 		return null;
 	}
+	
+	protected function doSave(System_Model $model) {
+		return null;
+	}
 }
 
 class Language_Model extends System_Model {
