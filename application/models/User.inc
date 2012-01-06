@@ -71,7 +71,7 @@ class User_Mapper extends System_Mapper {
 		}
 	}
 	
-	protected function doSave(Model $user) {
+	protected function doSave(System_Model $user) {
 		$args = array();
 		if ($user->getId()) {
 			$args[] = $user->getId();

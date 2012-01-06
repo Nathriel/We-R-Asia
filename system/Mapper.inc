@@ -55,6 +55,6 @@ abstract class System_Mapper {
 		$this->doSave($model);
 	}
 	
-	protected abstract function doSave(Model $model);
+	protected abstract function doSave(System_Model $model);
 }
 ?>
