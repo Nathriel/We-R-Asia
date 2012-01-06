@@ -53,6 +53,7 @@ class Projects extends System_Controller {
 			$CurrentProject = array(
 				'id' => $project->getId(),
 				'name' => $project->getName(),
+				'code' => $project->getCode(),
 			);
 			
 			echo $this->t()->render('project.html', array(

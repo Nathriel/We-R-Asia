@@ -6,7 +6,7 @@ class Project_Mapper extends System_Mapper {
 	
 	protected function doFind($id) {
 		$query = $this->db->prepareCached('findProject',
-				'SELECT id,name,finished,status_id
+				'SELECT id,name,code,finished,status_id
 				FROM project
 				WHERE id = ?');
 		$query->execute(array($id));
@@ -18,6 +18,7 @@ class Project_Mapper extends System_Mapper {
 		$project
 			->setId($row['id'])
 			->setName($row['name'])
+			->setCode($row['code'])
 			->setFinished($row['finished'])
 			->setStatusId($row['status_id']);
 		return $project;
@@ -58,16 +59,17 @@ class Project_Mapper extends System_Mapper {
 			$args[] = $project->getId();
 			$query = $this->db->prepareCached('updateProject',
 				'UPDATE project
-				SET id=?,name=?,finished=?,status_id=?
+				SET id=?,name=?,code=?,finished=?,status_id=?
 				WHERE id=?');
 		} else {
 			$query = $this->db->prepareCached('insertProject',
 				'INSERT INTO project
-				SET id=?,name=?,finished=?,status_id=?');
+				SET id=?,name=?,code=?,finished=?,status_id=?');
 		}
 		$args = array_merge(array(
 			$project->getId(),
 			$project->getName(),
+			$project->getCode(),
 			$project->getFinished(),
 			$project->getStatusId(),
 		), $args);
@@ -79,6 +81,7 @@ class Project_Mapper extends System_Mapper {
 class Project_Model extends System_Model {
 	private $id;
 	private $name;
+	private $projectCode;
 	private $finished;
 	private $statusId;
 	private $status;
@@ -98,6 +101,15 @@ class Project_Model extends System_Model {
 	
 	public function setName($name) {
 		$this->name = $name;
+		return $this;
+	}
+	
+	public function getCode() {
+		return $this->Code;
+	}
+	
+	public function setCode($Code) {
+		$this->Code = $Code;
 		return $this;
 	}
 	
