@@ -51,7 +51,7 @@ abstract class System_Mapper {
 	 */
 	protected abstract function doDelete($id);
 	
-	public function save(Model $model) {
+	public function save(System_Model $model) {
 		$this->doSave($model);
 	}
 	
