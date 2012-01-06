@@ -1,4 +1,5 @@
 $(function() {
+	var $dialogBox = $('#dialog_box');
 	
 	/* menu */
 	$('#menu, #drop_menu').hover(function() {
@@ -10,31 +11,31 @@ $(function() {
 	/* dialog_box */
 	
 	function showDialog(text, type) {
-		$('#dialog_box').prepend('<p>' + text + '</p>');
+		$dialogBox.empty();
+		$dialogBox.prepend('<p>' + text + '</p>');
 		$('#dialog_bg').show();
-		if(type == 'ok') {
-			$('#dialog_box').append('<a id="dialog_ok">OK</a><a id="dialog_cancel">Cancel</a>');
-		} else {
-			$('#dialog_box').append('<a id="dialog_cancel">Cancel</a>');
-		}
-		$('#dialog_box').show();
-		
-		$('#dialog_box #dialog_ok').click(function() {
-			/* ok button process */
-			return false;
-		});
-		
-		$('#dialog_box #dialog_cancel').click(function() {
-			$('#dialog_box').hide();
+		var $cancelButton = $('<a id="dialog_cancel">Cancel</a>');
+		$cancelButton.click(function(e) {
+			e.preventDefault();
 			$('#dialog_bg').hide();
-			$('#dialog_box').empty();
-			return false;
+			$dialogBox.hide();
 		});
+		if(type == 'ok') {
+			var $okButton = $('<a>OK</a>');
+			$okButton.click(function() {
+				/* ok button process */
+				return false;
+			});
+			$dialogBox.append($okButton).append($cancelButton);
+		} else {
+			$dialogBox.append($cancelButton);
+		}
+		$dialogBox.show();
 	}
 	
-	$('.option_delete').click(function(){
+	$('.option_delete').click(function(e) {
+		e.preventDefault();
 		showDialog('Are you sure you want to delete this?', 'ok');
-		return false;
 	});
 	
 	/* login */
