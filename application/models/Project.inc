@@ -37,25 +37,20 @@ class Project_Mapper extends System_Mapper {
 		return $result;
 	}
 	
-	public function findAll() {
-		$query = $this->db->prepareCached('findAllProjects',
-						'SELECT id
-						FROM projects');
-		$query->execute(array());
-		$result = array();
-		while ($row = $query->fetch(PDO::FETCH_ASSOC)) {
-			$result[] = $this->find($row['id']);
+	public function findAll($finished = 0) {
+		if ($finished === null) {
+			$query = $this->db->prepareCached('findAllProjects',
+				'SELECT id
+				FROM projects');
+			$query->execute(array());
+		} else {
+			$query = $this->db->prepareCached('findAllProjectsByFinished',
+				'SELECT id
+				FROM projects
+				WHERE finished=?');
+			$query->execute(array($finished));
 		}
-		return $result;
-	}
-	
-	public function findArchived() {
-		$query = $this->db->prepareCached('findArchivedProjects',
-			'SELECT id
-			FROM projects
-			WHERE finished = 0'
-		);
-		$query->execute(array());
+		
 		$result = array();
 		while ($row = $query->fetch(PDO::FETCH_ASSOC)) {
 			$result[] = $this->find($row['id']);
