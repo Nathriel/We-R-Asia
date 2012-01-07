@@ -123,13 +123,33 @@ class Projects extends System_Controller {
 		}
 	}
 	
-	public function product() {
-		echo $this->t()->render('product.html', array(
-			'pageTitle' => 'We R Asia | Product',
-		));
+	public function product($id = false) {
+		if($id)
+		{
+			$product = $this->mapper('product')->find($id);
+			$curProduct = array(
+				'id' => $product->getId(),
+				'name' => $product->getName(),
+			);
+			
+			$project = $this->mapper('project')->find($product->getProjectId());
+			$curProject = array(
+				'id' => $project->getId(),
+				'name' => $project->getName(),
+				'code' => $project->getCode(),
+			);
+			
+			echo $this->t()->render('product.html', array(
+				'pageTitle' => 'We R Asia | Product',
+				'product' => $curProduct,
+				'project' => $curProject,
+			));
+		} else {
+			//leeg
+		}
 	}
 	
-	public function add_product() {
+	public function addProduct() {
 		echo $this->t()->render('add_product.html', array(
 			'pageTitle' => 'We R Asia | Add Product',
 		));
