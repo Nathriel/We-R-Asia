@@ -1,17 +1,16 @@
 {% include 'header.html' %}
 <div id="content">
 
-	<h1><a href="projects">Projects</a> > <a href="projects/project/1">Project_name</a> > Add Product</h1>
+	<h1><a href="projects">Projects</a> > <a href="projects/project/{{project.id}}">{{project.name}}</a> > Add Product</h1>
 	
 	<div id="profile_labels">
 		<label for="product">Product Name:</label>
 		<label for="done">Done?:</label>
 	</div>
 	
-	<form method="post" action="" id="AddProductForm">
+	<form method="post" action="{{ AddProductForm.action }}" id="AddProductForm">
 		<div id="profile_input">
-			<input type="text" name="product" id="product" value="" />
-			<input type="checkbox" name="done" id="done" value="" />
+			<input type="text" name="name" id="name" value="" />
 		</div>
 		
 		<div class="clear"></div>

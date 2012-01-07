@@ -115,7 +115,6 @@ class Projects extends System_Controller {
 			} else {
 				$project->setFinished(0);
 			}
-			$project->setStatusId(1);
 			$project->save();
 			header('location: ../../');
 		} else {
@@ -149,16 +148,78 @@ class Projects extends System_Controller {
 		}
 	}
 	
-	public function addProduct() {
-		echo $this->t()->render('add_product.html', array(
-			'pageTitle' => 'We R Asia | Add Product',
-		));
+	public function addProduct($id = false) {
+		if($id)
+		{
+			$project = $this->mapper('project')->find($id);
+			$curProject = array(
+				'id' => $project->getId(),
+				'name' => $project->getName(),
+			);
+			echo $this->t()->render('add_product.html', array(
+				'pageTitle' => 'We R Asia | Add Product',
+				'project' => $curProject,
+				'AddProductForm' => array(
+					'action' => './projects/addProductProcess/' . $id,
+				),
+			));
+		} else {
+			//leeg
+		};
+	}
+	public function addProductProcess($id = false) {
+		if($id)
+		{
+			$productMapper = $this->mapper('product');
+			$product = new Product_Model($productMapper);
+			$product->setName($_POST['name']);
+			$product->setProjectId($id);
+			$product->setStatusId(1);
+			$product->save();
+			header('location: ../../');
+		} else {
+			//leeg
+		};
 	}
 	
-	public function editProduct() {
-		echo $this->t()->render('edit_product.html', array(
-			'pageTitle' => 'We R Asia | Edit Product',
-		));
+	public function editProduct($id = false) {
+		if($id)
+		{
+			$product = $this->mapper('product')->find($id);
+			$curProduct = array(
+				'id' => $product->getId(),
+				'name' => $product->getName(),
+			);
+			
+			$project = $this->mapper('project')->find($product->getId());
+			$curProject = array(
+				'id' => $project->getId(),
+				'name' => $project->getName(),
+			);
+			
+			echo $this->t()->render('edit_product.html', array(
+				'pageTitle' => 'We R Asia | Edit Product',
+				'product' => $curProduct,
+				'project' => $curProject,
+				'EditProductForm' => array(
+					'action' => './projects/editProductProcess/' . $product->getId(),
+				),
+			));
+		} else {
+			//leeg
+		};
+	}
+	public function editProductProcess($id = false) {
+		if($id)
+		{
+			$productMapper = $this->mapper('product');
+			$product = $productMapper->find($id);
+			$product->setName($_POST['name']);
+			$product->save();
+			header('location: ../');
+		} else {
+			//leeg
+		}
 	}
 	
 	public function archive() {
