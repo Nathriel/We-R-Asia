@@ -61,8 +61,8 @@ class Projects extends System_Controller {
 				'name' => $project->getName(),
 				'code' => $project->getCode(),
 			);
-			/*
-			$products = $this->mapper('product')->findAll();
+			
+			$products = $this->mapper('product')->findByProject($project);
 			
 			$tplProducts = array();
 			foreach ($products as $product) {
@@ -71,12 +71,11 @@ class Projects extends System_Controller {
 					'name' => $product->getName(),
 				);
 			}
-			*/
 			
 			echo $this->t()->render('project.html', array(
 				'pageTitle' => 'We R Asia | Project',
 				'project' => $CurProject,
-				//'product' => $tplProducts,
+				'product' => $tplProducts,
 			));
 		} else {
 			//leeg
