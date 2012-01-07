@@ -24,13 +24,13 @@ class Product_Mapper extends System_Mapper {
 	
 	public function findByProject(Project_Model $project) {
 		$query = $this->db->prepareCached('findProductByProject',
-				'SELECT product_id
+				'SELECT id
 				FROM product
 				WHERE project_id = ?');
 		$query->execute(array($project->getId()));
 		$result = array();
 		while ($row = $query->fetch(PDO::FETCH_ASSOC)) {
-			$result[] = $this->find($row['product_id']);
+			$result[] = $this->find($row['id']);
 		}
 		return $result;
 	}
