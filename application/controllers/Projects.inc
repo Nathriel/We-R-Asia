@@ -25,14 +25,14 @@ class Projects extends System_Controller {
 			);
 		}
 		
-		echo $this->t()->render('projects.html', array(
+		echo $this->t()->render('project/projects.html', array(
 			'pageTitle' => 'We R Asia | Projects',
 			'projects' => $tplProjects,
 		));
 	}
 	
 	public function addProject() {
-		echo $this->t()->render('add_project.html', array(
+		echo $this->t()->render('project/add_project.html', array(
 			'pageTitle' => 'We R Asia | Add Project',
 			'AddProjectForm' => array(
 				'action' => './projects/addProjectProcess/',
@@ -47,7 +47,7 @@ class Projects extends System_Controller {
 		$project->setFinished(0);
 		$project->setStatusId(1);
 		$project->save();
-		header('location: ../../');
+		header('location: ' . $this->getUrlPrefix() . 'projects');
 	}
 	
 	public function project($id = false) {
@@ -69,7 +69,7 @@ class Projects extends System_Controller {
 				);
 			}
 			
-			echo $this->t()->render('project.html', array(
+			echo $this->t()->render('project/project.html', array(
 				'pageTitle' => 'We R Asia | Project',
 				'project' => $curProject,
 				'products' => $tplProducts,
@@ -92,7 +92,7 @@ class Projects extends System_Controller {
 				'done' => $project->getFinished(),
 			);
 			
-			echo $this->t()->render('edit_project.html', array(
+			echo $this->t()->render('project/edit_project.html', array(
 				'pageTitle' => 'We R Asia | Edit Project',
 				'project' => $curProject,
 				'EditProjectForm' => array(
@@ -116,7 +116,7 @@ class Projects extends System_Controller {
 				$project->setFinished(0);
 			}
 			$project->save();
-			header('location: ../../');
+			header('location: ' . $this->getUrlPrefix() . 'projects');
 		} else {
 			//leeg
 		}
@@ -138,7 +138,7 @@ class Projects extends System_Controller {
 				'code' => $project->getCode(),
 			);
 			
-			echo $this->t()->render('product.html', array(
+			echo $this->t()->render('project/product/product.html', array(
 				'pageTitle' => 'We R Asia | Product',
 				'product' => $curProduct,
 				'project' => $curProject,
@@ -156,7 +156,7 @@ class Projects extends System_Controller {
 				'id' => $project->getId(),
 				'name' => $project->getName(),
 			);
-			echo $this->t()->render('add_product.html', array(
+			echo $this->t()->render('project/product/add_product.html', array(
 				'pageTitle' => 'We R Asia | Add Product',
 				'project' => $curProject,
 				'AddProductForm' => array(
@@ -176,7 +176,7 @@ class Projects extends System_Controller {
 			$product->setProjectId($id);
 			$product->setStatusId(1);
 			$product->save();
-			header('location: ../../');
+			header('location: ' . $this->getUrlPrefix() . 'projects/project/1');
 		} else {
 			//leeg
 		};
@@ -197,7 +197,7 @@ class Projects extends System_Controller {
 				'name' => $project->getName(),
 			);
 			
-			echo $this->t()->render('edit_product.html', array(
+			echo $this->t()->render('project/product/edit_product.html', array(
 				'pageTitle' => 'We R Asia | Edit Product',
 				'product' => $curProduct,
 				'project' => $curProject,
@@ -216,20 +216,14 @@ class Projects extends System_Controller {
 			$product = $productMapper->find($id);
 			$product->setName($_POST['name']);
 			$product->save();
-			header('location: ../');
+			header('location: ' . $this->getUrlPrefix() . 'projects/project/1');
 		} else {
 			//leeg
 		}
 	}
 	
-	public function archive() {
-		echo $this->t()->render('archive.html', array(
-			'pageTitle' => 'We R Asia | Archive',
-		));
-	}
-	
 	public function upload() {
-		echo $this->t()->render('doc_upload.html', array(
+		echo $this->t()->render('project/doc_upload.html', array(
 			'pageTitle' => 'We R Asia | Upload Document',
 		));
 	}

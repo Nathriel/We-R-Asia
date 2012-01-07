@@ -1,0 +1,25 @@
+{% include 'header.html' %}
+<div id="content">
+
+	<h1>Archive</h1>
+	
+	<table id="table">
+		<thead>
+			<tr>
+				<th>Name</th>
+				<th>Status</th>
+		</thead>
+		<tbody>
+			{% for project in projects %}
+			<tr{% if loop.index is even %} class="evenrow"{% endif %}>
+				<td><a href="archive/project/{{project.id}}">{{project.name}}</a></td>
+				<td>{{project.status}}</td>
+			</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+	
+	<div class="clear"></div>
+	
+</div>
+{% include 'footer.html' %}

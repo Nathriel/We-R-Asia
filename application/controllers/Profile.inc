@@ -16,7 +16,7 @@ class Profile extends System_Controller {
 				'company' => $user->getCompany(),
 			);
 		}
-		echo $this->t()->render('profile.html', $args);
+		echo $this->t()->render('user/profile.html', $args);
 	}
 }
 ?>

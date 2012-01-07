@@ -153,9 +153,6 @@ h1 {
 }
 #table td:last-child {
 	width: 339px;
-	border-left: 1px solid #4d4738;
-	color: #4d4738;
-	font-size: 16px;	
 }
 #table a {
 	color: #332f25;
@@ -448,15 +445,12 @@ input, select {
 	font-weight: bold;
 }
 
-#to_invoices, #to_archive {
+#to_invoices {
 	font-size: 17px;
 	font-weight: bold;
 	color: #26241c;
 	float: right;
-	margin: -45px 2px 0 0;
-}
-#to_archive {
-	margin-top: -20px;
+	margin: -35px 2px 0 0;
 }
 
 #content .doc_options td:first-child {
