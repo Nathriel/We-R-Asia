@@ -27,15 +27,16 @@ class Project_Mapper extends System_Mapper {
 	public function findByUser(User_Model $user, $finished = 0) {
 		if ($finished === null) {
 			$query = $this->db->prepareCached('findProjectByUser',
-					'SELECT project_id
-					FROM user_has_project
-					WHERE user_id = ?');
+				'SELECT project_id
+				FROM user_has_project
+				WHERE user_id = ?');
 			$query->execute(array($user->getId()));
 		} else {
 			$query = $this->db->prepareCached('findProjectByUserAndFinished',
-								'SELECT project_id
-								FROM user_has_project
-								WHERE user_id = ? AND finished = ?');
+				'SELECT user_has_project.project_id
+				FROM user_has_project
+				INNER JOIN project ON project.id = user_has_project.project_id
+				WHERE user_has_project.user_id = ? AND project.finished = ?');
 			$query->execute(array($user->getId(), $finished));
 		}
 		$result = array();
