@@ -222,7 +222,19 @@ class Projects extends System_Controller {
 		}
 	}
 	
-	public function upload() {
+	public function invoice() {
+		echo $this->t()->render('project/invoices.html', array(
+			'pageTitle' => 'We R Asia | Invoices',
+		));
+	}
+	
+	public function uploadInvoice() {
+		echo $this->t()->render('project/invoice_upload.html', array(
+			'pageTitle' => 'We R Asia | Upload Invoice',
+		));
+	}
+	
+	public function uploadDocument() {
 		echo $this->t()->render('project/doc_upload.html', array(
 			'pageTitle' => 'We R Asia | Upload Document',
 		));

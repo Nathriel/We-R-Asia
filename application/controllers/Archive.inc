@@ -50,7 +50,7 @@ class Archive extends System_Controller {
 				);
 			}
 			
-			echo $this->t()->render('project.html', array(
+			echo $this->t()->render('archive/project.html', array(
 				'pageTitle' => 'We R Asia | Project',
 				'project' => $curProject,
 				'products' => $tplProducts,
@@ -77,7 +77,7 @@ class Archive extends System_Controller {
 				'code' => $project->getCode(),
 			);
 			
-			echo $this->t()->render('product.html', array(
+			echo $this->t()->render('archive/product/product.html', array(
 				'pageTitle' => 'We R Asia | Product',
 				'product' => $curProduct,
 				'project' => $curProject,
@@ -87,9 +87,9 @@ class Archive extends System_Controller {
 		}
 	}
 	
-	public function upload() {
-		echo $this->t()->render('doc_upload.html', array(
-			'pageTitle' => 'We R Asia | Upload Document',
+	public function invoice() {
+		echo $this->t()->render('archive/invoices.html', array(
+			'pageTitle' => 'We R Asia | Invoices',
 		));
 	}
 }

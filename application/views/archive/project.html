@@ -1,0 +1,49 @@
+{% include 'header.html' %}
+<div id="content">
+
+	<h1><a href="archive">Archive</a> > {{ project.name }}</h1>
+	<p id="project_number">{{ project.code }}</p>
+	
+	<p id="project_status">Status: In development</p>
+	
+	<a id="to_invoices" href="archive/invoice/{{ project.id }}">To invoices ></a>
+	
+	{% if productsCount > 0 %}
+	<table id="table">
+		<thead>
+			<tr>
+				<th>Name</th>
+				<th>Status</th>
+		</thead>
+		<tbody>
+			{% for product in products %}
+			<tr{% if loop.index is even %} class="evenrow"{% endif %}>
+				<td><a href="archive/product/{{ product.id }}">{{ product.name }}</a></td>
+				<td></td>
+			</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+	{% else %}
+	<h2>No products</h2>
+	{% endif %}
+	
+	<br />
+	<h2>Documents</h2>
+	
+	<table id="table">
+		<thead>
+			<tr>
+				<th>Name</th>
+				<th>Date</th>
+		</thead>
+		<tbody>
+			<tr>
+				<td>print_logo_tshirt.pdf</td>
+				<td class="date">8-12-2011</td>
+			</tr>
+		</tbody>
+	</table>
+	
+</div>
+{% include 'footer.html' %}
