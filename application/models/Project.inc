@@ -95,6 +95,19 @@ class Project_Mapper extends System_Mapper {
 		if (!$project->getId()) {
 			$project->setId($this->db->lastInsertId());
 		}
+		
+		$deleteQuery = $this->db->prepareCached('deleteAllLogitemRelationsByProject', 'DELETE FROM project_has_logitem WHERE project_id = ?');
+		$deleteQuery->execute(array($project->getId()));
+		foreach ($project->getLogItems() as $logItem) {
+			$logItem->save();
+			$insertQuery = $this->db->prepareCached('insertLogitemRelationByProject', 'INSERT INTO project_has_logitem SET project_id = ?, logitem_id = ?');
+			$insertQuery->execute(array($project->getId(), $logItem->getId()));
+		}
+		
+		foreach ($project->getProducts() as $product) {
+			$product->setProjectId($project->getId());
+			$product->save();
+		}
 	}
 }
 
@@ -105,6 +118,7 @@ class Project_Model extends System_Model {
 	private $finished;
 	private $statusId;
 	private $status;
+	private $logItems;
 	
 	public function getId() {
 		return $this->id;
@@ -162,6 +176,34 @@ class Project_Model extends System_Model {
 	public function setStatus($status) {
 		$this->status = $status;
 		$this->statusId = $status->getId();
+		return $this;
+	}
+	
+	public function getLogItems() {
+		if ($this->logItems == null) {
+			$this->logItems = $this->mapper->mapper('logItem')->findByProject($this);
+		}
+		return $this->logItems;
+	}
+	
+	public function addLogItem(LogItem_Model $logItem) {
+		$logItems = $this->getLogItems();
+		$logItems[] = $logItem;
+		$this->logItems = $logItems;
+		return $this;
+	}
+	
+	public function getProducts() {
+		if ($this->products == null) {
+			$this->products = $this->mapper->mapper('product')->findByProject($this);
+		}
+		return $this->products;
+	}
+	
+	public function addProduct(Product_Model $product) {
+		$products = $this->getProducts();
+		$products[] = $product;
+		$this->products = $products;
 		return $this;
 	}
 }
