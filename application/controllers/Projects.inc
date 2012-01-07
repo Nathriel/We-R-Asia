@@ -74,7 +74,7 @@ class Projects extends System_Controller {
 			echo $this->t()->render('project.html', array(
 				'pageTitle' => 'We R Asia | Project',
 				'project' => $curProject,
-				'product' => $tplProducts,
+				'products' => $tplProducts,
 			));
 		} else {
 			//leeg
