@@ -31,15 +31,15 @@ class Projects extends System_Controller {
 		));
 	}
 	
-	public function add_project() {
+	public function addProject() {
 		echo $this->t()->render('add_project.html', array(
 			'pageTitle' => 'We R Asia | Add Project',
 			'AddProjectForm' => array(
-    				'action' => './projects/processAddProject/',
-    			),
+				'action' => './projects/addProjectProcess/',
+			),
 		));
 	}
-	public function processAddProject() {
+	public function addProjectProcess() {
 		$projectMapper = $this->mapper('project');
 		$project = new Project_Model($projectMapper);
 		$project->setName($_POST['name']);
@@ -81,7 +81,7 @@ class Projects extends System_Controller {
 		}
 	}
 	
-	public function edit_project($id = false) {
+	public function editProject($id = false) {
 		if($id)
 		{
 			$project = $this->mapper('project')->find($id);
@@ -89,12 +89,37 @@ class Projects extends System_Controller {
 			$curProject = array(
 				'id' => $project->getId(),
 				'name' => $project->getName(),
+				'code' => $project->getCode(),
+				'done' => $project->getFinished(),
 			);
 			
 			echo $this->t()->render('edit_project.html', array(
 				'pageTitle' => 'We R Asia | Edit Project',
 				'project' => $curProject,
+				'EditProjectForm' => array(
+					'action' => './projects/editProjectProcess/' . $project->getId(),
+				),
 			));
+		} else {
+			//leeg
+		}
+	}
+	public function editProjectProcess($id = false) {
+		if($id)
+		{
+			$projectMapper = $this->mapper('project');
+			$project = new Project_Model($projectMapper);
+			$project->setName($id);
+			$project->setName($_POST['name']);
+			$project->setCode($_POST['code']);
+			if(isset($_POST['done'])) {
+				$project->setFinished(1);
+			} else {
+				$project->setFinished(0);
+			}
+			$project->setStatusId(1);
+			$project->save();
+			header('location: ../../');
 		} else {
 			//leeg
 		}
@@ -112,7 +137,7 @@ class Projects extends System_Controller {
 		));
 	}
 	
-	public function edit_product() {
+	public function editProduct() {
 		echo $this->t()->render('edit_product.html', array(
 			'pageTitle' => 'We R Asia | Edit Product',
 		));

@@ -1,7 +1,7 @@
 {% include 'header.html' %}
 <div id="content">
 
-	<h1><a href="projects">Projects</a> > <a href="projects/project/1">{% project.name %}</a> > Edit Project</h1>
+	<h1><a href="projects">Projects</a> > <a href="projects/project/{{ project.id }}">{{ project.name }}</a> > Edit Project</h1>
 	
 	<div id="profile_labels">
 		<label for="name">Project Name:</label>
@@ -10,11 +10,11 @@
 		<label for="permissions">Permissions:</label>
 	</div>
 	
-	<form method="post" action="" id="EditProjectForm">
+	<form method="post" action="{{ EditProjectForm.action }}" id="EditProjectForm">
 		<div id="profile_input">
-			<input type="text" name="name" id="name" value="" />
-			<input type="text" name="code" id="code" value="" />
-			<input type="checkbox" name="done" id="done" value="" /><br />
+			<input type="text" name="name" id="name" value="{{ project.name }}" />
+			<input type="text" name="code" id="code" value="{{ project.code }}" />
+			<input type="checkbox" name="done" id="done" {% if project.done == 1 %} checked="true" {% endif %} /><br />
 			<div id="permissions_bg">
 				<input type="checkbox" name="permissions" value="user_1" /><label>User 1</label><br />
 				<input type="checkbox" name="permissions" value="user_2" /><label>User 2</label><br />
