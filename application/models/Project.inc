@@ -24,12 +24,21 @@ class Project_Mapper extends System_Mapper {
 		return $project;
 	}
 	
-	public function findByUser(User_Model $user) {
-		$query = $this->db->prepareCached('findProjectByUser',
+	public function findByUser(User_Model $user, $finished = 0) {
+		if ($finished === null) {
+			$query = $this->db->prepareCached('findProjectByUser',
 				'SELECT project_id
 				FROM user_has_project
 				WHERE user_id = ?');
-		$query->execute(array($user->getId()));
+			$query->execute(array($user->getId()));
+		} else {
+			$query = $this->db->prepareCached('findProjectByUserAndFinished',
+				'SELECT user_has_project.project_id
+				FROM user_has_project
+				INNER JOIN project ON project.id = user_has_project.project_id
+				WHERE user_has_project.user_id = ? AND project.finished = ?');
+			$query->execute(array($user->getId(), $finished));
+		}
 		$result = array();
 		while ($row = $query->fetch(PDO::FETCH_ASSOC)) {
 			$result[] = $this->find($row['project_id']);
@@ -37,11 +46,20 @@ class Project_Mapper extends System_Mapper {
 		return $result;
 	}
 	
-	public function findAll() {
-		$query = $this->db->prepareCached('findAllProjects',
-						'SELECT id
-						FROM projects');
-		$query->execute(array());
+	public function findAll($finished = 0) {
+		if ($finished === null) {
+			$query = $this->db->prepareCached('findAllProjects',
+				'SELECT id
+				FROM projects');
+			$query->execute(array());
+		} else {
+			$query = $this->db->prepareCached('findAllProjectsByFinished',
+				'SELECT id
+				FROM projects
+				WHERE finished=?');
+			$query->execute(array($finished));
+		}
+		
 		$result = array();
 		while ($row = $query->fetch(PDO::FETCH_ASSOC)) {
 			$result[] = $this->find($row['id']);
@@ -77,6 +95,19 @@ class Project_Mapper extends System_Mapper {
 		if (!$project->getId()) {
 			$project->setId($this->db->lastInsertId());
 		}
+		
+		$deleteQuery = $this->db->prepareCached('deleteAllLogitemRelationsByProject', 'DELETE FROM project_has_logitem WHERE project_id = ?');
+		$deleteQuery->execute(array($project->getId()));
+		foreach ($project->getLogItems() as $logItem) {
+			$logItem->save();
+			$insertQuery = $this->db->prepareCached('insertLogitemRelationByProject', 'INSERT INTO project_has_logitem SET project_id = ?, logitem_id = ?');
+			$insertQuery->execute(array($project->getId(), $logItem->getId()));
+		}
+		
+		foreach ($project->getProducts() as $product) {
+			$product->setProjectId($project->getId());
+			$product->save();
+		}
 	}
 }
 
@@ -87,6 +118,7 @@ class Project_Model extends System_Model {
 	private $finished;
 	private $statusId;
 	private $status;
+	private $logItems;
 	
 	public function getId() {
 		return $this->id;
@@ -144,6 +176,34 @@ class Project_Model extends System_Model {
 	public function setStatus($status) {
 		$this->status = $status;
 		$this->statusId = $status->getId();
+		return $this;
+	}
+	
+	public function getLogItems() {
+		if ($this->logItems == null) {
+			$this->logItems = $this->mapper->mapper('logItem')->findByProject($this);
+		}
+		return $this->logItems;
+	}
+	
+	public function addLogItem(LogItem_Model $logItem) {
+		$logItems = $this->getLogItems();
+		$logItems[] = $logItem;
+		$this->logItems = $logItems;
+		return $this;
+	}
+	
+	public function getProducts() {
+		if ($this->products == null) {
+			$this->products = $this->mapper->mapper('product')->findByProject($this);
+		}
+		return $this->products;
+	}
+	
+	public function addProduct(Product_Model $product) {
+		$products = $this->getProducts();
+		$products[] = $product;
+		$this->products = $products;
 		return $this;
 	}
 }

@@ -4,7 +4,7 @@ class Projects extends System_Controller {
     public function init(){
         $user = $this->mapper('user')->getLoggedinUser();
         if(!$user){
-            header("Location: ./");
+            header('Location: ./');
         }
     }
     
