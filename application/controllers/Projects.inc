@@ -61,7 +61,6 @@ class Projects extends System_Controller {
 			);
 			
 			$products = $this->mapper('product')->findByProject($project);
-			
 			$tplProducts = array();
 			foreach ($products as $product) {
 				$tplProducts[] = array(
@@ -74,6 +73,7 @@ class Projects extends System_Controller {
 				'pageTitle' => 'We R Asia | Project',
 				'project' => $curProject,
 				'products' => $tplProducts,
+				'productsCount' => count($tplProducts),
 			));
 		} else {
 			//leeg

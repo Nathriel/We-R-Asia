@@ -9,6 +9,7 @@
 	<a id="to_invoices" href="invoices/overview/{{ project.id }}">To invoices ></a>
 	<a id="to_archive" href="projects/archive/{{ project.id }}">To Archive ></a>
 	
+	{% if productsCount > 0 %}
 	<table id="table">
 		<thead>
 			<tr>
@@ -27,19 +28,11 @@
 				</td>
 			</tr>
 			{% endfor %}
-			
-			<!--temporary row until above bit works -->
-			<tr>
-				<td></td>
-				<td></td>
-				<td class="options_td">
-					<a class="option_edit" href="projects/editProduct/1">edit</a>
-					<a class="option_delete" href="#">delete</a>
-				</td>
-			</tr>
-			
 		</tbody>
 	</table>
+	{% else %}
+	<h2>No products</h2>
+	{% endif %}
 	
 	<a class="regular_button" href="projects/addProduct">Add Product</a>
 	
