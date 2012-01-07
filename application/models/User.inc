@@ -227,8 +227,8 @@ class User_Model extends System_Model {
 		return $this;
 	}
 	
-	public function getProjects() {
-		return $this->mapper->mapper('project')->findByUser($this);
+	public function getProjects($finished = 0) {
+		return $this->mapper->mapper('project')->findByUser($this, $finished);
 	}
 }
 ?>
