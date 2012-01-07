@@ -49,6 +49,20 @@ class Project_Mapper extends System_Mapper {
 		return $result;
 	}
 	
+	public function findArchived() {
+		$query = $this->db->prepareCached('findArchivedProjects',
+			'SELECT id
+			FROM projects
+			WHERE finished = 0'
+		);
+		$query->execute(array());
+		$result = array();
+		while ($row = $query->fetch(PDO::FETCH_ASSOC)) {
+			$result[] = $this->find($row['id']);
+		}
+		return $result;
+	}
+	
 	protected function doDelete($id) {
 		return null;
 	}
