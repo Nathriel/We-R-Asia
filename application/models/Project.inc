@@ -24,12 +24,20 @@ class Project_Mapper extends System_Mapper {
 		return $project;
 	}
 	
-	public function findByUser(User_Model $user) {
-		$query = $this->db->prepareCached('findProjectByUser',
-				'SELECT project_id
-				FROM user_has_project
-				WHERE user_id = ?');
-		$query->execute(array($user->getId()));
+	public function findByUser(User_Model $user, $finished = 0) {
+		if ($finished === null) {
+			$query = $this->db->prepareCached('findProjectByUser',
+					'SELECT project_id
+					FROM user_has_project
+					WHERE user_id = ?');
+			$query->execute(array($user->getId()));
+		} else {
+			$query = $this->db->prepareCached('findProjectByUserAndFinished',
+								'SELECT project_id
+								FROM user_has_project
+								WHERE user_id = ? AND finished = ?');
+			$query->execute(array($user->getId(), $finished));
+		}
 		$result = array();
 		while ($row = $query->fetch(PDO::FETCH_ASSOC)) {
 			$result[] = $this->find($row['project_id']);
