@@ -54,7 +54,6 @@ class Projects extends System_Controller {
 		if($id)
 		{
 			$project = $this->mapper('project')->find($id);
-			
 			$curProject = array(
 				'id' => $project->getId(),
 				'name' => $project->getName(),
