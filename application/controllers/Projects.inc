@@ -108,8 +108,7 @@ class Projects extends System_Controller {
 		if($id)
 		{
 			$projectMapper = $this->mapper('project');
-			$project = new Project_Model($projectMapper);
-			$project->setName($id);
+			$project = $projectMapper->find($id);
 			$project->setName($_POST['name']);
 			$project->setCode($_POST['code']);
 			if(isset($_POST['done'])) {
