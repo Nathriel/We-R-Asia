@@ -6,7 +6,7 @@ class Product_Mapper extends System_Mapper {
 	
 	protected function doFind($id) {
 		$query = $this->db->prepareCached('findProduct',
-				'SELECT id,name,status_id
+				'SELECT id,name,project_id,status_id
 				FROM product
 				WHERE id = ?');
 		$query->execute(array($id));
@@ -18,6 +18,7 @@ class Product_Mapper extends System_Mapper {
 		$product
 			->setId($row['id'])
 			->setName($row['name'])
+			->setProjectId($row['project_id'])
 			->setStatusId($row['status_id']);
 		return $product;
 	}
@@ -57,16 +58,17 @@ class Product_Mapper extends System_Mapper {
 			$args[] = $product->getId();
 			$query = $this->db->prepareCached('updateProduct',
 				'UPDATE product
-				SET id=?,name=?,status_id=?
+				SET id=?,name=?,project_id=?,status_id=?
 				WHERE id=?');
 		} else {
 			$query = $this->db->prepareCached('insertProduct',
 				'INSERT INTO product
-				SET id=?,name=?,status_id=?');
+				SET id=?,name=?,project_id=?,status_id=?');
 		}
 		$args = array_merge(array(
 			$product->getId(),
 			$product->getName(),
+			$product->getProjectId(),
 			$product->getStatusId(),
 		), $args);
 		$query->execute($args);
@@ -79,6 +81,7 @@ class Product_Mapper extends System_Mapper {
 class Product_Model extends System_Model {
 	private $id;
 	private $name;
+	private $projectId;
 	private $statusId;
 	private $status;
 	
@@ -97,6 +100,15 @@ class Product_Model extends System_Model {
 	
 	public function setName($name) {
 		$this->name = $name;
+		return $this;
+	}
+	
+	public function getProjectId() {
+		return $this->projectId;
+	}
+	
+	public function setProjectId($projectId) {
+		$this->projectId = $projectId;
 		return $this;
 	}
 	

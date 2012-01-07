@@ -1,8 +1,8 @@
 {% include 'header.html' %}
 <div id="content">
 
-	<h1><a href="projects">Projects</a> > <a href="projects/project/1">Project_name</a> > Product_name</h1>
-	<p id="project_number">project_number</p>
+	<h1><a href="projects">Projects</a> > <a href="projects/project/{{project.id}}">{{project.name}}</a> > {{product.name}}</h1>
+	<p id="project_number">{{project.code}}</p>
 	
 	<p id="project_status">Project status: In development</p>
 	
