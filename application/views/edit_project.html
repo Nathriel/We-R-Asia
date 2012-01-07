@@ -1,11 +1,11 @@
 {% include 'header.html' %}
 <div id="content">
 
-	<h1><a href="projects">Projects</a> > <a href="projects/project/1">Project_name</a> > Edit Project</h1>
+	<h1><a href="projects">Projects</a> > <a href="projects/project/1">{% project.name %}</a> > Edit Project</h1>
 	
 	<div id="profile_labels">
 		<label for="name">Project Name:</label>
-		<label for="number">Projectnumber:</label>
+		<label for="code">Projectcode:</label>
 		<label for="done">Done?:</label>
 		<label for="permissions">Permissions:</label>
 	</div>
@@ -13,7 +13,7 @@
 	<form method="post" action="" id="EditProjectForm">
 		<div id="profile_input">
 			<input type="text" name="name" id="name" value="" />
-			<input type="text" name="number" id="number" value="" />
+			<input type="text" name="code" id="code" value="" />
 			<input type="checkbox" name="done" id="done" value="" /><br />
 			<div id="permissions_bg">
 				<input type="checkbox" name="permissions" value="user_1" /><label>User 1</label><br />

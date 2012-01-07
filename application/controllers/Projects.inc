@@ -53,10 +53,9 @@ class Projects extends System_Controller {
 	public function project($id = false) {
 		if($id)
 		{
-			
 			$project = $this->mapper('project')->find($id);
 			
-			$CurProject = array(
+			$curProject = array(
 				'id' => $project->getId(),
 				'name' => $project->getName(),
 				'code' => $project->getCode(),
@@ -74,7 +73,7 @@ class Projects extends System_Controller {
 			
 			echo $this->t()->render('project.html', array(
 				'pageTitle' => 'We R Asia | Project',
-				'project' => $CurProject,
+				'project' => $curProject,
 				'product' => $tplProducts,
 			));
 		} else {
@@ -82,10 +81,23 @@ class Projects extends System_Controller {
 		}
 	}
 	
-	public function edit_project() {
-		echo $this->t()->render('edit_project.html', array(
-			'pageTitle' => 'We R Asia | Edit Project',
-		));
+	public function edit_project($id = false) {
+		if($id)
+		{
+			$project = $this->mapper('project')->find($id);
+			
+			$curProject = array(
+				'id' => $project->getId(),
+				'name' => $project->getName(),
+			);
+			
+			echo $this->t()->render('edit_project.html', array(
+				'pageTitle' => 'We R Asia | Edit Project',
+				'project' => $curProject,
+			));
+		} else {
+			//leeg
+		}
 	}
 	
 	public function product() {
