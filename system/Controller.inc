@@ -47,5 +47,9 @@ abstract class System_Controller {
 	protected function m() {
 		return $this->multiLanguage();
 	}
+	
+	protected function getUrlPrefix() {
+		return str_replace('index.php','',$_SERVER['SCRIPT_NAME']);
+	}
 }
 ?>
