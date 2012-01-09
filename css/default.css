@@ -458,13 +458,10 @@ input:not([type="submit"]) .wrong {
 	color: #4b4b4b;
 	font-size: 70%;
 	text-shadow: none!important;
-}
-.forget:before {
-	display: block;
-	width: 10px;
-	height: 10px;
-	content: url('../content/images/key.png');
-	margin-right: 2px;
+	background-image: url('../content/images/key.png');
+	background-repeat: no-repeat;
+	background-position: left;
+	padding-left: 15px;
 }
 
 #language_select {
