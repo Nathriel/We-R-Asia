@@ -19,6 +19,7 @@
 		<br />
 		
 		<div id="loginbox">
+			<div id="login_messagebox">You appear to have entered an invalid username or password!</div>
 			<form method="post" action="{{ loginForm.action }}" id="loginForm">
 				<input type="text" name="username" placeholder="Username"/>
 				<input type="password" name="password" placeholder="{{ trans("password") }}" />

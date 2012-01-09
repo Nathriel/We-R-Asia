@@ -398,6 +398,12 @@ input, select {
 #loginbox input {
 	margin-bottom: 20px;
 }
+
+input:not([type="submit"]) .wrong {
+	border: 3px solid #aa0000;
+	
+}
+
 #loginbox input[type="submit"] {
 	background-color: #b2a481;
 	border: 1px solid #665f4a;
@@ -435,12 +441,19 @@ input, select {
 	);
 }
 
+#login_messagebox {
+	display: none;
+	clear: both;
+	text-align: center;
+	margin-bottom: 20px;
+	color: #662525;
+	font-size: 80%;
+}
+
 .forget {
 	color: #4b4b4b;
 	font-size: 70%;
 	text-shadow: none!important;
-	position: relative;
-	top: 20px;
 }
 .forget:before {
 	display: block;
