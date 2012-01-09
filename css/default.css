@@ -448,6 +448,7 @@ input:not([type="submit"]) .wrong {
 	margin-bottom: 20px;
 	color: #662525;
 	font-size: 80%;
+	font-weight: bold;
 }
 
 .forget {
