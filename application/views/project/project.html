@@ -9,7 +9,7 @@
 	<a id="to_invoices" href="projects/invoice/{{ project.id }}">To invoices ></a>
 	
 	{% if productsCount > 0 %}
-	<table id="table">
+	<table>
 		<thead>
 			<tr>
 				<th>Name</th>
@@ -18,7 +18,7 @@
 		</thead>
 		<tbody>
 			{% for product in products %}
-			<tr{% if loop.index is even %} class="evenrow"{% endif %}>
+			<tr>
 				<td><a href="projects/product/{{ product.id }}">{{ product.name }}</a></td>
 				<td></td>
 				<td class="options_td">
@@ -40,7 +40,7 @@
 	<br />
 	<h2>Documents</h2>
 	
-	<table id="table" class="four_col doc_options">
+	<table class="four_col doc_options">
 		<thead>
 			<tr>
 				<th>Name</th>

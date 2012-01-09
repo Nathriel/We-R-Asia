@@ -3,7 +3,7 @@
 
 	<h1>Projects</h1>
 	
-	<table id="table">
+	<table>
 		<thead>
 			<tr>
 				<th>Name</th>
@@ -12,7 +12,7 @@
 		</thead>
 		<tbody>
 			{% for project in projects %}
-			<tr{% if loop.index is even %} class="evenrow"{% endif %}>
+			<tr>
 				<td><a href="projects/project/{{project.id}}">{{project.name}}</a></td>
 				<td>{{project.status}}</td>
 				<td class="options_td">
