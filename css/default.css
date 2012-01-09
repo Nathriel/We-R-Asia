@@ -117,33 +117,35 @@ h1 {
 	font-weight: bold;
 }
 
-#table {
+table {
 	display: block;
 	width: 870px;
 	margin: 24px 0 0 0;
+	background-color: #FFF;
 	background-image: url('../content/images/lijst_bg.png');
 	background-repeat: no-repeat;
 	background-position: right top;
 	border-collapse: collapse;
 	border-spacing: 0;
 }
-#table thead {
+table thead {
 	background-color: #b7a985;
 }
-#table th {
+table th {
 	padding:  10px 20px;
 	border: 1px solid black;
 	text-align: left;
 	color: #4d4738;
 	font-size: 24px;
 }
-#table th:last-child {
+table th:last-child {
 	border-left: 1px solid #4d4738;
 }
-#table tr.evenrow {
-	background-image: url('../content/images/trans_bg.png');
+table tr:nth-child(even) {
+	background: rgba(150, 150, 150, 0.3);
 }
-#table td {
+
+table td {
 	padding: 20px;
 	width: 450px;
 	border: 1px solid #4d4738;
@@ -151,13 +153,13 @@ h1 {
 	color: #332f25;
 	font-weight: bold;
 }
-#table td:last-child {
+table td:last-child {
 	width: 339px;
 }
-#table a {
+table a {
 	color: #332f25;
 }
-#table td.options_td {
+table td.options_td {
 	width: 145px;
 }
 
