@@ -298,10 +298,18 @@ input, select {
 
 /* header */
 #header {
-	background-color: #b7a985;
+	background: #b7a985; /* Old browsers */
+	background: -moz-linear-gradient(top, #b7a985 0%, #a69979 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#b7a985), color-stop(100%,#a69979)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top, #b7a985 0%,#a69979 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top, #b7a985 0%,#a69979 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top, #b7a985 0%,#a69979 100%); /* IE10+ */
+	background: linear-gradient(top, #b7a985 0%,#a69979 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b7a985', endColorstr='#a69979',GradientType=0 ); /* IE6-9 */
 	width: 100%;
 	height: 55px;
 	border-bottom: 1px solid white;
+	box-shadow: 0px 5px 10px rgba(0,0,0,0.5);
 }
 
 #menu {
@@ -327,6 +335,7 @@ input, select {
 	margin: 0;
 	text-align: center;
 	display: none;
+	box-shadow: 5px 5px 10px rgba(0,0,0,0.5);
 }
 
 #drop_menu a {
