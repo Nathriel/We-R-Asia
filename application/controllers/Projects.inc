@@ -238,6 +238,7 @@ class Projects extends System_Controller {
 		echo $this->t()->render('project/doc_upload.html', array(
 			'pageTitle' => 'We R Asia | Upload Document',
 		));
+		echo("Hello World");
 	}
 }
 ?>
