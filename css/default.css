@@ -369,6 +369,20 @@ input, select {
 	border-radius: 7px;
 	border: 1px solid #FFF;
 	box-shadow: 0px 0px 10px #000;
+	
+	background-image: linear-gradient(bottom, rgb(211,211,211) 27%, rgb(175,175,175) 0%);
+	background-image: -o-linear-gradient(bottom, rgb(211,211,211) 27%, rgb(175,175,175) 0%);
+	background-image: -moz-linear-gradient(bottom, rgb(211,211,211) 27%, rgb(175,175,175) 0%);
+	background-image: -webkit-linear-gradient(bottom, rgb(211,211,211) 27%, rgb(175,175,175) 0%);
+	background-image: -ms-linear-gradient(bottom, rgb(211,211,211) 27%, rgb(175,175,175) 0%);
+
+	background-image: -webkit-gradient(
+		linear,
+		left bottom,
+		left top,
+		color-stop(0.27, rgb(211,211,211)),
+		color-stop(0, rgb(175,175,175))
+	);
 }
 
 #loginbox a {
@@ -390,9 +404,35 @@ input, select {
 	font-weight: bold;
 	color: #FFF;
 	cursor: pointer;
+	background-image: linear-gradient(bottom, rgb(150,139,110) 0%, rgb(183,169,133) 100%);
+	background-image: -o-linear-gradient(bottom, rgb(150,139,110) 0%, rgb(183,169,133) 100%);
+	background-image: -moz-linear-gradient(bottom, rgb(150,139,110) 0%, rgb(183,169,133) 100%);
+	background-image: -webkit-linear-gradient(bottom, rgb(150,139,110) 0%, rgb(183,169,133) 100%);
+	background-image: -ms-linear-gradient(bottom, rgb(150,139,110) 0%, rgb(183,169,133) 100%);
+
+	background-image: -webkit-gradient(
+		linear,
+		left bottom,
+		left top,
+		color-stop(0, rgb(150,139,110)),
+		color-stop(1, rgb(183,169,133))
+	);
 }
 #loginbox input[type="submit"]:hover {
 	background-color: #968b6e;
+	background-image: linear-gradient(bottom, rgb(150,139,110) 100%, rgb(183,169,133) 0%);
+	background-image: -o-linear-gradient(bottom, rgb(150,139,110) 100%, rgb(183,169,133) 0%);
+	background-image: -moz-linear-gradient(bottom, rgb(150,139,110) 100%, rgb(183,169,133) 0%);
+	background-image: -webkit-linear-gradient(bottom, rgb(150,139,110) 100%, rgb(183,169,133) 0%);
+	background-image: -ms-linear-gradient(bottom, rgb(150,139,110) 100%, rgb(183,169,133) 0%);
+
+	background-image: -webkit-gradient(
+		linear,
+		left bottom,
+		left top,
+		color-stop(1, rgb(150,139,110)),
+		color-stop(0, rgb(183,169,133))
+	);
 }
 
 .forget {
