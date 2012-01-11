@@ -77,15 +77,14 @@ class Project_Mapper extends System_Mapper {
 			$args[] = $project->getId();
 			$query = $this->db->prepareCached('updateProject',
 				'UPDATE project
-				SET id=?,name=?,code=?,finished=?,status_id=?
+				SET name=?,code=?,finished=?,status_id=?
 				WHERE id=?');
 		} else {
 			$query = $this->db->prepareCached('insertProject',
 				'INSERT INTO project
-				SET id=?,name=?,code=?,finished=?,status_id=?');
+				SET name=?,code=?,finished=?,status_id=?');
 		}
 		$args = array_merge(array(
-			$project->getId(),
 			$project->getName(),
 			$project->getCode(),
 			$project->getFinished(),

@@ -122,6 +122,7 @@ class User_Model extends System_Model {
 	private $company;
 	private $languageId;
 	private $language;
+	private $rights;
 	
 	public function getId() {
 		return $this->id;
@@ -229,6 +230,23 @@ class User_Model extends System_Model {
 	
 	public function getProjects($finished = 0) {
 		return $this->mapper->mapper('project')->findByUser($this, $finished);
+	}
+	
+	public function getRights() {
+		if ($this->rights == null && $this->getId()) {
+			$this->rights = $this->mapper->mapper('right')->findByUser($this);
+		}
+		return $this->rights;
+	}
+	
+	public function hasRight($name) {
+		$rights = $this->getRights();
+		foreach ($rights as $right) {
+			if ($right->getName() == $name) {
+				return true;
+			}
+		}
+		return false;
 	}
 }
 ?>

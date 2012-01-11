@@ -58,15 +58,14 @@ class Product_Mapper extends System_Mapper {
 			$args[] = $product->getId();
 			$query = $this->db->prepareCached('updateProduct',
 				'UPDATE product
-				SET id=?,name=?,project_id=?,status_id=?
+				SET name=?,project_id=?,status_id=?
 				WHERE id=?');
 		} else {
 			$query = $this->db->prepareCached('insertProduct',
 				'INSERT INTO product
-				SET id=?,name=?,project_id=?,status_id=?');
+				SET name=?,project_id=?,status_id=?');
 		}
 		$args = array_merge(array(
-			$product->getId(),
 			$product->getName(),
 			$product->getProjectId(),
 			$product->getStatusId(),
