@@ -3,6 +3,9 @@ class Profile extends System_Controller {
 	public function index() {
 		$args = array(
 			'pageTitle' => 'We R Asia | Profile',
+			'profileForm' => array(
+				'action' => './Profile/EditProcess',
+			),
 		);
 		if (isset($_SESSION['userId'])) {
 			/* @var $user User_Model */ // little trick for autocompletion
@@ -17,6 +20,10 @@ class Profile extends System_Controller {
 			);
 		}
 		echo $this->t()->render('user/profile.html', $args);
+	}
+	
+	public function editProcess() {
+		
 	}
 }
 ?>
