@@ -53,11 +53,13 @@ class Projects extends System_Controller {
 	public function project($id = false) {
 		if($id)
 		{
+			$languageModel = $this->mapper('language')->findBycode('en');
 			$project = $this->mapper('project')->find($id);
 			$curProject = array(
 				'id' => $project->getId(),
 				'name' => $project->getName(),
 				'code' => $project->getCode(),
+				'status' => $project->getStatus()->getTextForLanguage($languageModel),
 			);
 			
 			$products = $this->mapper('product')->findByProject($project);
@@ -66,6 +68,7 @@ class Projects extends System_Controller {
 				$tplProducts[] = array(
 					'id' => $product->getId(),
 					'name' => $product->getName(),
+					'status' => $product->getStatus()->getTextForLanguage($languageModel),
 				);
 			}
 			
@@ -125,11 +128,14 @@ class Projects extends System_Controller {
 	public function product($id = false) {
 		if($id)
 		{
+			$languageModel = $this->mapper('language')->findBycode('en');
 			$product = $this->mapper('product')->find($id);
 			$curProduct = array(
 				'id' => $product->getId(),
 				'name' => $product->getName(),
+				'status' => $product->getStatus()->getTextForLanguage($languageModel),
 			);
+			
 			
 			$project = $this->mapper('project')->find($product->getProjectId());
 			$curProject = array(

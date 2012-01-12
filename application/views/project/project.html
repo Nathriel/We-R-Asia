@@ -1,10 +1,10 @@
 {% include 'header.html' %}
 <div id="content">
 
-	<h1><a href="projects">Projects</a> > {{ project.name }}</h1>
-	<p id="project_number">{{ project.code }}</p>
+	<h1><a href="projects">Projects</a> > {{project.name}}</h1>
+	<p id="project_number">{{project.code}}</p>
 	
-	<p id="project_status">Status: In development</p>
+	<p id="project_status">Status: {{project.status}}</p>
 	
 	<a id="to_invoices" href="projects/invoice/{{ project.id }}">To invoices ></a>
 	
@@ -19,8 +19,8 @@
 		<tbody>
 			{% for product in products %}
 			<tr>
-				<td><a href="projects/product/{{ product.id }}">{{ product.name }}</a></td>
-				<td></td>
+				<td><a href="projects/product/{{ product.id }}">{{product.name}}</a></td>
+				<td>{{product.status}}</td>
 				<td class="options_td">
 					<a class="option_edit" href="projects/editProduct/{{product.id}}">edit</a>
 					<a class="option_delete" href="#">delete</a>
