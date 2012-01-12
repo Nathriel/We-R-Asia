@@ -24,6 +24,10 @@ class Status_Mapper extends System_Mapper {
 	protected function doDelete($id) {
 		return null;
 	}
+	
+	protected function doSave(System_Model $status) {
+		return null;
+	}
 }
 
 class Status_Model extends System_Model {
