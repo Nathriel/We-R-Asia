@@ -53,7 +53,7 @@ class Status_Model extends System_Model {
 	}
 	
 	public function getTranslationForLanguage($language) {
-		return $this->mapper->mapper('translatable')->find($translatableId)->getTranslationForLanguage($language);
+		return $this->mapper->mapper('translatable')->find($this->getTranslatableId())->getTranslationForLanguage($language);
 	}
 	
 	public function getTextForLanguage($language) {
