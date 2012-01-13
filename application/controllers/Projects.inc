@@ -53,7 +53,8 @@ class Projects extends System_Controller {
 	public function project($id = false) {
 		if($id)
 		{
-			$languageModel = $this->mapper('language')->findBycode('en');
+			$user = $this->mapper('user')->getLoggedinUser();
+			$languageModel = $user->getLanguage();
 			$project = $this->mapper('project')->find($id);
 			$curProject = array(
 				'id' => $project->getId(),
@@ -128,7 +129,8 @@ class Projects extends System_Controller {
 	public function product($id = false) {
 		if($id)
 		{
-			$languageModel = $this->mapper('language')->findBycode('en');
+			$user = $this->mapper('user')->getLoggedinUser();
+			$languageModel = $user->getLanguage();
 			$product = $this->mapper('product')->find($id);
 			$curProduct = array(
 				'id' => $product->getId(),

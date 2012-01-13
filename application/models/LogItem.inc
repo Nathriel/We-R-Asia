@@ -107,6 +107,20 @@ class LogItem_Model extends System_Model {
 	public function getTextForLanguage($language) {
 		$text = $this->getTranslationForLanguage($language)->getTranslation();
 		foreach ($this->data as $key => $val) {
+			if (is_array($val) && count($val) >= 4 && $val[0] == 'find') {
+				$valCount = count($val);
+				$mapper = $this->mapper->mapper($val[1]);
+				$object = $mapper->find($val[2]);
+				$args = array();
+				for ($i = 4; $i < $valCount; ++$i) {
+					if ($val[$i] == 'currentLanguage') {
+						$args[] = $this->mapper->mapper('user')->getLoggedInUser()->getLanguage();
+					} else {
+						$args[] = $val[$i];
+					}
+				}
+				$val = call_user_method_array('get'.ucfirst($val[3]), $object, $args);
+			}
 			$text = str_replace('{'.$key.'}', $val, $text);
 		}
 		return $text;
