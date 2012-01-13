@@ -3,33 +3,35 @@
 
 	<h1><a href="projects">Projects</a> > <a href="projects/project/{{project.id}}">{{project.name}}</a> > {{product.name}}</h1>
 	<p id="project_number">{{project.code}}</p>
-	
+
 	<p id="project_status">Product status: {{product.status}}</p>
-	
+
 	<h2>Status Log</h2>
-	
+
 	<table>
 		<thead>
 			<tr>
 				<th>Status</th>
 				<th>Date</th>
-				<th>Options</th>
+				<!-- <th>Options</th> -->
 		</thead>
 		<tbody>
+			{% for logItem in product.logItems %}
 			<tr>
-				<td>In afwachting blauwdruk</td>
-				<td>21-12-2011</td>
-				<td class="options_td">
+				<td>{{ logItem.text }}</td>
+				<td>{{ logItem.date }}</td>
+				<!-- <td class="options_td">
 					<input type="checkbox" class="option_visible" name="visible" value="yes" />
 					<a class="option_delete" href="#">delete</a>
-				</td>
+				</td> -->
 			</tr>
+			{% endfor %}
 		</tbody>
 	</table>
-	
+
 	<br />
 	<h2>Documents</h2>
-	
+
 	<table class="four_col doc_options">
 		<thead>
 			<tr>
@@ -47,10 +49,10 @@
 			</tr>
 		</tbody>
 	</table>
-	
+
 	<a href="status/add" class="regular_button">New Status</a>
-	
+
 	<div class="clear"></div>
-	
+
 </div>
 {% include 'footer.html' %}
