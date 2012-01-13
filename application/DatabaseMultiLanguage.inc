@@ -1,8 +1,11 @@
 <?php
 class DatabaseMultiLanguage extends System_MultiLanguage {
 	protected function getCurrentLanguage() {
-		if (isset($_SESSION['userId'])) {
-			return $this->mapper('user')->find($_SESSION['userId'])->getLanguage();
+		if (isset($_SESSION['languageId'])) {
+			return $this->mapper('language')->find($_SESSION['languageId']);
+		} elseif (isset($_SESSION['userId'])) {
+			$_SESSION['languageId'] = $this->mapper('user')->find($_SESSION['userId'])->getLanguageId();
+			return $this->getCurrentLanguage(); // sorry for the weird code oO
 		} else {
 			return $this->mapper('language')->findByCode('nl');
 		}
