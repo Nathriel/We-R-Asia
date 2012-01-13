@@ -77,12 +77,12 @@ class User_Mapper extends System_Mapper {
 			$args[] = $user->getId();
 			$query = $this->db->prepareCached('updateUser',
 				'UPDATE user
-				SET username=?,password=?,salt=?,name=?,address=?,residence=?,email=?,company=?,language_id=?
+				SET username=?,password=?,password_salt=?,name=?,address=?,residence=?,email=?,company=?,language_id=?
 				WHERE id=?');
 		} else {
 			$query = $this->db->prepareCached('insertUser',
 				'INSERT INTO user
-				SET username=?,password=?,salt=?,name=?,address=?,residence=?,email=?,company=?,language_id=?');
+				SET username=?,password=?,password_salt=?,name=?,address=?,residence=?,email=?,company=?,language_id=?');
 		}
 		$args = array_merge(array(
 			$user->getUsername(),
@@ -95,7 +95,6 @@ class User_Mapper extends System_Mapper {
 			$user->getCompany(),
 			$user->getLanguage()->getId()
 		), $args);
-		$query->execute($args);
 		if (!$user->getId()) {
 			$user->setId($this->db->lastInsertId());
 		}
@@ -222,7 +221,7 @@ class User_Model extends System_Model {
 		return $this->language;
 	}
 	
-	public function setLanguage($language) {
+	public function setLanguage(Language_Model $language) {
 		$this->language = $language;
 		$this->languageId = $this->language->getId();
 		return $this;

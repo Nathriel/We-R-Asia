@@ -48,14 +48,14 @@ class Home extends System_controller{
 	
 	public function language($languageCode, $returnUrl) {
 		$decodedReturnUrl = urldecode($returnUrl);
+		$language = $this->mapper('language')->findByCode($languageCode);
 		/* @var $user User_Model */
 		$user = $this->mapper('user')->getLoggedinUser();
 		if ($user) {
-			$user->setLanguage($this->mapper('language')->findByCode($languageCode));
+			$user->setLanguage($language);
 			$user->save();
-		} else {
-			$_SESSION['languageId'] = $this->mapper('language')->findByCode($languageCode)->getId();
 		}
+		$_SESSION['languageId'] = $language->getId();
 		header('Location: '.$this->getUrlPrefix().$decodedReturnUrl);
 	}
 }
