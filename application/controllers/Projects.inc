@@ -127,15 +127,30 @@ class Projects extends System_Controller {
 	}
 	
 	public function product($id = false) {
+		/*var_dump(serialize(array(
+			'fromStatus' => array('find', 'Status', 3, 'textForLanguage', 'currentLanguage'),
+			'toStatus' => array('find', 'Status', 4, 'textForLanguage', 'currentLanguage'),
+		)));*/
 		if($id)
 		{
 			$user = $this->mapper('user')->getLoggedinUser();
 			$languageModel = $user->getLanguage();
 			$product = $this->mapper('product')->find($id);
+			
+			$tplLogItems = array();
+			$logItems = $product->getLogItems();
+			foreach ($logItems as $logItem) {
+				$tplLogItems[] = array(
+					'date' => $logItem->getDate(),
+					'text' => $logItem->getTextForLanguage($languageModel),
+				);
+			}
+			
 			$curProduct = array(
 				'id' => $product->getId(),
 				'name' => $product->getName(),
 				'status' => $product->getStatus()->getTextForLanguage($languageModel),
+				'logItems' => $tplLogItems,
 			);
 			
 			

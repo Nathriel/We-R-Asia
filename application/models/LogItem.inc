@@ -101,7 +101,7 @@ class LogItem_Model extends System_Model {
 	}
 	
 	private function getTranslationForLanguage($language) {
-		return $this->mapper->mapper('translatable')->find($translatableId)->getTranslationForLanguage($language);
+		return $this->mapper->mapper('translatable')->find($this->getTranslatableId())->getTranslationForLanguage($language);
 	}
 	
 	public function getTextForLanguage($language) {
@@ -114,12 +114,12 @@ class LogItem_Model extends System_Model {
 				$args = array();
 				for ($i = 4; $i < $valCount; ++$i) {
 					if ($val[$i] == 'currentLanguage') {
-						$args[] = $this->mapper->mapper('user')->getLoggedInUser()->getLanguage();
+						$args[] = $language;
 					} else {
 						$args[] = $val[$i];
 					}
 				}
-				$val = call_user_method_array('get'.ucfirst($val[3]), $object, $args);
+				$val = call_user_func_array(array($object, 'get'.ucfirst($val[3])), $args);
 			}
 			$text = str_replace('{'.$key.'}', $val, $text);
 		}

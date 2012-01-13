@@ -13,17 +13,19 @@
 			<tr>
 				<th>Status</th>
 				<th>Date</th>
-				<th>Options</th>
+				<!-- <th>Options</th> -->
 		</thead>
 		<tbody>
+			{% for logItem in product.logItems %}
 			<tr>
-				<td>In afwachting blauwdruk</td>
-				<td>21-12-2011</td>
-				<td class="options_td">
+				<td>{{ logItem.text }}</td>
+				<td>{{ logItem.date }}</td>
+				<!-- <td class="options_td">
 					<input type="checkbox" class="option_visible" name="visible" value="yes" />
 					<a class="option_delete" href="#">delete</a>
-				</td>
+				</td> -->
 			</tr>
+			{% endfor %}
 		</tbody>
 	</table>
 	
