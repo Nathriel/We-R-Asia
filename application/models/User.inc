@@ -107,6 +107,18 @@ class User_Mapper extends System_Mapper {
 			return null;
 		}
 	}
+	
+	public function findAll() {
+		$query = $this->db->prepareCached('findAllUsers',
+				'SELECT id
+				FROM user');
+		$query->execute(array());
+		$result = array();
+		while ($row = $query->fetch(PDO::FETCH_ASSOC)) {
+			$result[] = $this->find($row['id']);
+		}
+		return $result;
+	}
 }
 
 class User_Model extends System_Model {
@@ -241,7 +253,7 @@ class User_Model extends System_Model {
 	public function hasRight($name) {
 		$rights = $this->getRights();
 		foreach ($rights as $right) {
-			if ($right->getName() == $name) {
+			if ($right && $right->getName() == $name) {
 				return true;
 			}
 		}
