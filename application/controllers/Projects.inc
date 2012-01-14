@@ -10,6 +10,7 @@ class Projects extends System_Controller {
     
 	public function index() {
 		$user = $this->mapper('user')->getLoggedinUser();
+		$languageModel = $user->getLanguage();
 		if ($user) {
 			$projects = $user->getProjects();
 		} else {
@@ -21,13 +22,14 @@ class Projects extends System_Controller {
 			$tplProjects[] = array(
 				'id' => $project->getId(),
 				'name' => $project->getName(),
-				'status' => 'moet nog',
+				'status' => $project->getStatus()->getTextForLanguage($languageModel),
 			);
 		}
 		
 		echo $this->t()->render('project/projects.html', array(
 			'pageTitle' => 'We R Asia | Projects',
 			'projects' => $tplProjects,
+			'productsCount' => count($tplProjects),
 		));
 	}
 	
@@ -165,6 +167,7 @@ class Projects extends System_Controller {
 				'pageTitle' => 'We R Asia | Product',
 				'product' => $curProduct,
 				'project' => $curProject,
+				'productsCount' => count($tplLogItems),
 			));
 		} else {
 			//leeg
@@ -214,7 +217,7 @@ class Projects extends System_Controller {
 				'name' => $product->getName(),
 			);
 			
-			$project = $this->mapper('project')->find($product->getId());
+			$project = $this->mapper('project')->find($product->getProjectId());
 			$curProject = array(
 				'id' => $project->getId(),
 				'name' => $project->getName(),
@@ -245,6 +248,49 @@ class Projects extends System_Controller {
 		}
 	}
 	
+	public function addStatusToProject($id = false) {
+		if($id)
+		{
+			$project = $this->mapper('project')->find($id);
+			$curProject = array(
+				'id' => $project->getId(),
+				'name' => $project->getName(),
+			);
+			
+			echo $this->t()->render('project/update_status.html', array(
+				'pageTitle' => 'We R Asia | Update Status',
+				'project' => $curProject,
+			));
+		} else {
+			//leeg
+		}
+	}
+	
+	public function addStatusToProduct($id = false) {
+		if($id)
+		{
+			$product = $this->mapper('product')->find($id);
+			$curProduct = array(
+				'id' => $product->getId(),
+				'name' => $product->getName(),
+			);
+			
+			$project = $this->mapper('project')->find($product->getProjectId());
+			$curProject = array(
+				'id' => $project->getId(),
+				'name' => $project->getName(),
+			);
+			
+			echo $this->t()->render('project/product/update_status.html', array(
+				'pageTitle' => 'We R Asia | Update Status',
+				'project' => $curProject,
+				'product' => $curProduct,
+			));
+		} else {
+			//leeg
+		}
+	}
+	
 	public function invoice() {
 		echo $this->t()->render('project/invoices.html', array(
 			'pageTitle' => 'We R Asia | Invoices',
@@ -261,7 +307,6 @@ class Projects extends System_Controller {
 		echo $this->t()->render('project/doc_upload.html', array(
 			'pageTitle' => 'We R Asia | Upload Document',
 		));
-		echo("Hello World");
 	}
 }
 ?>

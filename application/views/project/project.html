@@ -4,7 +4,9 @@
 	<h1><a href="projects">Projects</a> > {{project.name}}</h1>
 	<p id="project_number">{{project.code}}</p>
 	
-	<p id="project_status">Status: {{project.status}}</p>
+	<p id="project_status">Status: {{project.status}}<a href="projects/addStatusToProject/{{project.id}}" class="regular_button align_left">Update Status</a></p>
+	
+	<div class="clear"></div>
 	
 	<a id="to_invoices" href="projects/invoice/{{ project.id }}">To invoices ></a>
 	
@@ -30,7 +32,7 @@
 		</tbody>
 	</table>
 	{% else %}
-	<h2>No products</h2>
+	<h2>There are no products yet.</h2>
 	{% endif %}
 	
 	<a class="regular_button" href="projects/addProduct/{{project.id}}">Add Product</a>

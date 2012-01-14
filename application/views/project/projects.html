@@ -1,6 +1,7 @@
 {% include 'header.html' %}
 <div id="content">
 
+	{% if productsCount > 0 %}
 	<h1>Projects</h1>
 	
 	<table>
@@ -24,6 +25,9 @@
 			{% endfor %}
 		</tbody>
 	</table>
+	{% else %}
+	<h2>There are no projects yet.</h2>
+	{% endif %}
 	
 	<a href="projects/addProject" class="regular_button">Add Project</a>
 	

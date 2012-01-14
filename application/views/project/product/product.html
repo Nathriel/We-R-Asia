@@ -4,8 +4,14 @@
 	<h1><a href="projects">Projects</a> > <a href="projects/project/{{project.id}}">{{project.name}}</a> > {{product.name}}</h1>
 	<p id="project_number">{{project.code}}</p>
 
-	<p id="project_status">Product status: {{product.status}}</p>
+	<p id="project_status">Product status: {{product.status}} <a href="projects/addStatusToProduct/{{product.id}}" class="regular_button align_left">Update Status</a></p>
 
+
+	
+
+	<div class="clear"></div>
+	
+	{% if productsCount > 0 %}
 	<h2>Status Log</h2>
 
 	<table>
@@ -13,21 +19,19 @@
 			<tr>
 				<th>Status</th>
 				<th>Date</th>
-				<!-- <th>Options</th> -->
 		</thead>
 		<tbody>
 			{% for logItem in product.logItems %}
 			<tr>
 				<td>{{ logItem.text }}</td>
 				<td>{{ logItem.date }}</td>
-				<!-- <td class="options_td">
-					<input type="checkbox" class="option_visible" name="visible" value="yes" />
-					<a class="option_delete" href="#">delete</a>
-				</td> -->
 			</tr>
 			{% endfor %}
 		</tbody>
 	</table>
+	{% else %}
+	<h2>There is no status log yet.</h2>
+	{% endif %}
 
 	<br />
 	<h2>Documents</h2>
@@ -49,10 +53,6 @@
 			</tr>
 		</tbody>
 	</table>
-
-	<a href="status/add" class="regular_button">New Status</a>
-
-	<div class="clear"></div>
 
 </div>
 {% include 'footer.html' %}

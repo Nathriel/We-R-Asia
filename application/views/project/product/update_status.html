@@ -1,14 +1,14 @@
 {% include 'header.html' %}
 <div id="content">
 
-	<h1><a href="projects">Projects</a> > <a href="projects/project/1">Project_name</a> > <a href="projects/product/1">Product_name</a> > Edit Status</h1>
+	<h1><a href="projects">Projects</a> > <a href="projects/project/{{project.id}}">{{project.name}}</a> > <a href="projects/product/{{product.id}}">{{product.name}}</a> > New Status</h1>
 	
 	<div id="profile_labels">
 		<label for="status">Status:</label>
 		<label for="visible">Visible to clients?:</label>
 	</div>
 	
-	<form method="post" action="" id="EditStatusForm">
+	<form method="post" action="" id="AddStatusForm">
 		<div id="profile_input">
 			<input type="text" name="status" id="status" value="" />
 			<input type="checkbox" name="visible" id="visible" value="" />
