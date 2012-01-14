@@ -21,7 +21,7 @@ class Home extends System_controller{
     
     public function logout() {
     	unset($_SESSION['userId']);
-        header('Location: ./');
+        header('Location: ../');
     }
     
     /**

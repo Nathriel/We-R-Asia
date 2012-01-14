@@ -370,6 +370,12 @@ input, select {
 	background-color: #665f4a;
 }
 
+#header #language_select {
+	float: right;
+	width: auto;
+	margin: -39px 15px 0 0;
+}
+
 /* Login page */
 #logo {
 	margin:auto;
