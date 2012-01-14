@@ -12,42 +12,17 @@
 				<th>Options</th>
 		</thead>
 		<tbody>
+			{% for user in users %}
 			<tr>
-				<td>Henk de Vries</td>
-				<td>We R Asia</td>
-				<td>Admin</td>
+				<td>{{ user.name }}</td>
+				<td>{{ user.company }}</td>
+				<td>{{ user.type }}</td>
 				<td class="options_td">
-					<a class="option_edit" href="users/edit/1">edit</a>
+					<a class="option_edit" href="users/edit/{{ user.id }}">edit</a>
 					<a class="option_delete" href="#">delete</a>
 				</td>
 			</tr>
-			<tr>
-				<td>Willem Duys</td>
-				<td>We R Asia</td>
-				<td>Moderator</td>
-				<td class="options_td">
-					<a class="option_edit" href="users/edit/1">edit</a>
-					<a class="option_delete" href="#">delete</a>
-				</td>
-			</tr>
-			<tr>
-				<td>Gerard Joling</td>
-				<td>Bert's Betonmolen</td>
-				<td></td>
-				<td class="options_td">
-					<a class="option_edit" href="users/edit/1">edit</a>
-					<a class="option_delete" href="#">delete</a>
-				</td>
-			</tr>
-			<tr>
-				<td>Dovahkiin</td>
-				<td>We R Asia</td>
-				<td>Moderator</td>
-				<td class="options_td">
-					<a class="option_edit" href="users/edit/1">edit</a>
-					<a class="option_delete" href="#">delete</a>
-				</td>
-			</tr>
+			{% endfor %}
 		</tbody>
 	</table>
 	
