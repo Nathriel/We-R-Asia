@@ -232,5 +232,15 @@ class Project_Model extends System_Model {
 		}
 		return $this;
 	}
+	
+	public function hasUser(User_Model $user) {
+		$users = $this->getUsers();
+		foreach ($users as $u) {
+			if ($u->getId() == $user->getId()) {
+				return true;
+			}
+		}
+		return false;
+	}
 }
 ?>

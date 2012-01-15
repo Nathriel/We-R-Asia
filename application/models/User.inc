@@ -273,5 +273,9 @@ class User_Model extends System_Model {
 		}
 		return false;
 	}
+	
+	public function canViewProject(Project_Model $project) {
+		return ($project->hasUser($this) || $this->hasRight('europe'));
+	}
 }
 ?>
