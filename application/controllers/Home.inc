@@ -47,7 +47,7 @@ class Home extends System_controller{
 	}
 	
 	public function language($languageCode, $returnUrl) {
-		$decodedReturnUrl = urldecode($returnUrl);
+		$decodedReturnUrl = str_replace('|','/',$returnUrl);
 		$language = $this->mapper('language')->findByCode($languageCode);
 		/* @var $user User_Model */
 		$user = $this->mapper('user')->getLoggedinUser();
