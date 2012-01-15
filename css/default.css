@@ -578,7 +578,7 @@ input:not([type="submit"]) .wrong {
 }
 
 #profile_input select {
-	width: 692px;
+	width: 672px;
 	padding-right: 0px;
 }
 #profile_input input[type="checkbox"] {
