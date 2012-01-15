@@ -133,7 +133,7 @@ class Projects extends System_Controller {
 			} else {
 				$project->setFinished(0);
 			}
-			$project->setUsersAsIdArray(array($_POST['permissions']));
+			$project->setUsersAsIdArray($_POST['permissions']);
 			$project->save();
 			header('location: ' . $this->getUrlPrefix() . 'projects');
 		} else {
