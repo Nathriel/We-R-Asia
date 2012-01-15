@@ -16,9 +16,9 @@
 			<input type="text" name="code" id="code" value="{{ project.code }}" />
 			<input type="checkbox" name="done" id="done" {% if project.done == 1 %} checked="true" {% endif %} /><br />
 			<div id="permissions_bg">
-				<input type="checkbox" name="permissions" value="user_1" /><label>User 1</label><br />
-				<input type="checkbox" name="permissions" value="user_2" /><label>User 2</label><br />
-				<input type="checkbox" name="permissions" value="user_3" /><label>User 3</label><br />
+				{% for user in users %}
+				<input type="checkbox" name="permissions[]" value="{{user.id}}" {% if user.permission %} checked="true" {% endif %} /><label>{{user.name}}</label><br />
+				{% endfor %}
 			</div>
 		</div>
 		

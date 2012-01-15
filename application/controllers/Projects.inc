@@ -90,7 +90,6 @@ class Projects extends System_Controller {
 		if($id)
 		{
 			$project = $this->mapper('project')->find($id);
-			
 			$curProject = array(
 				'id' => $project->getId(),
 				'name' => $project->getName(),
@@ -98,9 +97,22 @@ class Projects extends System_Controller {
 				'done' => $project->getFinished(),
 			);
 			
+			$users = $this->mapper('user')->findAll();
+			$tplUsers = array();
+			foreach ($users as $user) {
+				if (!$user->hasRight('europe')) {
+					$tplUsers[] = array(
+						'id' => $user->getId(),
+						'name' => $user->getName(),
+						'permission' => $user->canViewProject($project),
+					);
+				}
+			}
+			
 			echo $this->t()->render('project/edit_project.html', array(
 				'pageTitle' => 'We R Asia | Edit Project',
 				'project' => $curProject,
+				'users' => $tplUsers,
 				'EditProjectForm' => array(
 					'action' => './projects/editProjectProcess/' . $project->getId(),
 				),
@@ -121,6 +133,7 @@ class Projects extends System_Controller {
 			} else {
 				$project->setFinished(0);
 			}
+			$project->setUsersAsIdArray(array($_POST['permissions']));
 			$project->save();
 			header('location: ' . $this->getUrlPrefix() . 'projects');
 		} else {
