@@ -95,6 +95,7 @@ class User_Mapper extends System_Mapper {
 			$user->getCompany(),
 			$user->getLanguage()->getId()
 		), $args);
+		$query->execute($args);
 		if (!$user->getId()) {
 			$user->setId($this->db->lastInsertId());
 		}

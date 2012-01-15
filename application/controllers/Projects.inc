@@ -129,10 +129,6 @@ class Projects extends System_Controller {
 	}
 	
 	public function product($id = false) {
-		/*var_dump(serialize(array(
-			'fromStatus' => array('find', 'Status', 3, 'textForLanguage', 'currentLanguage'),
-			'toStatus' => array('find', 'Status', 4, 'textForLanguage', 'currentLanguage'),
-		)));*/
 		if($id)
 		{
 			$user = $this->mapper('user')->getLoggedinUser();
