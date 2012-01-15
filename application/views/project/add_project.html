@@ -14,9 +14,9 @@
 			<input type="text" name="name" id="name" />
 			<input type="text" name="code" id="code" />
 			<div id="permissions_bg">
-				<input type="checkbox" name="permissions" value="user_1" /><label>User 1</label><br />
-				<input type="checkbox" name="permissions" value="user_2" /><label>User 2</label><br />
-				<input type="checkbox" name="permissions" value="user_3" /><label>User 3</label><br />
+				{% for user in users %}
+				<input type="checkbox" name="permissions[]" value="{{user.id}}" /><label>{{user.name}}</label><br />
+				{% endfor %}
 			</div>
 		</div>
 		

@@ -34,8 +34,20 @@ class Projects extends System_Controller {
 	}
 	
 	public function addProject() {
+		$users = $this->mapper('user')->findAll();
+		$tplUsers = array();
+		foreach ($users as $user) {
+			if (!$user->hasRight('europe')) {
+				$tplUsers[] = array(
+					'id' => $user->getId(),
+					'name' => $user->getName(),
+				);
+			}
+		}
+		
 		echo $this->t()->render('project/add_project.html', array(
 			'pageTitle' => 'We R Asia | Add Project',
+			'users' => $tplUsers,
 			'AddProjectForm' => array(
 				'action' => './projects/addProjectProcess/',
 			),
@@ -48,6 +60,7 @@ class Projects extends System_Controller {
 		$project->setCode($_POST['code']);
 		$project->setFinished(0);
 		$project->setStatusId(1);
+		$project->setUsersAsIdArray($_POST['permissions']);
 		$project->save();
 		header('location: ' . $this->getUrlPrefix() . 'projects');
 	}
