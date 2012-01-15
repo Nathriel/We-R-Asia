@@ -120,6 +120,19 @@ class User_Mapper extends System_Mapper {
 		}
 		return $result;
 	}
+	
+	public function findByProject(Project_Model $project) {
+		$query = $this->db->prepareCached('findUserByProject',
+				'SELECT user_id
+				FROM user_has_project
+				WHERE project_id = ?');
+		$query->execute(array($project->getId()));
+		$result = array();
+		while ($row = $query->fetch(PDO::FETCH_ASSOC)) {
+			$result[] = $this->find($row['user_id']);
+		}
+		return $result;
+	}
 }
 
 class User_Model extends System_Model {

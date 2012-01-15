@@ -68,7 +68,11 @@ class Project_Mapper extends System_Mapper {
 	}
 	
 	protected function doDelete($id) {
-		return null;
+		$query = $this->db->prepareCached('deleteProject',
+			'DELETE FROM projects WHERE id = ?'
+		);
+		$query->execute(array($id));
+		return true;
 	}
 	
 	protected function doSave(System_Model $project) {
@@ -107,6 +111,13 @@ class Project_Mapper extends System_Mapper {
 			$product->setProjectId($project->getId());
 			$product->save();
 		}
+		
+		$deleteQuery = $this->db->prepareCached('deleteAllUsersFromProject', 'DELETE FROM user_has_project WHERE project_id = ?');
+		$deleteQuery->execute(array($project->getId()));
+		foreach ($project->getUsers() as $user) {
+			$insertQuery = $this->db->prepareCached('insertUserByProject', 'INSERT INTO user_has_project SET project_id = ?, user_id = ?');
+			$insertQuery->execute(array($project->getId(), $user->getId()));
+		}
 	}
 }
 
@@ -118,6 +129,7 @@ class Project_Model extends System_Model {
 	private $statusId;
 	private $status;
 	private $logItems;
+	private $users;
 	
 	public function getId() {
 		return $this->id;
@@ -203,6 +215,21 @@ class Project_Model extends System_Model {
 		$products = $this->getProducts();
 		$products[] = $product;
 		$this->products = $products;
+		return $this;
+	}
+	
+	public function getUsers() {
+		if ($this->users == null && $this->getId()) {
+			$this->users = $this->mapper->mapper('user')->findByProject($this);
+		}
+		return $this->users;
+	}
+	
+	public function setUsersAsIdArray(array $userIds = array()) {
+		$this->users = array();
+		foreach ($userIds as $userId) {
+			$this->users[] = $this->mapper->mapper('user')->find($userId);
+		}
 		return $this;
 	}
 }
