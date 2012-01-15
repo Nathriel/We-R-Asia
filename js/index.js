@@ -10,7 +10,7 @@ $(function() {
 	
 	/* dialog_box */
 	
-	function showDialog(text, type) {
+	function showDialog(text, type, origin) {
 		$dialogBox.empty();
 		$dialogBox.prepend('<p>' + text + '</p>');
 		$('#dialog_bg').show();
@@ -23,7 +23,12 @@ $(function() {
 		if(type == 'ok') {
 			var $okButton = $('<a>OK</a>');
 			$okButton.click(function() {
-				/* ok button process */
+				var url = window.location;
+				var splitOrigin = $(origin).attr('href').split('/');
+				var identifier = splitOrigin[0];
+				if(identifier = 'project') {
+					window.location = url + '/deleteProjectProcess/' + splitOrigin[1];
+				}
 				return false;
 			});
 			$dialogBox.append($okButton).append($cancelButton);
@@ -35,7 +40,7 @@ $(function() {
 	
 	$('.option_delete').click(function(e) {
 		e.preventDefault();
-		showDialog('Are you sure you want to delete this?', 'ok');
+		showDialog('Are you sure you want to delete this?', 'ok', this);
 	});
 	
 	/* login */

@@ -33,38 +33,6 @@ class Projects extends System_Controller {
 		));
 	}
 	
-	public function addProject() {
-		$users = $this->mapper('user')->findAll();
-		$tplUsers = array();
-		foreach ($users as $user) {
-			if (!$user->hasRight('europe')) {
-				$tplUsers[] = array(
-					'id' => $user->getId(),
-					'name' => $user->getName(),
-				);
-			}
-		}
-		
-		echo $this->t()->render('project/add_project.html', array(
-			'pageTitle' => 'We R Asia | Add Project',
-			'users' => $tplUsers,
-			'AddProjectForm' => array(
-				'action' => './projects/addProjectProcess/',
-			),
-		));
-	}
-	public function addProjectProcess() {
-		$projectMapper = $this->mapper('project');
-		$project = new Project_Model($projectMapper);
-		$project->setName($_POST['name']);
-		$project->setCode($_POST['code']);
-		$project->setFinished(0);
-		$project->setStatusId(1);
-		$project->setUsersAsIdArray($_POST['permissions']);
-		$project->save();
-		header('location: ' . $this->getUrlPrefix() . 'projects');
-	}
-	
 	public function project($id = false) {
 		if($id)
 		{
@@ -97,6 +65,48 @@ class Projects extends System_Controller {
 		} else {
 			//leeg
 		}
+	}
+	
+	public function deleteProjectProcess($id = false) {
+		if($id)
+		{
+			$this->mapper('project')->delete($id);
+			header('location: ' . $this->getUrlPrefix() . 'projects');
+		} else {
+			//leeg
+		}
+	}
+	
+	public function addProject() {
+		$users = $this->mapper('user')->findAll();
+		$tplUsers = array();
+		foreach ($users as $user) {
+			if (!$user->hasRight('europe')) {
+				$tplUsers[] = array(
+					'id' => $user->getId(),
+					'name' => $user->getName(),
+				);
+			}
+		}
+		
+		echo $this->t()->render('project/add_project.html', array(
+			'pageTitle' => 'We R Asia | Add Project',
+			'users' => $tplUsers,
+			'AddProjectForm' => array(
+				'action' => './projects/addProjectProcess/',
+			),
+		));
+	}
+	public function addProjectProcess() {
+		$projectMapper = $this->mapper('project');
+		$project = new Project_Model($projectMapper);
+		$project->setName($_POST['name']);
+		$project->setCode($_POST['code']);
+		$project->setFinished(0);
+		$project->setStatusId(1);
+		$project->setUsersAsIdArray($_POST['permissions']);
+		$project->save();
+		header('location: ' . $this->getUrlPrefix() . 'projects');
 	}
 	
 	public function editProject($id = false) {
