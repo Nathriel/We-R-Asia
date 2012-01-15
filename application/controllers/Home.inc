@@ -57,6 +57,7 @@ class Home extends System_controller{
 		}
 		$_SESSION['languageId'] = $language->getId();
 		header('Location: '.$this->getUrlPrefix().$decodedReturnUrl);
+		
 	}
 }
 ?>
