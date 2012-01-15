@@ -587,6 +587,53 @@ input:not([type="submit"]) .wrong {
 	margin: 15px 0 0 0;
 }
 
+/* profile page - password */
+#password_labels {
+	display: block;
+	width: 207px;
+	float: left;
+	margin-top: 15px;
+}
+#password_labels label {
+	float: right;
+	text-align: right;
+	font-size: 23px;
+	font-weight: bold;
+	width: 100%;
+	margin: 10px 0 13px 0;
+}
+
+#password_input {
+	float: right;
+	width: 650px;
+	margin-top: 15px;
+}
+#password_input input, #password_input select {
+	width: 100%;
+	height: 43px;
+	font-size: 28px;
+	border-radius: 5px;
+	border: 1px solid #9e9e9e;
+	padding: 0 10px;
+	margin-bottom: 7px;
+}
+
+#password_input select {
+	width: 672px;
+	padding-right: 0px;
+}
+#password_input input[type="checkbox"] {
+	width: 20px;
+	height: 20px;
+	margin: 15px 0 0 0;
+}
+
+#password_remark {
+	font-weight: bold;
+	font-size: 120%;	
+	border-bottom: 1px solid rgba(50,50,50,0.5);
+}
+
 #center_buttons {
 	margin: auto;
 	display: block;
