@@ -3,25 +3,21 @@
 
 	<h1><a href="users">Users</a> > Add User</h1>
 	
-	<div id="profile_labels">
-		<label for="username">Username:</label>
-		<label for="name">Name:</label>
-		<label for="email">Email:</label>
-		<label for="password">Password:</label>
-		<label for="password_again">Password again:</label>
-		<label for="type">Type:</label>
-		<label for="address">Address:</label>
-		<label for="residence">City:</label>
-		<label for="company">Company:</label>
-	</div>
-	
 	<form method="post" action="" id="AddUserForm">
+		<div id="profile_labels">
+			<label for="username">Username:</label>
+			<label for="name">Name:</label>
+			<label for="email">Email:</label>
+			<label for="type">Type:</label>
+			<label for="address">Address:</label>
+			<label for="residence">City:</label>
+			<label for="company">Company:</label>
+		</div>
+
 		<div id="profile_input">
 			<input type="text" name="username" id="username" value="{{ username }}" />
 			<input type="text" name="name" id="name" value="{{ name }}" />
 			<input type="text" name="email" id="email" value="{{ email }}" />
-			<input type="text" name="password" id="password" value="wtf? waarom wachtwoord?" />
-			<input type="text" name="password_again" id="password_again" value="wtf? waarom wachtwoord?" />
 			<select type="text" name="type" id="type" />
 				<option value="user">User</option>
 				<option value="moderator">Moderator</option>
@@ -30,6 +26,18 @@
 			<input type="text" name="address" id="address" value="{{ address }}" />
 			<input type="text" name="residence" id="residence" value="{{ residence }}" />
 			<input type="text" name="company" id="company" value="{{ company }}" />
+		</div>
+		
+		<div class="clear"></div>
+	
+		<div id="password_labels">
+			<label for="password">Password:</label>
+			<label for="password_again">Password again:</label>
+		</div>
+		
+		<div id="password_input">
+			<input type="password" name="password" id="password" value="" />
+			<input type="password" name="password_again" id="password_again" value="" />
 		</div>
 		
 		<div class="clear"></div>
