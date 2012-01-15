@@ -130,6 +130,7 @@ class Project_Model extends System_Model {
 	private $status;
 	private $logItems;
 	private $users;
+	private $products;
 	
 	public function getId() {
 		return $this->id;
