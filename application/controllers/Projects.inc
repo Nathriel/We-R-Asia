@@ -168,7 +168,7 @@ class Projects extends System_Controller {
 				'product' => $curProduct,
 				'project' => $curProject,
 				'productsCount' => count($tplLogItems),
-				'languageSwitchReturnUrl' => urlencode($_SERVER['PATH_INFO']),
+				'languageSwitchReturnUrl' => urlencode(str_replace('/','|',$_SERVER['PATH_INFO'])),
 			));
 		} else {
 			//leeg
