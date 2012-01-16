@@ -90,9 +90,11 @@ class Product_Mapper extends System_Mapper {
 		$deleteQuery = $this->db->prepareCached('deleteAllDocumentsFromProduct', 'DELETE FROM product_has_document WHERE product_id = ?');
 		$deleteQuery->execute(array($product->getId()));
 		foreach ($documents as $document) {
-			$document->save();
-			$insertQuery = $this->db->prepareCached('insertDocumentByProduct', 'INSERT INTO product_has_document SET product_id = ?, document_id = ?');
-			$insertQuery->execute(array($product->getId(), $document->getId()));
+			if ($document) {
+				$document->save();
+				$insertQuery = $this->db->prepareCached('insertDocumentByProduct', 'INSERT INTO product_has_document SET product_id = ?, document_id = ?');
+				$insertQuery->execute(array($product->getId(), $document->getId()));
+			}
 		}
 	}
 }
@@ -105,6 +107,7 @@ class Product_Model extends System_Model {
 	private $status;
 	private $logItems = array();
 	private $documents;
+	private $project;
 	
 	public function getId() {
 		return $this->id;
@@ -182,6 +185,13 @@ class Product_Model extends System_Model {
 		$documents[] = $document;
 		$this->documents = $documents;
 		return $this;
+	}
+	
+	public function getProject() {
+		if ($this->project == null && $this->getProjectId()) {
+			$this->project = $this->mapper->mapper('project')->find($this->getProjectId());
+		}
+		return $this->project;
 	}
 }
 ?>
