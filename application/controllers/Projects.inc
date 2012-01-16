@@ -572,16 +572,52 @@ class Projects extends System_Controller {
 		}
 	}
 	
-	public function invoice() {
+	public function invoice($id = false) {
+		if (!$id) {
+			return;
+		}
+		$project = $this->mapper('project')->find($id);
+		$curProject = array(
+				'id' => $project->getId(),
+				'name' => $project->getName(),
+				'code' => $project->getCode(),
+		);
 		echo $this->t()->render('project/invoices.html', array(
 			'pageTitle' => 'We R Asia | Invoices',
+			'project' => $curProject,
 		));
 	}
 	
-	public function uploadInvoice() {
+	public function uploadInvoice($id = false) {
+		if (!$id) {
+			return;
+		}
+		$project = $this->mapper('project')->find($id);
+		$curProject = array(
+			'id' => $project->getId(),
+			'name' => $project->getName(),
+			'code' => $project->getCode(),
+		);
 		echo $this->t()->render('project/invoice_upload.html', array(
-			'pageTitle' => 'We R Asia | Upload Invoice',
+				'pageTitle' => 'We R Asia | Upload Invoice',
+				'project' => $curProject,
 		));
+	}
+	
+	public function uploadInvoiceProcess($id = false) {
+		if (!$id) {
+			return;
+		}
+		$newName = './content/uploads/'.(microtime(true)*1000).'_'.$_FILES['file_input']['name'];
+		move_uploaded_file($_FILES['file_input']['tmp_name'], $newName);
+		$project = $this->mapper('project')->find($id);
+		$invoiceMapper = $this->mapper('invoice');
+		$invoice = new Invoice_Model($invoiceMapper);
+		$invoice->setFileLocation($newName)->setProjectId($id)->save();
+	
+		$project->addInvoice($invoice);
+		$project->save();
+		header('location: ' . $this->getUrlPrefix() . 'projects/invoice/'.$id);
 	}
 	
 	public function uploadDocumentToProject($id = false) {
