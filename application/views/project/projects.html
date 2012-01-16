@@ -17,15 +17,9 @@
 				<td><a href="projects/project/{{project.id}}">{{project.name}}</a></td>
 				<td>{{project.status}}</td>
 				<td class="options_td">
-<<<<<<< HEAD
-					<a class="option_archive" href="#">{{ trans("toArchive") }}</a>
-					<a class="option_edit" href="projects/editProject/{{project.id}}">{{ trans("edit") }}</a>
-					<a class="option_delete" href="projects/{{project.id}}">{{ trans("delete") }}</a>
-=======
 					<a class="option_archive" href="archive/{{project.id}}">{{ trans("archive") }}</a>
 					<a class="option_edit" href="projects/editProject/{{project.id}}">{{ trans("edit") }}</a>
 					<a class="option_delete" href="project/{{project.id}}">{{ trans("delete") }}</a>
->>>>>>> 0a39cac4d58bfb81db7f8ddd4fccb0af0c41c252
 				</td>
 			</tr>
 			{% endfor %}
