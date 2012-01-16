@@ -328,18 +328,32 @@ class Projects extends System_Controller {
 		if($id)
 		{
 			$project = $this->mapper('project')->find($id);
+			$statuses = $this->mapper('status')->findAll();
 			$curProject = array(
 				'id' => $project->getId(),
 				'name' => $project->getName(),
 			);
 			
+			$tplStatuses = array();
+			foreach ($statuses as $status) {
+				$tplStatuses[] = $status->getTextForLanguage($this->mapper('user')->getLoggedInUser()->getLanguage());
+			}
+			
 			echo $this->t()->render('project/update_status.html', array(
 				'pageTitle' => 'We R Asia | Update Status',
 				'project' => $curProject,
+				'statuses' => $tplStatuses,
 			));
 		} else {
 			//leeg
 		}
+	}
+	
+	public function processAddExistingStatusToProject($id = false) {
+		if (!$id) {
+			return;
+		}
+		
 	}
 	
 	public function addStatusToProduct($id = false) {
