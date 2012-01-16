@@ -1,11 +1,11 @@
 {% include 'header.html' %}
 <div id="content">
 
-	<h1><a href="projects">{{ trans("projects") }}</a> > <a href="projects/project/1">{{project.name}}</a> > {{ trans("newStatus") }}</h1>
+	<h1><a href="projects">{{ trans("projects") }}</a> &gt; <a href="projects/project/1">{{project.name}}</a> &gt; {{ trans("newStatus") }}</h1>
 	
 	<div id="profile_labels">
 		<label for="status">Status:</label>
-		<label for="visible">{{ trans("visibleToClients") }}:</label>
+		<label for="statusSelect">{{ trans("orSelectStatus") }}:</label>
 	</div>
 	
 	<form method="post" action="" id="AddStatusForm">
