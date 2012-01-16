@@ -243,8 +243,10 @@ class Projects extends System_Controller {
 	public function deleteProductProcess($id = false) {
 		if($id)
 		{
-			/* needs model function */
-			header('location: ' . $this->getUrlPrefix() . 'projects');
+			$product = $this->mapper('product')->find($id);
+			$project = $this->mapper('project')->find($product->getProjectId());
+			$this->mapper('product')->delete($id);
+			header('location: ' . $this->getUrlPrefix() . 'projects/project/' . $project->getId());
 		} else {
 			//leeg
 		}
@@ -328,18 +330,34 @@ class Projects extends System_Controller {
 		if($id)
 		{
 			$project = $this->mapper('project')->find($id);
+			$statuses = $this->mapper('status')->findAll();
 			$curProject = array(
 				'id' => $project->getId(),
 				'name' => $project->getName(),
 			);
 			
+			$tplStatuses = array();
+			foreach ($statuses as $status) {
+				$tplStatuses[] = $status->getTextForLanguage($this->mapper('user')->getLoggedInUser()->getLanguage());
+			}
+			
 			echo $this->t()->render('project/update_status.html', array(
 				'pageTitle' => 'We R Asia | Update Status',
 				'project' => $curProject,
+				'statuses' => $tplStatuses,
 			));
 		} else {
 			//leeg
 		}
+	}
+	
+	public function processAddExistingStatusToProject($id = false) {
+		if (!$id) {
+			return;
+		}
+		$status = $this->mapper('status')->find($_POST['status']);
+		$project = $this->mapper('project')->find($id);
+		$logItemMapper = $this->mapper('logItem');
 	}
 	
 	public function addStatusToProduct($id = false) {

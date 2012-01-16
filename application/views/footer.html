@@ -3,7 +3,9 @@
 		<div id="dialog_box">
 		</div>
 		<script type="text/javascript">
-			jsl.load('./js/index.js');
+			jsl.load('./js/index.js', function() {
+				setBaseHref('{{ baseHref }}');
+			});
 		</script>
 	</body>
 </html>

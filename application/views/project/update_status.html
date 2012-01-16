@@ -1,14 +1,14 @@
 {% include 'header.html' %}
 <div id="content">
 
-	<h1><a href="projects">{{ trans("projects") }}</a> > <a href="projects/project/1">{{project.name}}</a> > {{ trans("newStatus") }}</h1>
+	<h1><a href="projects">{{ trans("projects") }}</a> &gt; <a href="projects/project/1">{{project.name}}</a> &gt; {{ trans("newStatus") }}</h1>
 	
 	<div id="profile_labels">
 		<label for="nl_status">Dutch status:</label>
 		<label for="en_status">English status:</label>
 	</div>
 	
-	<form method="post" action="" id="AddStatusForm">
+	<form method="post" action="./projects/processAddNewStatusToProject/{{ project.id }}" id="AddStatusForm">
 		<div id="profile_input">
 			<input type="text" name="nl_status" id="nl_status" value="" />
 			<input type="text" name="en_status" id="en_status" value="" />
@@ -20,6 +20,18 @@
 			<input class="center_button" type="submit" name="submit" value="{{ trans('save') }}" />
 			<input class="center_button" type="reset" name="reset" value="{{ trans('cancel') }}" />
 		</div>
+	</form>
+	
+	<span>Or choose an existing status:</span>
+	
+	<form method="post" action="./projects/processAddExistingStatusToProject/{{ project.id }}" id="AddExistingStatusForm">
+		<label for="status">Status:</label>
+		<select name="status" id="status">
+			{% for status in statuses %}
+				<option>{{ status }}</option>
+			{% endfor %}
+		</select>
+		<input class="center_button" type="submit" name="submit" value="{{ trans('save') }}" />
 	</form>
 	
 </div>
