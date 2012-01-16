@@ -39,6 +39,7 @@
 	
 	<div class="clear"></div>
 	
+	{% if documentsCount > 0 %}
 	<br />
 	<h2>{{ trans("documents") }}</h2>
 	
@@ -50,15 +51,24 @@
 				<th>{{ trans("options") }}</th>
 		</thead>
 		<tbody>
+			{% for document in documents %}
 			<tr>
-				<td>print_logo_tshirt.pdf</td>
-				<td class="date">8-12-2011</td>
+				<td><a href="">{{document.name}}</a></td>
+				<td class="date"></td>
 				<td class="options_td">
+<<<<<<< HEAD
 					<a class="option_delete" href="#">{{ trans("delete") }}</a>
+=======
+					<a class="option_delete" href="document/{{document.id}}">{{ trans("delete") }}</a>
+>>>>>>> 0a39cac4d58bfb81db7f8ddd4fccb0af0c41c252
 				</td>
 			</tr>
+			{% endfor %}
 		</tbody>
 	</table>
+	{% else %}
+	<h2>{{ trans("noDocuments") }}</h2>
+	{% endif %}
 	
 	<a class="regular_button" href="projects/uploadDocument/1">{{ trans("upload") }}</a>
 	

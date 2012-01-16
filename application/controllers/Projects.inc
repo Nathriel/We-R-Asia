@@ -56,12 +56,34 @@ class Projects extends System_Controller {
 				);
 			}
 			
+			$documents = $this->mapper('document')->findByProject($project);
+			$tplDocuments = array();
+			foreach ($documents as $document) {
+				$splitFileLocation = explode("/", $document->getFileLocation());
+				$tplDocuments[] = array(
+					'id' => $document->getId(),
+					'name' => $splitFileLocation[8],
+				);
+			}
+			
 			echo $this->t()->render('project/project.html', array(
 				'pageTitle' => 'We R Asia | Project',
 				'project' => $curProject,
 				'products' => $tplProducts,
+				'documents' => $tplDocuments,
 				'productsCount' => count($tplProducts),
+				'documentsCount' => count($tplDocuments),
 			));
+		} else {
+			//leeg
+		}
+	}
+	
+	public function archiveProjectProcess($id = false) {
+		if($id)
+		{
+			/* needs model function */
+			header('location: ' . $this->getUrlPrefix() . 'projects');
 		} else {
 			//leeg
 		}
@@ -195,12 +217,34 @@ class Projects extends System_Controller {
 				'code' => $project->getCode(),
 			);
 			
+			$documents = $this->mapper('document')->findByProduct($product);
+			$tplDocuments = array();
+			foreach ($documents as $document) {
+				$splitFileLocation = explode("/", $document->getFileLocation());
+				$tplDocuments[] = array(
+					'id' => $document->getId(),
+					'name' => $splitFileLocation[8],
+				);
+			}
+			
 			echo $this->t()->render('project/product/product.html', array(
 				'pageTitle' => 'We R Asia | Product',
 				'product' => $curProduct,
 				'project' => $curProject,
+				'documents' => $tplDocuments,
 				'productsCount' => count($tplLogItems),
+				'documentsCount' => count($tplDocuments),
 			));
+		} else {
+			//leeg
+		}
+	}
+	
+	public function deleteProductProcess($id = false) {
+		if($id)
+		{
+			/* needs model function */
+			header('location: ' . $this->getUrlPrefix() . 'projects');
 		} else {
 			//leeg
 		}

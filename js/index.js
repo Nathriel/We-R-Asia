@@ -29,7 +29,9 @@ $(function() {
 				if (identifier == 'project') {
 					window.location = url + '/deleteProjectProcess/' + splitOrigin[1];
 				} else if (identifier == 'product') {
-					alert(url + '../../deleteProductProcess/' + splitOrigin[1]);
+					/* alert(url + '/../../deleteProductProcess/' + splitOrigin[1]); */
+				} else if(identifier == 'archive') {
+					window.location = url + '/ArchiveProjectProcess/' + splitOrigin[1];
 				}
 				return false;
 			});
@@ -43,6 +45,11 @@ $(function() {
 	$('.option_delete').click(function(e) {
 		e.preventDefault();
 		showDialog('Are you sure you want to delete this?', 'ok', this);
+	});
+	
+	$('.option_archive').click(function(e) {
+		e.preventDefault();
+		showDialog('Are you sure you want to archive this project?', 'ok', this);
 	});
 	
 	/* login */
