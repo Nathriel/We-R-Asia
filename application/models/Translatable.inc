@@ -40,8 +40,26 @@ class Translatable_Mapper extends System_Mapper {
 		return null;
 	}
 	
-	protected function doSave(System_Model $model) {
-		return null;
+	protected function doSave(System_Model $translatable) {
+		$args = array();
+		if ($translatable->getId()) {
+			$args[] = $translatable->getId();
+			$query = $this->db->prepareCached('updateTranslatable',
+				'UPDATE translatable
+				SET sentence=?
+				WHERE id=?');
+		} else {
+			$query = $this->db->prepareCached('insertTranslatable',
+				'INSERT INTO translatable
+				SET sentence=?');
+		}
+		$args = array_merge(array(
+			$translatable->getSentence(),
+		), $args);
+		$query->execute($args);
+		if (!$translatable->getId()) {
+			$translatable->setId($this->db->lastInsertId());
+		}
 	}
 }
 

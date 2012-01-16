@@ -377,7 +377,58 @@ class Projects extends System_Controller {
 			))
 			->save();
 		$project->addLogItem($logItem);
-		$project->setStatus($this->mapper('status')->find($_POST['status']));
+		$project->setStatus($status);
+		$project->save();
+		header('location: ' . $this->getUrlPrefix() . 'projects/project/'.$id);
+	}
+	
+	public function processAddNewStatusToProject($id = false) {
+		if (!$id) {
+			return;
+		}
+		$nlStatus = $_POST['nl_status'];
+		$enStatus = $_POST['en_status'];
+		$translatableMapper = $this->mapper('translatable');
+		$translatable = new Translatable_Model($translatableMapper);
+		$translatable->setSentence($enStatus);
+		$translatable->save();
+		
+		$translationMapper = $this->mapper('translation');
+		$translation = new Translation_Model($translationMapper);
+		$translation->setTranslatableId($translatable->getId());
+		$translation->setLanguage($this->mapper('language')->findByCode('en'));
+		$translation->setTranslation($enStatus);
+		$translation->save();
+		
+		$translation = new Translation_Model($translationMapper);
+		$translation->setTranslatableId($translatable->getId());
+		$translation->setLanguage($this->mapper('language')->findByCode('nl'));
+		$translation->setTranslation($nlStatus);
+		$translation->save();
+		
+		$statusMapper = $this->mapper('status');
+		$status = new Status_Model($statusMapper);
+		$status->setTranslatableId($translatable->getId());
+		$status->save();
+		$project = $this->mapper('project')->find($id);
+		$logItemMapper = $this->mapper('logItem');
+		$logItem = new LogItem_Model($logItemMapper);
+		$logItem
+			->setDate(time())
+			->setTranslatableId($this->mapper('translatable')->findBySentence('statusChange')->getId())
+			->setData(serialize(
+					array(
+							'fromStatus' => array(
+									'find', 'Status', $project->getStatus()->getId(), 'TextForLanguage', 'currentLanguage'
+							),
+							'toStatus' => array(
+									'find', 'Status', $status->getId(), 'TextForLanguage', 'currentLanguage'
+							),
+					)
+			))
+		->save();
+		$project->addLogItem($logItem);
+		$project->setStatus($status);
 		$project->save();
 		header('location: ' . $this->getUrlPrefix() . 'projects/project/'.$id);
 	}
