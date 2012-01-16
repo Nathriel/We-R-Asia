@@ -369,7 +369,7 @@ class Projects extends System_Controller {
 		$logItem
 			->setDate(time())
 			->setTranslatableId($this->mapper('translatable')->findBySentence('statusChange')->getId())
-			->setData(serialize(
+			->setData(
 				array(
 					'fromStatus' => array(
 						'find', 'Status', $project->getStatus()->getId(), 'TextForLanguage', 'currentLanguage'
@@ -378,7 +378,7 @@ class Projects extends System_Controller {
 						'find', 'Status', $_POST['status'], 'TextForLanguage', 'currentLanguage'
 					),
 				)
-			))
+			)
 			->save();
 		$project->addLogItem($logItem);
 		$project->setStatus($status);
@@ -420,7 +420,7 @@ class Projects extends System_Controller {
 		$logItem
 			->setDate(time())
 			->setTranslatableId($this->mapper('translatable')->findBySentence('statusChange')->getId())
-			->setData(serialize(
+			->setData(
 					array(
 							'fromStatus' => array(
 									'find', 'Status', $project->getStatus()->getId(), 'TextForLanguage', 'currentLanguage'
@@ -429,7 +429,7 @@ class Projects extends System_Controller {
 									'find', 'Status', $status->getId(), 'TextForLanguage', 'currentLanguage'
 							),
 					)
-			))
+			)
 		->save();
 		$project->addLogItem($logItem);
 		$project->setStatus($status);
@@ -448,7 +448,7 @@ class Projects extends System_Controller {
 		$logItem
 		->setDate(time())
 		->setTranslatableId($this->mapper('translatable')->findBySentence('statusChange')->getId())
-		->setData(serialize(
+		->setData(
 				array(
 					'fromStatus' => array(
 						'find', 'Status', $product->getStatus()->getId(), 'TextForLanguage', 'currentLanguage'
@@ -457,7 +457,7 @@ class Projects extends System_Controller {
 						'find', 'Status', $_POST['status'], 'TextForLanguage', 'currentLanguage'
 					),
 				)
-		))
+		)
 		->save();
 		$product->addLogItem($logItem);
 		$product->setStatus($status);
@@ -499,7 +499,7 @@ class Projects extends System_Controller {
 		$logItem
 		->setDate(time())
 		->setTranslatableId($this->mapper('translatable')->findBySentence('statusChange')->getId())
-		->setData(serialize(
+		->setData(
 				array(
 						'fromStatus' => array(
 								'find', 'Status', $product->getStatus()->getId(), 'TextForLanguage', 'currentLanguage'
@@ -508,7 +508,7 @@ class Projects extends System_Controller {
 								'find', 'Status', $status->getId(), 'TextForLanguage', 'currentLanguage'
 						),
 				)
-		))
+		)
 		->save();
 		$product->addLogItem($logItem);
 		$product->setStatus($status);
