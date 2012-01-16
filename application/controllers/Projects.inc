@@ -74,7 +74,7 @@ class Projects extends System_Controller {
 					$splitFileLocation = explode('_', $document->getFileLocation());
 					$tplDocuments[] = array(
 						'id' => $document->getId(),
-						'name' => $splitFileLocation[count($splitFileLocation) - 1],
+						'name' => (isset($splitFileLocation[1])?$splitFileLocation[1]:'Unknown'),
 						'date' => date('d-m-Y H:i:s', filemtime($document->getFileLocation())),
 						'fileUrl' => $document->getFileLocation(),
 					);
