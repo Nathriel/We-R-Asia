@@ -15,6 +15,9 @@ class Archive extends System_Controller {
 		} else {
 			$projects = $this->mapper('project')->findAll(true);
 		}
+        
+        //var_dump($projects);
+        //exit;
 		
 		$tplProjects = array();
 		foreach ($projects as $project) {
