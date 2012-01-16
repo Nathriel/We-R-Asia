@@ -33,9 +33,10 @@
 	<h2>There is no status log yet.</h2>
 	{% endif %}
 
+	{% if documentsCount > 0 %}
 	<br />
 	<h2>{{ trans("documents") }}</h2>
-
+	
 	<table class="four_col doc_options">
 		<thead>
 			<tr>
@@ -44,15 +45,20 @@
 				<th>{{ trans("options") }}</th>
 		</thead>
 		<tbody>
+			{% for document in documents %}
 			<tr>
-				<td>print_logo_tshirt.pdf</td>
-				<td class="date">8-12-2011</td>
+				<td><a href="">{{document.name}}</a></td>
+				<td class="date"></td>
 				<td class="options_td">
-					<a class="option_delete" href="#">{{ trans("delete") }}</a>
+					<a class="option_delete" href="document/{{document.id}}">delete</a>
 				</td>
 			</tr>
+			{% endfor %}
 		</tbody>
 	</table>
+	{% else %}
+	<h2>There are no documents yet.</h2>
+	{% endif %}
 
 </div>
 {% include 'footer.html' %}

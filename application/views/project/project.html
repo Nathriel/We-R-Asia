@@ -39,6 +39,7 @@
 	
 	<div class="clear"></div>
 	
+	{% if documentsCount > 0 %}
 	<br />
 	<h2>Documents</h2>
 	
@@ -50,15 +51,20 @@
 				<th>Options</th>
 		</thead>
 		<tbody>
+			{% for document in documents %}
 			<tr>
-				<td>print_logo_tshirt.pdf</td>
-				<td class="date">8-12-2011</td>
+				<td><a href="">{{document.name}}</a></td>
+				<td class="date"></td>
 				<td class="options_td">
-					<a class="option_delete" href="#">delete</a>
+					<a class="option_delete" href="document/{{document.id}}">delete</a>
 				</td>
 			</tr>
+			{% endfor %}
 		</tbody>
 	</table>
+	{% else %}
+	<h2>There are no documents yet.</h2>
+	{% endif %}
 	
 	<a class="regular_button" href="projects/uploadDocument/1">Upload</a>
 	
