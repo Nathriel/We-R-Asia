@@ -110,6 +110,10 @@ class Home extends System_controller{
     }
     
 	public function forgotPassword() {
+        require_once('/libraries/phpMailer/class.phpmailer.php');
+        $mail = new PHPMailer(true);
+        $mail->IsSMTP();
+
 		$user = $this->mapper('user')->findByEmail($_POST['recipient']);
 		$newPass = $this->generatePassword(9,8);
         $user->setSalt(hash('sha256',dechex(sin(rand(0,100000))*100000)));
@@ -120,30 +124,39 @@ class Home extends System_controller{
 				if($_SESSION['languageId'] == 1) {
 					$subject = "password forgotten";
 					$headers = "From:" . "service@we-r-asia.com" . "\n";
-					$body = "new password:" + $newPass;
+					$body = "new password:" . $newPass;
 				} else {
 					$subject = "wachtwoord vergeten";
 					$headers = "Van:" . "service@we-r-asia.com" . "\n";
-					$body = "nieuwe wachtword:" + $newPass;
+					$body = "nieuwe wachtwoord:" . $newPass;
 				}
-			}
-			$charset='UTF-8';
-			$recipient = $_POST['recipient'];
-			$headers += "From: info@werasia.com\n Content-Type: text/html; charset=$charset; format=flowed\n"
-			. "MIME-Version: 1.0\n"
-			. "Content-Transfer-Encoding: 8bit\n"
-			. "X-Mailer: PHP\n";
-            $user->save();
-			//mail($recipient, $subject, $body, $headers);
+			}else
+            {
+                $body = "new password:" . $newPass;
+            }
             
-            $to      = $_POST['recipient'];
-            $subject = 'password forgotten';
-            $message = $body;
-            $headers = 'From: info@werasia.com' . "\r\n" .
-                'Reply-To: info@werasia.com' . "\r\n" .
-                'X-Mailer: PHP/' . phpversion();
-            echo $to;
-            echo mail($to, $subject, $message, $headers);
+            $mail->Host       = "mail.bequtest.nl"; // SMTP server                  
+          $mail->SMTPAuth   = true;                  // enable SMTP authentication
+          $mail->Host       = "mail.bequtest.nl"; // sets the SMTP server
+          $mail->Port       = 26;                    // set the SMTP port for the GMAIL server
+          $mail->Username   = "wra@bequtest.nl"; // SMTP account username
+          $mail->Password   = "wra";        // SMTP account password
+          $mail->AddReplyTo('wra@bequtest.nl', 'First Last');
+          $mail->AddAddress($_POST['recipient'],$user->getUsername());
+          $mail->SetFrom('wra@bequtest.nl', 'We Are Asia');
+          $mail->AddReplyTo('wra@bequtest.nl', 'We Are Asia');
+          $mail->Subject = $subject;
+          $mail->AltBody = 'To view the message, please use an HTML compatible email viewer!'; // optional - MsgHTML will create an alternate automatically
+          $mail->MsgHTML($body);
+          try{
+            $mail->Send();
+            $user->save();
+          } catch (phpmailerException $e) {
+            //echo $e->errorMessage(); //Pretty error messages from PHPMailer
+          } catch (Exception $e) {
+            //echo $e->getMessage(); //Boring error messages from anything else!
+          }
+          header('Location: '.$this->getUrlPrefix());
 		} else {
 			
 		}
