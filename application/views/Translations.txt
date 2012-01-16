@@ -1,0 +1,621 @@
+<USER>
+login.html
+
+You appear to have entered an invalid username or password!
+Het ziet er naar uit dat je een incorrecte gebruikersnaam of wachtwoord hebt ingevuld!
+
+placeholder="Username"
+placeholder="Gebruikersnaam"
+
+
+
+
+
+header.html
+
+Projects
+Projecten
+
+Archive
+Archief
+
+Users
+Gebruikers
+
+Profile
+Profiel
+
+Logout
+Uitloggen
+
+
+
+
+
+error.html (Translation progress hier gestopt omdat die console er niet echt serieus uitziet...)
+
+Last visit
+Laatste bezoek
+
+
+
+
+
+users.html
+
+Users
+Gebruikers
+
+Name
+Naam
+
+Company
+Firma
+
+Options
+Opties
+
+edit
+aanpassen
+
+delete
+verwijderen
+
+Add
+Toevoegen
+
+
+
+
+
+profile.html
+
+Edit Profile
+Aanpassen Profiel
+
+Username
+Gebruikersnaam
+
+Name
+Naam
+
+Password
+Wachtwoord
+
+Password again
+Wachtwoord opnieuw
+
+Address
+Adres
+
+City
+Woonplaats
+
+Company
+Firma
+
+value="Save"
+value="Opslaan"
+
+value="Cancel"
+value="Annuleren"
+
+
+
+
+
+edit_user.html
+
+User
+Gebruiker
+
+Edit User
+Aanpassen Gebruiker
+
+Username
+Gebruikersnaam
+
+Name
+Naam
+
+Password
+Wachtwoord
+
+Password Again
+Wachtwoord Opnieuw
+
+Address
+Adres
+
+City
+Woonplaats
+
+Company
+Firma
+
+User
+Gebruiker
+
+value="Save"
+value="Opslaan"
+
+value="Cancel"
+value="Annuleren"
+
+
+
+
+
+
+add_user.html
+
+User
+Gebruiker
+
+Add User
+Toevoegen Gebruiker
+
+Name
+Naam
+
+Password
+Wachtwoord
+
+Password Again
+Wachtwoord Opnieuw
+
+Address
+Adres
+
+City
+Woonplaats
+
+Company
+Firma
+
+User
+Gebruiker
+
+value="Save"
+value="Opslaan"
+
+value="Cancel"
+value="Annuleren"
+
+
+
+
+
+<STATUS>
+edit_status.html
+
+Projects
+Projecten
+
+Project_name
+Project_naam
+
+Edit Status
+Aanpassen Status
+
+Visible to clients?
+Zichtbaar voor klanten?
+
+value="Save"
+value="Opslaan"
+
+value="Cancel"
+value="Annuleren"
+
+
+
+
+
+add_status.html
+
+
+Projects
+Projecten
+
+Project_name
+Project_naam
+
+Edit Status
+Aanpassen Status
+
+Visible to clients?
+Zichtbaar voor klanten?
+
+value="Save"
+value="Opslaan"
+
+value="Cancel"
+value="Annuleren"
+
+
+
+
+
+<PROJECTS>
+projects.html
+
+Projects
+Projecten
+
+Name
+Naam
+
+Options
+Opties
+
+archive
+in archief
+
+edit
+aanpassen
+
+delete
+verwijderen
+
+Add Project
+Toevoegen Project
+
+
+
+
+
+project.html
+
+Projects
+Projecten
+
+Status: In development
+Status: In ontwikkeling
+
+To invoices
+Naar facturen
+
+Name
+Naam
+
+Options
+Opties
+
+edit
+aanpassen
+
+delete
+verwijderen
+
+No products
+Geen producten
+
+Add Product
+Toevoegen Product
+
+Documents
+Documenten
+
+Name
+Naam
+
+Date
+Datum
+
+Options
+Opties
+
+delete
+verwijderen
+
+Upload
+Uploaden
+
+
+
+
+
+invoices.html
+
+Projects
+Projecten
+
+Project_name
+Project_naam
+
+Invoices
+Facturen
+
+Name
+Naam
+
+Options
+Opties
+
+delete
+verwijderen
+
+Upload
+Uploaden
+
+
+
+
+
+
+invoice_upload.html
+
+Projects
+Projecten
+
+Project_name
+Project_naam
+
+Invoices
+Facturen
+
+Upload
+Uploaden
+
+project_number
+project_nummer
+
+Upload New Invoice
+Nieuw Factuur Uploaden
+
+value="Upload"
+value="Uploaden"
+
+Latest Invoices
+Laatste Facturen
+
+Name
+Naam
+
+Date
+Datum
+
+
+
+
+
+
+edit_project.html
+
+Projects
+Projecten
+
+Edit Project
+Aanpassen Project
+
+Project Name
+Project Naam
+
+Done?
+Klaar?
+
+Permissions
+Bevoegdheden
+
+User 1
+Gebruiker 1
+
+value="Save"
+value="Opslaan"
+
+value="Cancel"
+value="Annuleren"
+
+
+
+
+
+doc_upload.html
+
+Projects
+Projecten
+
+Project_name
+Project_naam
+
+Upload
+Uploaden
+
+project_number
+project_nummer
+
+Upload New Document
+Nieuw Document Uploaden
+
+value="Upload"
+value="Uploaden"
+
+Latest Documents
+Laatste Documenten
+
+Name
+Naam
+
+Date
+Datum
+
+
+
+
+
+add_project.html
+
+Projects
+Projecten
+
+Add Project
+Toevoegen Project
+
+Project Name
+Project Naam
+
+Done?
+Klaar?
+
+Permissions
+Bevoegdheden
+
+User 1
+Gebruiker 1
+
+value="Save"
+value="Opslaan"
+
+value="Cancel"
+value="Annuleren"
+
+
+
+
+
+product.html
+
+Projects
+Projecten
+
+Project status: In development
+Project status: In ontwikkeling
+
+Date
+Datum
+
+Options
+Opties
+
+edit
+aanpassen
+
+delete
+verwijderen
+
+New Status
+Nieuwe Status
+
+
+
+
+
+edit_product.html
+
+Projects
+Projecten
+
+Edit Product
+Aanpassen Product
+
+Product Name
+Product Naam
+
+Done?
+Klaar?
+
+value="Save"
+value="Opslaan"
+
+value="Cancel"
+value="Annuleren"
+
+
+
+
+
+add_product.html
+
+Projects
+Projecten
+
+Add Product
+Toevoegen Product
+
+Product Name
+Product Naam
+
+Done?
+Klaar?
+
+value="Save"
+value="Opslaan"
+
+value="Cancel"
+value="Annuleren"
+
+
+
+
+
+<ARCHIVES>
+project.html
+
+Archive
+Archief
+
+Status: In development
+Status: In ontwikkeling
+
+To invoices
+Naar facturen
+
+Name
+Naam
+
+No products
+Geen producten
+
+Documents
+Documenten
+
+Name
+Naam
+
+Date
+Datum
+
+
+
+
+
+invoices.html
+
+Archive
+Archief
+
+Project_name
+Project_naam
+
+Invoices
+Facturen
+
+Name
+Naam
+
+
+
+
+
+archive.html
+
+Archive
+Archief
+
+Name
+Naam
+
+
+
+
+
+product.html
+
+Archive
+Achief
+
+Project status: In Ontwikkeling
+
+Date
+Datum
+

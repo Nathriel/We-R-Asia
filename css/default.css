@@ -243,9 +243,8 @@ input, select {
 	background-color: #968b6e;
 	display: block;
 	height: 30px;
-	width: 130px;
 	margin: 20px 2px 0 0;
-	padding-top: 10px;
+	padding: 10px 10px 0 10px;
 	border: 1px solid #665f4a;
 	border-radius: 7px;
 	color: white;
@@ -538,7 +537,7 @@ input:not([type="submit"]) .wrong {
 	border-radius: 5px;
 	border: 1px solid #9e9e9e;
 	background-color: white;
-	width: 650px;
+	width: 612px;
 	padding: 10px;
 }
 #permissions_bg label {
@@ -549,7 +548,7 @@ input:not([type="submit"]) .wrong {
 /* profile page */
 #profile_labels {
 	display: block;
-	width: 207px;
+	width: 254px;
 	float: left;
 	margin-top: 25px;
 }
@@ -564,7 +563,7 @@ input:not([type="submit"]) .wrong {
 
 #profile_input {
 	float: right;
-	width: 650px;
+	width: 612px;
 	margin-top: 25px;
 }
 #profile_input input, #profile_input select {
@@ -578,7 +577,7 @@ input:not([type="submit"]) .wrong {
 }
 
 #profile_input select {
-	width: 672px;
+	width: 635px;
 	padding-right: 0px;
 }
 #profile_input input[type="checkbox"] {
@@ -590,7 +589,7 @@ input:not([type="submit"]) .wrong {
 /* profile page - password */
 #password_labels {
 	display: block;
-	width: 207px;
+	width: 254px;
 	float: left;
 	margin-top: 15px;
 }
@@ -605,7 +604,7 @@ input:not([type="submit"]) .wrong {
 
 #password_input {
 	float: right;
-	width: 650px;
+	width: 612px;
 	margin-top: 15px;
 }
 #password_input input, #password_input select {
@@ -637,7 +636,7 @@ input:not([type="submit"]) .wrong {
 #center_buttons {
 	margin: auto;
 	display: block;
-	width: 404px;
+	width: 405px;
 	margin-top: 20px;
 }
 

@@ -1,7 +1,7 @@
 {% include 'header.html' %}
 <div id="content">
 
-	<h1><a href="projects">Projects</a> > <a href="projects/project/{{project.id}}">{{project.name}}</a> > {{product.name}}</h1>
+	<h1><a href="projects">{{ trans("projects") }}</a> > <a href="projects/project/{{project.id}}">{{project.name}}</a> > {{product.name}}</h1>
 	<p id="project_number">{{project.code}}</p>
 
 	<p id="project_status">Product status: {{product.status}} <a href="projects/addStatusToProduct/{{product.id}}" class="regular_button align_left">Update Status</a></p>
@@ -18,7 +18,7 @@
 		<thead>
 			<tr>
 				<th>Status</th>
-				<th>Date</th>
+				<th>{{ trans("date") }}</th>
 		</thead>
 		<tbody>
 			{% for logItem in product.logItems %}
@@ -30,29 +30,35 @@
 		</tbody>
 	</table>
 	{% else %}
-	<h2>There is no status log yet.</h2>
+	<h2>{{ trans("noStatusLog") }}</h2>
 	{% endif %}
 
+	{% if documentsCount > 0 %}
 	<br />
-	<h2>Documents</h2>
-
+	<h2>{{ trans("documents") }}</h2>
+	
 	<table class="four_col doc_options">
 		<thead>
 			<tr>
-				<th>Name</th>
-				<th>Date</th>
-				<th>Options</th>
+				<th>{{ trans("name") }}</th>
+				<th>{{ trans("date") }}</th>
+				<th>{{ trans("options") }}</th>
 		</thead>
 		<tbody>
+			{% for document in documents %}
 			<tr>
-				<td>print_logo_tshirt.pdf</td>
-				<td class="date">8-12-2011</td>
+				<td><a href="">{{document.name}}</a></td>
+				<td class="date"></td>
 				<td class="options_td">
-					<a class="option_delete" href="#">delete</a>
+					<a class="option_delete" href="document/{{document.id}}">{{ trans("delete") }}</a>
 				</td>
 			</tr>
+			{% endfor %}
 		</tbody>
 	</table>
+	{% else %}
+	<h2>{{ trans("noDocuments") }}</h2>
+	{% endif %}
 
 </div>
 {% include 'footer.html' %}

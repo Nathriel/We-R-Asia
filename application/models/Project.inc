@@ -72,6 +72,7 @@ class Project_Mapper extends System_Mapper {
 			'DELETE FROM project WHERE id = ?'
 		);
 		$query->execute(array($id));
+		var_dump($query->errorInfo());exit;
 		return true;
 	}
 	

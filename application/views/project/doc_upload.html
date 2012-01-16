@@ -1,26 +1,26 @@
 {% include 'header.html' %}
 <div id="content">
 
-	<h1><a href="projects">Projects</a> > <a href="projects/project/1">Project_name</a> > Upload</h1>
+	<h1><a href="projects">{{ trans("projects") }}</a> > <a href="projects/project/1">Project_name</a> > {{ trans("upload") }}</h1>
 	<p id="project_number">project_number</p>
 	
-	<h2>Upload New Document</h2>
+	<h2>{{ trans("uploadNewDocument") }}</h2>
 
 	<form method="post" action="" id="uploadDocForm">
 		<input name="file_upload" id="file_upload" type="text" />
 		<input name="file_input" id="file_input" type="file" />
-		<input name="file_submit" class="regular_button" type="submit" value="Upload" />
+		<input name="file_submit" class="regular_button" type="submit" value="{{ trans("upload") }}" />
 	</form>
 	
 	<div class="clear"></div>
 	
-	<h2>Latest Documents</h2>
+	<h2>{{ trans("latestDocuments") }}</h2>
 	
 	<table>
 		<thead>
 			<tr>
-				<th>Name</th>
-				<th>Date</th>
+				<th>{{ trans("name") }}</th>
+				<th>{{ trans("date") }}</th>
 		</thead>
 		<tbody>
 			<tr>

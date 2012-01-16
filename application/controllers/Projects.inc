@@ -56,12 +56,34 @@ class Projects extends System_Controller {
 				);
 			}
 			
+			$documents = $this->mapper('document')->findByProject($project);
+			$tplDocuments = array();
+			foreach ($documents as $document) {
+				$splitFileLocation = explode("/", $document->getFileLocation());
+				$tplDocuments[] = array(
+					'id' => $document->getId(),
+					'name' => $splitFileLocation[8],
+				);
+			}
+			
 			echo $this->t()->render('project/project.html', array(
 				'pageTitle' => 'We R Asia | Project',
 				'project' => $curProject,
 				'products' => $tplProducts,
+				'documents' => $tplDocuments,
 				'productsCount' => count($tplProducts),
+				'documentsCount' => count($tplDocuments),
 			));
+		} else {
+			//leeg
+		}
+	}
+	
+	public function archiveProjectProcess($id = false) {
+		if($id)
+		{
+			/* needs model function */
+			header('location: ' . $this->getUrlPrefix() . 'projects');
 		} else {
 			//leeg
 		}
@@ -195,12 +217,36 @@ class Projects extends System_Controller {
 				'code' => $project->getCode(),
 			);
 			
+			$documents = $this->mapper('document')->findByProduct($product);
+			$tplDocuments = array();
+			foreach ($documents as $document) {
+				$splitFileLocation = explode("/", $document->getFileLocation());
+				$tplDocuments[] = array(
+					'id' => $document->getId(),
+					'name' => $splitFileLocation[8],
+				);
+			}
+			
 			echo $this->t()->render('project/product/product.html', array(
 				'pageTitle' => 'We R Asia | Product',
 				'product' => $curProduct,
 				'project' => $curProject,
+				'documents' => $tplDocuments,
 				'productsCount' => count($tplLogItems),
+				'documentsCount' => count($tplDocuments),
 			));
+		} else {
+			//leeg
+		}
+	}
+	
+	public function deleteProductProcess($id = false) {
+		if($id)
+		{
+			$product = $this->mapper('product')->find($id);
+			$project = $this->mapper('project')->find($product->getProjectId());
+			$this->mapper('product')->delete($id);
+			header('location: ' . $this->getUrlPrefix() . 'projects/project/' . $project->getId());
 		} else {
 			//leeg
 		}
@@ -284,18 +330,34 @@ class Projects extends System_Controller {
 		if($id)
 		{
 			$project = $this->mapper('project')->find($id);
+			$statuses = $this->mapper('status')->findAll();
 			$curProject = array(
 				'id' => $project->getId(),
 				'name' => $project->getName(),
 			);
 			
+			$tplStatuses = array();
+			foreach ($statuses as $status) {
+				$tplStatuses[] = $status->getTextForLanguage($this->mapper('user')->getLoggedInUser()->getLanguage());
+			}
+			
 			echo $this->t()->render('project/update_status.html', array(
 				'pageTitle' => 'We R Asia | Update Status',
 				'project' => $curProject,
+				'statuses' => $tplStatuses,
 			));
 		} else {
 			//leeg
 		}
+	}
+	
+	public function processAddExistingStatusToProject($id = false) {
+		if (!$id) {
+			return;
+		}
+		$status = $this->mapper('status')->find($_POST['status']);
+		$project = $this->mapper('project')->find($id);
+		$logItemMapper = $this->mapper('logItem');
 	}
 	
 	public function addStatusToProduct($id = false) {

@@ -1,3 +1,8 @@
+var baseHref;
+function setBaseHref(a) {
+	baseHref = a;
+}
+
 $(function() {
 	var $dialogBox = $('#dialog_box');
 	
@@ -27,8 +32,16 @@ $(function() {
 				var url = window.location;
 				var splitOrigin = $(origin).attr('href').split('/');
 				var identifier = splitOrigin[0];
-				if(identifier = 'project') {
-					window.location = url + '/deleteProjectProcess/' + splitOrigin[1];
+				if (identifier == 'project') {
+					window.location = baseHref + 'projects/deleteProjectProcess/' + splitOrigin[1];
+				} else if (identifier == 'product') {
+					window.location = baseHref + 'projects/deleteProductProcess/' + splitOrigin[1];
+				} else if(identifier == 'archive') {
+					window.location = baseHref + 'projects/archiveProjectProcess/' + splitOrigin[1];
+				} else if(identifier == 'document') {
+					window.location = baseHref + 'projects/deleteDocumentProcess/' + splitOrigin[1];
+				} else if(identifier == 'invoice') {
+					window.location = baseHref + 'projects/deleteInvoiceProcess/' + splitOrigin[1];
 				}
 				return false;
 			});
@@ -61,6 +74,11 @@ $(function() {
         }
     });
     
+	$('.option_archive').click(function(e) {
+		e.preventDefault();
+		showDialog('Are you sure you want to archive this project?', 'ok', this);
+	});
+
 	/* login */
 	$('#loginForm').submit(function(e) {
 		e.preventDefault();
