@@ -100,9 +100,10 @@ class Project_Mapper extends System_Mapper {
 			$project->setId($this->db->lastInsertId());
 		}
 		
+		$logItems = $project->getLogItems();
 		$deleteQuery = $this->db->prepareCached('deleteAllLogitemRelationsByProject', 'DELETE FROM project_has_logitem WHERE project_id = ?');
 		$deleteQuery->execute(array($project->getId()));
-		foreach ($project->getLogItems() as $logItem) {
+		foreach ($logItems as $logItem) {
 			if ($logItem) {
 				$logItem->save();
 				$insertQuery = $this->db->prepareCached('insertLogitemRelationByProject', 'INSERT INTO project_has_logitem SET project_id = ?, logitem_id = ?');
