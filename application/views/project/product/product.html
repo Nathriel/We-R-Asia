@@ -18,7 +18,7 @@
 		<thead>
 			<tr>
 				<th>Status</th>
-				<th>Date</th>
+				<th>{{ trans("date") }}</th>
 		</thead>
 		<tbody>
 			{% for logItem in product.logItems %}
@@ -34,21 +34,21 @@
 	{% endif %}
 
 	<br />
-	<h2>Documents</h2>
+	<h2>{{ trans("documents") }}</h2>
 
 	<table class="four_col doc_options">
 		<thead>
 			<tr>
-				<th>Name</th>
-				<th>Date</th>
-				<th>Options</th>
+				<th>{{ trans("name") }}</th>
+				<th>{{ trans("date") }}</th>
+				<th>{{ trans("options") }}</th>
 		</thead>
 		<tbody>
 			<tr>
 				<td>print_logo_tshirt.pdf</td>
 				<td class="date">8-12-2011</td>
 				<td class="options_td">
-					<a class="option_delete" href="#">delete</a>
+					<a class="option_delete" href="#">{{ trans("delete") }}</a>
 				</td>
 			</tr>
 		</tbody>
