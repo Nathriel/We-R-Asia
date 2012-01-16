@@ -40,10 +40,11 @@ class User_Mapper extends System_Mapper {
 		return $user;
 	}
 	
-	protected function doDelete($id) {
+	public function doDelete($id) {
 		$query = $this->db->prepareCached('deleteUser',
 			'DELETE FROM user WHERE id = ?');
 		$query->execute(array($id));
+        var_dump($query->errorInfo());
 	}
 	
 	public function findByUsername($username) {
@@ -107,7 +108,7 @@ class User_Mapper extends System_Mapper {
         //print_r($user);
         //print_r($this->mapper('right'));
         //var_dump($this->mapper->('right')->find(7));  
-        var_dump($this->mapper('right')->find('7'));
+        //var_dump($this->mapper('right')->find(7));
         
 	}
 	

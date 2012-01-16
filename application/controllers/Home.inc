@@ -59,5 +59,28 @@ class Home extends System_controller{
 		header('Location: '.$this->getUrlPrefix().$decodedReturnUrl);
 		
 	}
+	
+	public function forgotPassword() {
+		
+	
+		if(isset($_SESSION['languageId'])) {
+			if($_SESSION['languageId'] == 1) {
+				$subject = "password forgotten";
+				$headers = "From:" . "service@we-r-asia.com" . "\n";
+				$body = "";
+			} else {
+				$subject = "wachtwoord vergeten";
+				$headers = "Van:" . "service@we-r-asia.com" . "\n";
+				$body = "";
+			}
+		}
+		$charset='UTF-8';
+		$recipient = $_POST['recipient'];
+		$headers += "Content-Type: text/html; charset=$charset; format=flowed\n"
+		. "MIME-Version: 1.0\n"
+		. "Content-Transfer-Encoding: 8bit\n"
+		. "X-Mailer: PHP\n";
+		mail($recipient, $subject, $body, $headers);
+	}
 }
 ?>
