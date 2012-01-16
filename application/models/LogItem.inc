@@ -15,11 +15,15 @@ class LogItem_Mapper extends System_Mapper {
 			return null;
 		}
 		$logItem = new LogItem_Model($this);
+		$unserialize = unserialize($row['data']);
 		$logItem
 			->setId($row['id'])
 			->setDate($row['date'])
-			->setData(unserialize($row['data']))
+			->setData($unserialize)
 			->setTranslatableId($row['translatable_id']);
+		if (!$unserialize) {
+			var_dump($row['data']);
+		}
 		return $logItem;
 	}
 	

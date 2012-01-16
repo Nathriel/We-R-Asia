@@ -3,8 +3,8 @@ class Profile extends System_Controller {
 	public function index() {
 		$args = array(
 			'pageTitle' => 'We R Asia | Profile',
-			'profileForm' => array(
-				'action' => './Profile/EditProcess',
+			'ProfileForm' => array(
+				'action' => './Profile/editProcess',
 			),
 		);
 		if (isset($_SESSION['userId'])) {
@@ -23,7 +23,24 @@ class Profile extends System_Controller {
 	}
 	
 	public function editProcess() {
-		
+	   if (isset($_SESSION['userId'])) {
+            $userMapper = $this->mapper('user');
+			$user = $userMapper->find($_SESSION['userId']);
+			$user->setUsername($_POST['username']);
+            $user->setName($_POST['name']);
+            $user->setEmail($_POST['email']);
+            $user->setAddress($_POST['address']);
+            $user->setResidence($_POST['residence']);
+            
+            if($_POST['password'] && $_POST['password'] !="")
+            {
+                $user->setSalt(hash('sha256',dechex(sin(rand(0,100000))*100000)));
+                $user->setPassword(hash('sha256',hash('sha256',$_POST['password']).$user->getSalt()));
+            }
+            
+			$user->save();
+			header('location: ' . $this->getUrlPrefix() . 'Profile');
+        }
 	}
 }
 ?>

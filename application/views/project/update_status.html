@@ -8,7 +8,7 @@
 		<label for="en_status">English status:</label>
 	</div>
 	
-	<form method="post" action="./projects/processAddNewStatusToProject/{{ project.id }}" id="AddStatusForm">
+	<form method="post" action="./projects/processAddNewStatusTo{{ type }}/{{ relevantId }}" id="AddStatusForm">
 		<div id="profile_input">
 			<input type="text" name="nl_status" id="nl_status" value="" />
 			<input type="text" name="en_status" id="en_status" value="" />
@@ -24,7 +24,7 @@
 	
 	<span>Or choose an existing status:</span>
 	
-	<form method="post" action="./projects/processAddExistingStatusToProject/{{ project.id }}" id="AddExistingStatusForm">
+	<form method="post" action="./projects/processAddExistingStatusTo{{ type }}/{{ relevantId }}" id="AddExistingStatusForm">
 		<label for="status">Status:</label>
 		<select name="status" id="status">
 			{% for status in statuses %}

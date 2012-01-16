@@ -25,6 +25,14 @@ class Users extends System_Controller {
 		));
 	}
 	
+    public function delete($id = false){
+        if($id){
+            $this->mapper('user')->doDelete($id);
+            exit;
+            header('location: ' . $this->getUrlPrefix() . 'users');
+        }
+    }
+    
 	public function edit($id = false) {
 	   if($id)
        {

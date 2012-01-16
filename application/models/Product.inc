@@ -78,9 +78,11 @@ class Product_Mapper extends System_Mapper {
 		$deleteQuery = $this->db->prepareCached('deleteAllLogitemRelationsByProduct', 'DELETE FROM product_has_logitem WHERE product_id = ?');
 		$deleteQuery->execute(array($product->getId()));
 		foreach ($product->getLogItems() as $logItem) {
-			$logItem->save();
-			$insertQuery = $this->db->prepareCached('insertLogitemRelationByProduct', 'INSERT INTO product_has_logitem SET product_id = ?, logitem_id = ?');
-			$insertQuery->execute(array($product->getId(), $logItem->getId()));
+			if ($logItem) {
+				$logItem->save();
+				$insertQuery = $this->db->prepareCached('insertLogitemRelationByProduct', 'INSERT INTO product_has_logitem SET product_id = ?, logitem_id = ?');
+				$insertQuery->execute(array($product->getId(), $logItem->getId()));
+			}
 		}
 	}
 }
@@ -91,7 +93,7 @@ class Product_Model extends System_Model {
 	private $projectId;
 	private $statusId;
 	private $status;
-	private $logItems;
+	private $logItems = array();
 	
 	public function getId() {
 		return $this->id;
@@ -144,7 +146,7 @@ class Product_Model extends System_Model {
 	}
 	
 	public function getLogItems() {
-		if ($this->logItems == null) {
+		if ($this->logItems == null || count($this->logItems)) {
 			$this->logItems = $this->mapper->mapper('logItem')->findByProduct($this);
 		}
 		return $this->logItems;
@@ -153,6 +155,7 @@ class Product_Model extends System_Model {
 	public function addLogItem(LogItem_Model $logItem) {
 		$logItems = $this->getLogItems();
 		$logItems[] = $logItem;
+		$this->logItems = $logItems;
 		return $this;
 	}
 }

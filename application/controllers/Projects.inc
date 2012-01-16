@@ -350,6 +350,8 @@ class Projects extends System_Controller {
 				'pageTitle' => 'We R Asia | Update Status',
 				'project' => $curProject,
 				'statuses' => $tplStatuses,
+				'relevantId' => $curProject['id'],
+				'type' => 'Project',
 			));
 		} else {
 			//leeg
@@ -435,6 +437,85 @@ class Projects extends System_Controller {
 		header('location: ' . $this->getUrlPrefix() . 'projects/project/'.$id);
 	}
 	
+	public function processAddExistingStatusToProduct($id = false) {
+		if (!$id) {
+			return;
+		}
+		$status = $this->mapper('status')->find($_POST['status']);
+		$product = $this->mapper('product')->find($id);
+		$logItemMapper = $this->mapper('logItem');
+		$logItem = new LogItem_Model($logItemMapper);
+		$logItem
+		->setDate(time())
+		->setTranslatableId($this->mapper('translatable')->findBySentence('statusChange')->getId())
+		->setData(serialize(
+				array(
+					'fromStatus' => array(
+						'find', 'Status', $product->getStatus()->getId(), 'TextForLanguage', 'currentLanguage'
+					),
+					'toStatus' => array(
+						'find', 'Status', $_POST['status'], 'TextForLanguage', 'currentLanguage'
+					),
+				)
+		))
+		->save();
+		$product->addLogItem($logItem);
+		$product->setStatus($status);
+		$product->save();
+		header('location: ' . $this->getUrlPrefix() . 'projects/product/'.$id);
+	}
+	
+	public function processAddNewStatusToProduct($id = false) {
+		if (!$id) {
+			return;
+		}
+		$nlStatus = $_POST['nl_status'];
+		$enStatus = $_POST['en_status'];
+		$translatableMapper = $this->mapper('translatable');
+		$translatable = new Translatable_Model($translatableMapper);
+		$translatable->setSentence($enStatus);
+		$translatable->save();
+	
+		$translationMapper = $this->mapper('translation');
+		$translation = new Translation_Model($translationMapper);
+		$translation->setTranslatableId($translatable->getId());
+		$translation->setLanguage($this->mapper('language')->findByCode('en'));
+		$translation->setTranslation($enStatus);
+		$translation->save();
+	
+		$translation = new Translation_Model($translationMapper);
+		$translation->setTranslatableId($translatable->getId());
+		$translation->setLanguage($this->mapper('language')->findByCode('nl'));
+		$translation->setTranslation($nlStatus);
+		$translation->save();
+	
+		$statusMapper = $this->mapper('status');
+		$status = new Status_Model($statusMapper);
+		$status->setTranslatableId($translatable->getId());
+		$status->save();
+		$product = $this->mapper('product')->find($id);
+		$logItemMapper = $this->mapper('logItem');
+		$logItem = new LogItem_Model($logItemMapper);
+		$logItem
+		->setDate(time())
+		->setTranslatableId($this->mapper('translatable')->findBySentence('statusChange')->getId())
+		->setData(serialize(
+				array(
+						'fromStatus' => array(
+								'find', 'Status', $product->getStatus()->getId(), 'TextForLanguage', 'currentLanguage'
+						),
+						'toStatus' => array(
+								'find', 'Status', $status->getId(), 'TextForLanguage', 'currentLanguage'
+						),
+				)
+		))
+		->save();
+		$product->addLogItem($logItem);
+		$product->setStatus($status);
+		$product->save();
+		header('location: ' . $this->getUrlPrefix() . 'projects/product/'.$id);
+	}
+	
 	public function addStatusToProduct($id = false) {
 		if($id)
 		{
@@ -450,10 +531,22 @@ class Projects extends System_Controller {
 				'name' => $project->getName(),
 			);
 			
+			$statuses = $this->mapper('status')->findAll();
+			$tplStatuses = array();
+			foreach ($statuses as $status) {
+				$tplStatuses[] = array(
+						'name' => $status->getTextForLanguage($this->mapper('user')->getLoggedInUser()->getLanguage()),
+						'id' => $status->getId(),
+				);
+			}
+			
 			echo $this->t()->render('project/product/update_status.html', array(
 				'pageTitle' => 'We R Asia | Update Status',
 				'project' => $curProject,
 				'product' => $curProduct,
+				'type' => 'Product',
+				'relevantId' => $curProduct['id'],
+				'statuses' => $tplStatuses,
 			));
 		} else {
 			//leeg
