@@ -243,9 +243,8 @@ input, select {
 	background-color: #968b6e;
 	display: block;
 	height: 30px;
-	width: 130px;
 	margin: 20px 2px 0 0;
-	padding-top: 10px;
+	padding: 10px 10px 0 10px;
 	border: 1px solid #665f4a;
 	border-radius: 7px;
 	color: white;
