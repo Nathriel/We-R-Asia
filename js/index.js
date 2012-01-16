@@ -43,7 +43,7 @@ $(function() {
 				} else if(identifier == 'invoice') {
 					window.location = baseHref + 'projects/deleteInvoiceProcess/' + splitOrigin[1];
 				} else if(identifier == 'user') {
-					window.location = baseHref + 'projects/deleteUserProcess/' + splitOrigin[1];
+					window.location = baseHref + 'users/delete/' + splitOrigin[1];
 				}
 				return false;
 			});

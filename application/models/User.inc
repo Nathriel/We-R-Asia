@@ -62,7 +62,7 @@ class User_Mapper extends System_Mapper {
 			'SELECT id
 			FROM user
 			WHERE email = ?');
-		$query->execute(array($username));
+		$query->execute(array($email));
 		$row = $query->fetch(PDO::FETCH_ASSOC);
 		return $this->find($row['id']);
 	}
