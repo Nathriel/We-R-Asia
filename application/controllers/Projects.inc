@@ -580,5 +580,12 @@ class Projects extends System_Controller {
 			'project' => $curProject,
 		));
 	}
+	
+	public function uploadDocumentToProjectProcess($id = false) {
+		if (!$id) {
+			return;
+		}
+		
+	}
 }
 ?>
