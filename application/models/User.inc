@@ -84,6 +84,11 @@ class User_Mapper extends System_Mapper {
 				'INSERT INTO user
 				SET username=?,password=?,password_salt=?,name=?,address=?,residence=?,email=?,company=?,language_id=?');
 		}
+        
+        if(!$user->getLanguage()){
+            $user->setLanguage($this->mapper('language')->find('1'));
+        }
+        
 		$args = array_merge(array(
 			$user->getUsername(),
 			$user->getPassword(),
@@ -99,6 +104,11 @@ class User_Mapper extends System_Mapper {
 		if (!$user->getId()) {
 			$user->setId($this->db->lastInsertId());
 		}
+        //print_r($user);
+        //print_r($this->mapper('right'));
+        //var_dump($this->mapper->('right')->find(7));  
+        var_dump($this->mapper('right')->find('7'));
+        
 	}
 	
 	public function getLoggedInUser() {
@@ -257,12 +267,18 @@ class User_Model extends System_Model {
 		return $this->mapper->mapper('project')->findByUser($this, $finished);
 	}
 	
+    
+    
 	public function getRights() {
 		if ($this->rights == null && $this->getId()) {
 			$this->rights = $this->mapper->mapper('right')->findByUser($this);
 		}
 		return $this->rights;
 	}
+    
+    public function setRights($rights){
+        $this->rights = $rights;
+    } 
 	
 	public function hasRight($name) {
 		$rights = $this->getRights();

@@ -30,8 +30,12 @@ class Users extends System_Controller {
        {
     	   $args = array(
     			'pageTitle' => 'We R Asia | Edit User',
+                'EditUserForm' => array(
+                    'action' => './users/editUserProcess/'.$id,
+                    )
 	      );
            $user = $this->mapper('user')->find($id);
+           
            $args += array(
     				'username' => $user->getUsername(),
     				'name' => $user->getName(),
@@ -42,14 +46,51 @@ class Users extends System_Controller {
     			);
     		echo $this->t()->render('user/edit_user.html', $args);
         }else{
-            //Wanneer edit leeg is
+            header('location: ' . $this->getUrlPrefix() . 'users');
         }
 	}
 	
 	public function add() {
 		echo $this->t()->render('user/add_user.html', array(
 			'pageTitle' => 'We R Asia | Add User',
+            'AddUserForm' => array(
+					'action' => './users/addUserProcess/',
+            )
 		));
 	}
+    
+    public function editUserProcess($id = false){
+        if($id)
+		{
+			$userMapper = $this->mapper('user');
+			$user = $userMapper->find($id);
+			$user->setUsername($_POST['username']);
+            $user->setName($_POST['name']);
+            $user->setEmail($_POST['email']);
+            $user->setAddress($_POST['address']);
+            $user->setResidence($_POST['residence']);
+			$user->save();
+            exit;
+			header('location: ' . $this->getUrlPrefix() . 'users/edit/'.$id);
+		} else {
+			//leeg
+		}
+    }
+    
+    public function addUserProcess(){
+        $userMapper = $this->mapper('user');
+        $user = new User_Model($userMapper);
+        $user->setUsername($_POST['username']);
+        $user->setName($_POST['name']);
+        $user->setEmail($_POST['email']);
+        $user->setAddress($_POST['address']);
+        $user->setResidence($_POST['residence']);
+        $user->setRights($this->mapper('right')->find($_POST['type']));
+        $user->setCompany($_POST['company']);
+        $user->setSalt(hash('sha256',dechex(sin(rand(0,100000))*100000)));
+        $user->setPassword(hash('sha256',hash('sha256',$_POST['password']).$user->getSalt()));
+        $user->save();
+        header('location: ' . $this->getUrlPrefix() . 'users');
+    }
 }
 ?>
