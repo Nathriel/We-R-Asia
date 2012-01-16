@@ -67,6 +67,16 @@ class Projects extends System_Controller {
 		}
 	}
 	
+	public function archiveProjectProcess($id = false) {
+		if($id)
+		{
+			/* needs model function */
+			header('location: ' . $this->getUrlPrefix() . 'projects');
+		} else {
+			//leeg
+		}
+	}
+	
 	public function deleteProjectProcess($id = false) {
 		if($id)
 		{
@@ -201,6 +211,15 @@ class Projects extends System_Controller {
 				'project' => $curProject,
 				'productsCount' => count($tplLogItems),
 			));
+		} else {
+			//leeg
+		}
+	}
+	
+	public function deleteProductProcess($id = false) {
+		if($id)
+		{
+			
 		} else {
 			//leeg
 		}
