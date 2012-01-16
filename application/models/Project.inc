@@ -131,9 +131,9 @@ class Project_Model extends System_Model {
 	private $finished;
 	private $statusId;
 	private $status;
-	private $logItems = array();
-	private $users = array();
-	private $products = array();
+	private $logItems;
+	private $users;
+	private $products;
 	
 	public function getId() {
 		return $this->id;
@@ -195,7 +195,7 @@ class Project_Model extends System_Model {
 	}
 	
 	public function getLogItems() {
-		if ($this->logItems == null || $this->logItems == array()) {
+		if ($this->logItems == null) {
 			$this->logItems = $this->mapper->mapper('logItem')->findByProject($this);
 		}
 		return $this->logItems;
@@ -209,7 +209,7 @@ class Project_Model extends System_Model {
 	}
 	
 	public function getProducts() {
-		if ($this->products == null || $this->products == array()) {
+		if ($this->products == null) {
 			$this->products = $this->mapper->mapper('product')->findByProject($this);
 		}
 		return $this->products;
@@ -223,7 +223,7 @@ class Project_Model extends System_Model {
 	}
 	
 	public function getUsers() {
-		if (($this->users == null || $this->users = array()) && $this->getId()) {
+		if ($this->users == null && $this->getId()) {
 			$this->users = $this->mapper->mapper('user')->findByProject($this);
 		}
 		return $this->users;

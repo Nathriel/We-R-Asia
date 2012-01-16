@@ -146,7 +146,7 @@ class Product_Model extends System_Model {
 	}
 	
 	public function getLogItems() {
-		if ($this->logItems == null || $this->logItems == array()) {
+		if ($this->logItems == null || count($this->logItems)) {
 			$this->logItems = $this->mapper->mapper('logItem')->findByProduct($this);
 		}
 		return $this->logItems;
