@@ -10,24 +10,15 @@
 				<th>{{ trans("options") }}</th>
 		</thead>
 		<tbody>
+		{% for invoice in invoices %}
 			<tr>
-				<td>Invoice_012012.pdf</td>
+				<td><a href="{{invoice.fileUrl}}">{{invoice.name}}</a></td>
+				<td class="date">{{ invoice.date }}</td>
 				<td class="options_td">
-					<a class="option_delete" href="#">{{ trans("delete") }}</a>
+					<a class="option_delete" href="invoice/{{invoice.id}}">{{ trans("delete") }}</a>
 				</td>
 			</tr>
-			<tr class="evenrow">
-				<td>Invoice_022011.pdf</td>
-				<td class="options_td">
-					<a class="option_delete" href="#">{{ trans("delete") }}</a>
-				</td>
-			</tr>
-			<tr>
-				<td>Invoice_112011.pdf</td>
-				<td class="options_td">
-					<a class="option_delete" href="#">{{ trans("delete") }}</a>
-				</td>
-			</tr>
+		{% endfor %}
 		</tbody>
 	</table>
 	

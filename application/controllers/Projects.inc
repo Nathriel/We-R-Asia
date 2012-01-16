@@ -582,9 +582,25 @@ class Projects extends System_Controller {
 				'name' => $project->getName(),
 				'code' => $project->getCode(),
 		);
+		
+		$invoices = $project->getInvoices();
+		$tplInvoices = array();
+		foreach ($invoices as $invoice) {
+			if ($invoice) {
+				$splitFileLocation = explode('_', $invoice->getFileLocation());
+				$tplInvoices[] = array(
+						'id' => $invoice->getId(),
+						'name' => (isset($splitFileLocation[1])?$splitFileLocation[1]:'Unknown'),
+						'date' => date('d-m-Y H:i:s', filemtime($invoice->getFileLocation())),
+						'fileUrl' => $invoice->getFileLocation(),
+				);
+			}
+		}
+		
 		echo $this->t()->render('project/invoices.html', array(
 			'pageTitle' => 'We R Asia | Invoices',
 			'project' => $curProject,
+			'invoices' => $tplInvoices,
 		));
 	}
 	
