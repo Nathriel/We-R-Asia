@@ -82,7 +82,9 @@ class Projects extends System_Controller {
 	public function archiveProjectProcess($id = false) {
 		if($id)
 		{
-			/* needs model function */
+			$project = $this->mapper('project')->find($id);
+			$project->setFinished(1);
+			$project->save();
 			header('location: ' . $this->getUrlPrefix() . 'projects');
 		} else {
 			//leeg
