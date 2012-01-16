@@ -103,9 +103,11 @@ class Project_Mapper extends System_Mapper {
 		$deleteQuery = $this->db->prepareCached('deleteAllLogitemRelationsByProject', 'DELETE FROM project_has_logitem WHERE project_id = ?');
 		$deleteQuery->execute(array($project->getId()));
 		foreach ($project->getLogItems() as $logItem) {
-			$logItem->save();
-			$insertQuery = $this->db->prepareCached('insertLogitemRelationByProject', 'INSERT INTO project_has_logitem SET project_id = ?, logitem_id = ?');
-			$insertQuery->execute(array($project->getId(), $logItem->getId()));
+			if ($logItem) {
+				$logItem->save();
+				$insertQuery = $this->db->prepareCached('insertLogitemRelationByProject', 'INSERT INTO project_has_logitem SET project_id = ?, logitem_id = ?');
+				$insertQuery->execute(array($project->getId(), $logItem->getId()));
+			}
 		}
 		
 		foreach ($project->getProducts() as $product) {
@@ -129,9 +131,9 @@ class Project_Model extends System_Model {
 	private $finished;
 	private $statusId;
 	private $status;
-	private $logItems;
-	private $users;
-	private $products;
+	private $logItems = array();
+	private $users = array();
+	private $products = array();
 	
 	public function getId() {
 		return $this->id;
@@ -193,7 +195,7 @@ class Project_Model extends System_Model {
 	}
 	
 	public function getLogItems() {
-		if ($this->logItems == null) {
+		if ($this->logItems == null || $this->logItems == array()) {
 			$this->logItems = $this->mapper->mapper('logItem')->findByProject($this);
 		}
 		return $this->logItems;
@@ -207,7 +209,7 @@ class Project_Model extends System_Model {
 	}
 	
 	public function getProducts() {
-		if ($this->products == null) {
+		if ($this->products == null || $this->products == array()) {
 			$this->products = $this->mapper->mapper('product')->findByProject($this);
 		}
 		return $this->products;
@@ -221,7 +223,7 @@ class Project_Model extends System_Model {
 	}
 	
 	public function getUsers() {
-		if ($this->users == null && $this->getId()) {
+		if (($this->users == null || $this->users = array()) && $this->getId()) {
 			$this->users = $this->mapper->mapper('user')->findByProject($this);
 		}
 		return $this->users;

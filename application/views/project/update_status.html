@@ -28,7 +28,7 @@
 		<label for="status">Status:</label>
 		<select name="status" id="status">
 			{% for status in statuses %}
-				<option>{{ status }}</option>
+				<option value="{{ status.id }}">{{ status.name }}</option>
 			{% endfor %}
 		</select>
 		<input class="center_button" type="submit" name="submit" value="{{ trans('save') }}" />

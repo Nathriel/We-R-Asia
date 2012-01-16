@@ -53,8 +53,28 @@ class LogItem_Mapper extends System_Mapper {
 		return null;
 	}
 	
-	protected function doSave(System_Model $model) {
-		return null;
+	protected function doSave(System_Model $logItem) {
+		$args = array();
+		if ($logItem->getId()) {
+			$args[] = $logItem->getId();
+			$query = $this->db->prepareCached('updateLogItem',
+				'UPDATE logitems
+				SET date=?,data=?,translatable_id=?
+				WHERE id=?');
+		} else {
+			$query = $this->db->prepareCached('insertLogItem',
+				'INSERT INTO logitems
+				SET date=?,data=?,translatable_id=?');
+		}
+		$args = array_merge(array(
+			$logItem->getDate(),
+			$logItem->getData(),
+			$logItem->getTranslatableId(),
+		), $args);
+		$query->execute($args);
+		if (!$logItem->getId()) {
+			$logItem->setId($this->db->lastInsertId());
+		}
 	}
 }
 
