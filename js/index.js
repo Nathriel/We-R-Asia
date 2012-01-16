@@ -1,3 +1,8 @@
+var baseHref;
+function setBaseHref(a) {
+	baseHref = a;
+}
+
 $(function() {
 	var $dialogBox = $('#dialog_box');
 	
@@ -29,7 +34,7 @@ $(function() {
 				if (identifier == 'project') {
 					window.location = url + '/deleteProjectProcess/' + splitOrigin[1];
 				} else if (identifier == 'product') {
-					/* alert(url + '/../../deleteProductProcess/' + splitOrigin[1]); */
+					alert(url + '/../../deleteProductProcess/' + splitOrigin[1]);
 				} else if(identifier == 'archive') {
 					window.location = url + '/ArchiveProjectProcess/' + splitOrigin[1];
 				}
