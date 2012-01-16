@@ -26,8 +26,10 @@ $(function() {
 				var url = window.location;
 				var splitOrigin = $(origin).attr('href').split('/');
 				var identifier = splitOrigin[0];
-				if(identifier = 'project') {
+				if (identifier == 'project') {
 					window.location = url + '/deleteProjectProcess/' + splitOrigin[1];
+				} else if (identifier == 'product') {
+					alert(url + '../../deleteProductProcess/' + splitOrigin[1]);
 				}
 				return false;
 			});

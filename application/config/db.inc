@@ -1,9 +1,9 @@
 <?php
 return array(
-	'host' => 'bequ.nl',
+	'host' => 'bequtest.nl',
 	'port' => null,
-	'username' => 'bequnl1x_wra',
+	'username' => 'bequtest_wra',
 	'password' => 'wra',
-	'database' => 'bequnl1x_wra',
+	'database' => 'bequtest_wra',
 );
 ?>
