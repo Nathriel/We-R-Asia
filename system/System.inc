@@ -54,6 +54,7 @@ class System {
 				} catch (Exception $e) {
 					echo '<pre>';
 					var_dump($e);
+					var_dump($e->getTraceAsString());
 					header('HTTP/1.0 500 Internal Server Error');
 				}
 			} else {
