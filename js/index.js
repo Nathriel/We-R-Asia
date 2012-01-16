@@ -32,11 +32,15 @@ $(function() {
 				var splitOrigin = $(origin).attr('href').split('/');
 				var identifier = splitOrigin[0];
 				if (identifier == 'project') {
-					window.location = url + '/deleteProjectProcess/' + splitOrigin[1];
+					window.location = baseHref + 'projects/deleteProjectProcess/' + splitOrigin[1];
 				} else if (identifier == 'product') {
-					alert(url + '/../../deleteProductProcess/' + splitOrigin[1]);
+					window.location = baseHref + 'projects/deleteProductProcess/' + splitOrigin[1];
 				} else if(identifier == 'archive') {
-					window.location = url + '/ArchiveProjectProcess/' + splitOrigin[1];
+					window.location = baseHref + 'projects/archiveProjectProcess/' + splitOrigin[1];
+				} else if(identifier == 'document') {
+					window.location = baseHref + 'projects/deleteDocumentProcess/' + splitOrigin[1];
+				} else if(identifier == 'invoice') {
+					window.location = baseHref + 'projects/deleteInvoiceProcess/' + splitOrigin[1];
 				}
 				return false;
 			});

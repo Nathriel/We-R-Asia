@@ -243,8 +243,10 @@ class Projects extends System_Controller {
 	public function deleteProductProcess($id = false) {
 		if($id)
 		{
-			/* needs model function */
-			header('location: ' . $this->getUrlPrefix() . 'projects');
+			$product = $this->mapper('product')->find($id);
+			$project = $this->mapper('project')->find($product->getProjectId());
+			$this->mapper('product')->delete($id);
+			header('location: ' . $this->getUrlPrefix() . 'projects/project/' . $project->getId());
 		} else {
 			//leeg
 		}
