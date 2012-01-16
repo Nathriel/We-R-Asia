@@ -43,8 +43,28 @@ class Translation_Mapper extends System_Mapper {
 		return null;
 	}
 	
-	protected function doSave(System_Model $model) {
-		return null;
+	protected function doSave(System_Model $translation) {
+		$args = array();
+		if ($translation->getId()) {
+			$args[] = $translation->getId();
+			$query = $this->db->prepareCached('updateTranslation',
+				'UPDATE translation
+				SET language_id=?, translatable_id=?, translation = ?
+				WHERE id=?');
+		} else {
+			$query = $this->db->prepareCached('insertTranslation',
+				'INSERT INTO translation
+				SET language_id=?, translatable_id=?, translation = ?');
+		}
+		$args = array_merge(array(
+			$translation->getLanguage()->getId(),
+			$translation->getTranslatable()->getId(),
+			$translation->getTranslation(),
+		), $args);
+		$query->execute($args);
+		if (!$translation->getId()) {
+			$translation->setId($this->db->lastInsertId());
+		}
 	}
 }
 

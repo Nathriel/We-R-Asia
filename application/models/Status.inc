@@ -40,7 +40,7 @@ class Status_Mapper extends System_Mapper {
 	protected function doSave(System_Model $status) {
 		$args = array();
 		if ($status->getId()) {
-			$args[] = $project->getId();
+			$args[] = $status->getId();
 			$query = $this->db->prepareCached('updateStatus',
 				'UPDATE status
 				SET translatable_id=?
