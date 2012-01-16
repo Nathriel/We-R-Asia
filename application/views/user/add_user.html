@@ -3,7 +3,7 @@
 
 	<h1><a href="users">{{ trans("users") }}</a> > {{ trans("addUser") }}</h1>
 	
-	<form method="post" action="" id="AddUserForm">
+	<form method="post" action="{{ AddUserForm.action }}" id="AddUserForm" class="passwordForm">
 		<div id="profile_labels">
 			<label for="username">{{ trans("username") }}:</label>
 			<label for="name">{{ trans("name") }}:</label>
@@ -18,10 +18,11 @@
 			<input type="text" name="username" id="username" value="{{ username }}" />
 			<input type="text" name="name" id="name" value="{{ name }}" />
 			<input type="text" name="email" id="email" value="{{ email }}" />
-			<select type="text" name="type" id="type" />
-				<option value="user">{{ trans("user") }}</option>
-				<option value="moderator">Moderator</option>
-				<option value="admin">Admin</option>
+            <input type="hidden" name="submitvalue" value="{{ submitvalue }}" />
+			<select type="text" name="type" id="type" >
+				<option value="5">Client</option>
+				<option value="6">China</option>
+				<option value="7">Europe</option>
 			</select>
 			<input type="text" name="address" id="address" value="{{ address }}" />
 			<input type="text" name="residence" id="residence" value="{{ residence }}" />

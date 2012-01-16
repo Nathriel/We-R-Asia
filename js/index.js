@@ -13,8 +13,9 @@ $(function() {
 		$('#drop_menu').hide();
 	});
 	
+    
+    
 	/* dialog_box */
-	
 	function showDialog(text, type, origin) {
 		$dialogBox.empty();
 		$dialogBox.prepend('<p>' + text + '</p>');
@@ -56,11 +57,28 @@ $(function() {
 		showDialog('Are you sure you want to delete this?', 'ok', this);
 	});
 	
+    /* password form */
+    $('.passwordForm').submit(function(e)
+    {
+        //e.preventDefault();
+        var password = $('.passwordForm input[name="password"]').val();
+        var password_again = $('.passwordForm input[name="password_again"]').val();
+        
+        if(password && password == password_again){
+            return true;
+        }
+        else
+        {
+            alert('The passwords are not equal');
+            return false;
+        }
+    });
+    
 	$('.option_archive').click(function(e) {
 		e.preventDefault();
 		showDialog('Are you sure you want to archive this project?', 'ok', this);
 	});
-	
+
 	/* login */
 	$('#loginForm').submit(function(e) {
 		e.preventDefault();
