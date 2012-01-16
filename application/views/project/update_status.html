@@ -4,21 +4,21 @@
 	<h1><a href="projects">{{ trans("projects") }}</a> > <a href="projects/project/1">{{project.name}}</a> > {{ trans("newStatus") }}</h1>
 	
 	<div id="profile_labels">
-		<label for="status">Status:</label>
-		<label for="visible">{{ trans("visibleToClients") }}:</label>
+		<label for="nl_status">Dutch status:</label>
+		<label for="en_status">English status:</label>
 	</div>
 	
 	<form method="post" action="" id="AddStatusForm">
 		<div id="profile_input">
-			<input type="text" name="status" id="status" value="" />
-			<input type="checkbox" name="visible" id="visible" value="" />
+			<input type="text" name="nl_status" id="nl_status" value="" />
+			<input type="text" name="en_status" id="en_status" value="" />
 		</div>
 		
 		<div class="clear"></div>
 		
 		<div id="center_buttons">
-			<input class="center_button" type="submit" name="submit" value="{{ trans("save") }}"/>
-			<input class="center_button" type="reset" name="reset" value="{{ trans("cancel") }}"/>
+			<input class="center_button" type="submit" name="submit" value="{{ trans('save') }}" />
+			<input class="center_button" type="reset" name="reset" value="{{ trans('cancel') }}" />
 		</div>
 	</form>
 	
