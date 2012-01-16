@@ -353,7 +353,9 @@ class Projects extends System_Controller {
 		if (!$id) {
 			return;
 		}
-		
+		$status = $this->mapper('status')->find($_POST['status']);
+		$project = $this->mapper('project')->find($id);
+		$logItemMapper = $this->mapper('logItem');
 	}
 	
 	public function addStatusToProduct($id = false) {
