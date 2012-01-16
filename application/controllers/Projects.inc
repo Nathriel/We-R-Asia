@@ -219,7 +219,8 @@ class Projects extends System_Controller {
 	public function deleteProductProcess($id = false) {
 		if($id)
 		{
-			
+			/* needs model function */
+			header('location: ' . $this->getUrlPrefix() . 'projects');
 		} else {
 			//leeg
 		}
