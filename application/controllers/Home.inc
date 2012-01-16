@@ -90,14 +90,32 @@ class Home extends System_controller{
 		return $password;
 	}
 	
+    public function newPasswordRequest(){
+        $user = $this->mapper('user')->getLoggedinUser();
+        if ($user) {
+            header('location: ./Projects');
+        } else {
+            echo $this->t()->render('forgotPassword.html', array(
+    			'pageTitle' => 'We R Asia | Forgot Password',
+    			'passwordForm' => array(
+    				'action' => './home/sendPassword/',
+    			),
+            	'languageSwitchReturnUrl' => urlencode(''),
+    		));
+        }
+    }
+    
+    public function sendPassword(){
+        $this->forgotPassword();
+    }
+    
 	public function forgotPassword() {
-		$user = $this->mapper('user')->findByEmail($_POST['recipient'];
-		
-		$newPass = generatePassword(9,8);
+		$user = $this->mapper('user')->findByEmail($_POST['recipient']);
+		$newPass = $this->generatePassword(9,8);
         $user->setSalt(hash('sha256',dechex(sin(rand(0,100000))*100000)));
         $user->setPassword(hash('sha256',hash('sha256',$newPass).$user->getSalt()));
 		
-		if(isset($user))) {
+		if(isset($user)) {
 			if(isset($_SESSION['languageId'])) {
 				if($_SESSION['languageId'] == 1) {
 					$subject = "password forgotten";
@@ -111,11 +129,21 @@ class Home extends System_controller{
 			}
 			$charset='UTF-8';
 			$recipient = $_POST['recipient'];
-			$headers += "Content-Type: text/html; charset=$charset; format=flowed\n"
+			$headers += "From: info@werasia.com\n Content-Type: text/html; charset=$charset; format=flowed\n"
 			. "MIME-Version: 1.0\n"
 			. "Content-Transfer-Encoding: 8bit\n"
 			. "X-Mailer: PHP\n";
-			mail($recipient, $subject, $body, $headers);
+            $user->save();
+			//mail($recipient, $subject, $body, $headers);
+            
+            $to      = $_POST['recipient'];
+            $subject = 'password forgotten';
+            $message = $body;
+            $headers = 'From: info@werasia.com' . "\r\n" .
+                'Reply-To: info@werasia.com' . "\r\n" .
+                'X-Mailer: PHP/' . phpversion();
+            echo $to;
+            echo mail($to, $subject, $message, $headers);
 		} else {
 			
 		}
