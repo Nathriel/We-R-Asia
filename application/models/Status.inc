@@ -21,12 +21,42 @@ class Status_Mapper extends System_Mapper {
 		return $status;
 	}
 	
+	public function findAll() {
+		$query = $this->db->prepareCached('findAllStatuses',
+				'SELECT id
+				FROM status');
+		$query->execute(array());
+		$result = array();
+		while ($row = $query->fetch(PDO::FETCH_ASSOC)) {
+			$result[] = $this->find($row['id']);
+		}
+		return $result;
+	}
+	
 	protected function doDelete($id) {
 		return null;
 	}
 	
 	protected function doSave(System_Model $status) {
-		return null;
+		$args = array();
+		if ($status->getId()) {
+			$args[] = $project->getId();
+			$query = $this->db->prepareCached('updateStatus',
+				'UPDATE status
+				SET translatable_id=?
+				WHERE id=?');
+		} else {
+			$query = $this->db->prepareCached('insertStatus',
+				'INSERT INTO status
+				SET translatable_id=?');
+		}
+		$args = array_merge(array(
+			$status->getTranslatableId(),
+		), $args);
+		$query->execute($args);
+		if (!$status->getId()) {
+			$status->setId($this->db->lastInsertId());
+		}
 	}
 }
 
