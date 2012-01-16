@@ -8,6 +8,17 @@ class Projects extends System_Controller {
         }
     }
     
+    public function moveToArchive($id = false){
+        if($id){
+            $project = $this->mapper('project')->find($id);
+            if($project){
+                $project->setFinished(1);
+                $project->save();
+                header('location: ' . $this->getUrlPrefix() . 'archive');
+            }
+        }
+    }
+    
 	public function index() {
 		$user = $this->mapper('user')->getLoggedinUser();
 		$languageModel = $user->getLanguage();
