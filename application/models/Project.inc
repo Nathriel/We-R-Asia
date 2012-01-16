@@ -128,9 +128,11 @@ class Project_Mapper extends System_Mapper {
 		$deleteQuery = $this->db->prepareCached('deleteAllDocumentsFromProject', 'DELETE FROM project_has_document WHERE project_id = ?');
 		$deleteQuery->execute(array($project->getId()));
 		foreach ($documents as $document) {
-			$document->save();
-			$insertQuery = $this->db->prepareCached('insertDocumentByProject', 'INSERT INTO project_has_document SET project_id = ?, document_id = ?');
-			$insertQuery->execute(array($project->getId(), $document->getId()));
+			if ($document) {
+				$document->save();
+				$insertQuery = $this->db->prepareCached('insertDocumentByProject', 'INSERT INTO project_has_document SET project_id = ?, document_id = ?');
+				$insertQuery->execute(array($project->getId(), $document->getId()));
+			}
 		}
 		
 		foreach ($project->getInvoices() as $invoice) {

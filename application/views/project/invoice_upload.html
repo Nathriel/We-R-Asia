@@ -9,7 +9,7 @@
 	<form method="post" action="" id="uploadDocForm">
 		<input name="file_upload" id="file_upload" type="text" />
 		<input name="file_input" id="file_input" type="file" />
-		<input name="file_submit" class="regular_button" type="submit" value="{{ trans("upload") }}" />
+		<input name="file_submit" class="regular_button" type="submit" value="{{ trans("upload") }}" enctype="multipart/form-data" />
 	</form>
 	
 	<div class="clear"></div>

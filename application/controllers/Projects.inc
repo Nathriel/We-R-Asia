@@ -237,11 +237,15 @@ class Projects extends System_Controller {
 			$documents = $this->mapper('document')->findByProduct($product);
 			$tplDocuments = array();
 			foreach ($documents as $document) {
-				$splitFileLocation = explode("/", $document->getFileLocation());
-				$tplDocuments[] = array(
-					'id' => $document->getId(),
-					'name' => $splitFileLocation[8],
-				);
+				if ($document) {
+					$splitFileLocation = explode('_', $document->getFileLocation());
+					$tplDocuments[] = array(
+						'id' => $document->getId(),
+						'name' => (isset($splitFileLocation[1])?$splitFileLocation[1]:'Unknown'),
+						'date' => date('d-m-Y H:i:s', filemtime($document->getFileLocation())),
+						'fileUrl' => $document->getFileLocation(),
+					);
+				}
 			}
 			
 			echo $this->t()->render('project/product/product.html', array(
