@@ -70,13 +70,15 @@ class Projects extends System_Controller {
 			$documents = $this->mapper('document')->findByProject($project);
 			$tplDocuments = array();
 			foreach ($documents as $document) {
-				$splitFileLocation = explode("/", $document->getFileLocation());
-				$tplDocuments[] = array(
-					'id' => $document->getId(),
-					'name' => $splitFileLocation[count($splitFileLocation) - 1],
-					'date' => date('d-m-Y H:i:s', filemtime($document->getFileLocation())),
-					'fileUrl' => $document->getFileLocation(),
-				);
+				if ($document) {
+					$splitFileLocation = explode('_', $document->getFileLocation());
+					$tplDocuments[] = array(
+						'id' => $document->getId(),
+						'name' => $splitFileLocation[count($splitFileLocation) - 1],
+						'date' => date('d-m-Y H:i:s', filemtime($document->getFileLocation())),
+						'fileUrl' => $document->getFileLocation(),
+					);
+				}
 			}
 			
 			echo $this->t()->render('project/project.html', array(
@@ -598,7 +600,7 @@ class Projects extends System_Controller {
 		if (!$id) {
 			return;
 		}
-		$newName = './content/uploads/'.(microtime(true)*1000).$_FILES['file_input']['name'];
+		$newName = './content/uploads/'.(microtime(true)*1000).'_'.$_FILES['file_input']['name'];
 		move_uploaded_file($_FILES['file_input']['tmp_name'], $newName);
 		$project = $this->mapper('project')->find($id);
 		$documentMapper = $this->mapper('document');
@@ -637,7 +639,7 @@ class Projects extends System_Controller {
 		if (!$id) {
 			return;
 		}
-		$newName = './content/uploads/'.(microtime(true)*1000).$_FILES['file_input']['name'];
+		$newName = './content/uploads/'.(microtime(true)*1000).'_'.$_FILES['file_input']['name'];
 		move_uploaded_file($_FILES['file_input']['tmp_name'], $newName);
 		$product = $this->mapper('product')->find($id);
 		$documentMapper = $this->mapper('document');

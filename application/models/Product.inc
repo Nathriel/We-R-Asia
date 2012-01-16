@@ -90,6 +90,7 @@ class Product_Mapper extends System_Mapper {
 		$deleteQuery = $this->db->prepareCached('deleteAllDocumentsFromProduct', 'DELETE FROM product_has_document WHERE product_id = ?');
 		$deleteQuery->execute(array($product->getId()));
 		foreach ($documents as $document) {
+			$document->save();
 			$insertQuery = $this->db->prepareCached('insertDocumentByProduct', 'INSERT INTO product_has_document SET product_id = ?, document_id = ?');
 			$insertQuery->execute(array($product->getId(), $document->getId()));
 		}
