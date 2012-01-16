@@ -25,7 +25,7 @@ class Invoice_Mapper extends System_Mapper {
 	public function findByProject(Project_Model $project) {
 		$query = $this->db->prepareCached('findInvoiceByProject',
 				'SELECT id
-				FROM invoice
+				FROM invoices
 				WHERE project_id = ?');
 		$query->execute(array($project->getId()));
 		$result = array();
@@ -56,12 +56,12 @@ class Invoice_Mapper extends System_Mapper {
 		if ($invoice->getId()) {
 			$args[] = $invoice->getId();
 			$query = $this->db->prepareCached('updateInvoice',
-				'UPDATE invoice
+				'UPDATE invoices
 				SET file_location=?,project_id=?
 				WHERE id=?');
 		} else {
 			$query = $this->db->prepareCached('insertInvoice',
-				'INSERT INTO invoice
+				'INSERT INTO invoices
 				SET file_location=?,project_id=?');
 		}
 		$args = array_merge(array(

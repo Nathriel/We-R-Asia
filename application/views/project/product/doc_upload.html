@@ -1,34 +1,16 @@
 {% include 'header.html' %}
 <div id="content">
 
-	<h1><a href="projects">{{ trans("projects") }}</a> &gt; <a href="projects/project/1">Project_name</a> &gt; <a href="projects/project/1">Project_name</a> &gt; {{ trans("upload") }}</h1>
-	<p id="project_number">project_number</p>
+	<h1><a href="projects">{{ trans("projects") }}</a> &gt; <a href="projects/project/{{ project.id }}">{{ project.name }}</a> &gt; <a href="projects/product/{{ product.id }}">{{ product.name }}</a> &gt; {{ trans("upload") }}</h1>
+	<p id="project_number">{{ project.code }}</p>
 	
 	<h2>{{ trans("uploadNewDocument") }}</h2>
 
-	<form method="post" action="" id="uploadDocForm">
+	<form method="post" action="./projects/uploadDocumentToProductProcess/{{ project.id }}" id="uploadDocForm">
 		<input name="file_upload" id="file_upload" type="text" />
 		<input name="file_input" id="file_input" type="file" />
 		<input name="file_submit" class="regular_button" type="submit" value="{{ trans("upload") }}" />
 	</form>
-	
-	<div class="clear"></div>
-	
-	<h2>{{ trans("latestDocuments") }}</h2>
-	
-	<table>
-		<thead>
-			<tr>
-				<th>{{ trans("name") }}</th>
-				<th>{{ trans("date") }}</th>
-		</thead>
-		<tbody>
-			<tr>
-				<td>print_logo_tshirt.pdf</td>
-				<td>8-12-2011</td>
-			</tr>
-		</tbody>
-	</table>
 	
 	<script type="text/javascript">
 		jsl.load('./js/upload.js');

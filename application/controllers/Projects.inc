@@ -62,7 +62,9 @@ class Projects extends System_Controller {
 				$splitFileLocation = explode("/", $document->getFileLocation());
 				$tplDocuments[] = array(
 					'id' => $document->getId(),
-					'name' => $splitFileLocation[8],
+					'name' => $splitFileLocation[count($splitFileLocation) - 1],
+					'date' => date('d-m-Y H:i:s', filemtime($document->getFileLocation())),
+					'fileUrl' => $document->getFileLocation(),
 				);
 			}
 			
@@ -585,7 +587,55 @@ class Projects extends System_Controller {
 		if (!$id) {
 			return;
 		}
+		$newName = './content/uploads/'.(microtime(true)*1000).$_FILES['file_input']['name'];
+		move_uploaded_file($_FILES['file_input']['tmp_name'], $newName);
+		$project = $this->mapper('project')->find($id);
+		$documentMapper = $this->mapper('document');
+		$document = new Document_Model($documentMapper);
+		$document->setFileLocation($newName)->save();
 		
+		$project->addDocument($document);
+		$project->save();
+		header('location: ' . $this->getUrlPrefix() . 'projects/project/'.$id);
+	}
+	
+	public function uploadDocumentToProduct($id = false) {
+		if (!$id) {
+			return;
+		}
+		$product = $this->mapper('product')->find($id);
+		$curProduct = array(
+			'id' => $product->getId(),
+			'name' => $product->getName(),
+		);
+		
+		$project = $product->getProject();
+		$curProject = array(
+				'id' => $project->getId(),
+				'name' => $project->getName(),
+				'code' => $project->getCode(),
+		);
+		echo $this->t()->render('project/product/doc_upload.html', array(
+				'pageTitle' => 'We R Asia | Upload Document',
+				'project' => $curProject,
+				'product' => $curProduct,
+		));
+	}
+	
+	public function uploadDocumentToProductProcess($id = false) {
+		if (!$id) {
+			return;
+		}
+		$newName = './content/uploads/'.(microtime(true)*1000).$_FILES['file_input']['name'];
+		move_uploaded_file($_FILES['file_input']['tmp_name'], $newName);
+		$product = $this->mapper('product')->find($id);
+		$documentMapper = $this->mapper('document');
+		$document = new Document_Model($documentMapper);
+		$document->setFileLocation($newName)->save();
+	
+		$product->addDocument($document);
+		$product->save();
+		header('location: ' . $this->getUrlPrefix() . 'projects/product/'.$id);
 	}
 }
 ?>
