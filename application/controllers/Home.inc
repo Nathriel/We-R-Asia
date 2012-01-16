@@ -60,27 +60,65 @@ class Home extends System_controller{
 		
 	}
 	
-	public function forgotPassword() {
+	private function generatePassword($length=9, $strength=0) {
+		$vowels = 'aeuy';
+		$consonants = 'bdghjmnpqrstvz';
+		if ($strength & 1) {
+			$consonants .= 'BDGHJLMNPQRSTVWXZ';
+		}
+		if ($strength & 2) {
+			$vowels .= "AEUY";
+		}
+		if ($strength & 4) {
+			$consonants .= '23456789';
+		}
+		if ($strength & 8) {
+			$consonants .= '@#$%';
+		}
 		
-	
-		if(isset($_SESSION['languageId'])) {
-			if($_SESSION['languageId'] == 1) {
-				$subject = "password forgotten";
-				$headers = "From:" . "service@we-r-asia.com" . "\n";
-				$body = "";
+		$password = '';
+		$alt = time() % 2;
+		for ($i = 0; $i < $length; $i++) {
+			if ($alt == 1) {
+				$password .= $consonants[(rand() % strlen($consonants))];
+				$alt = 0;
 			} else {
-				$subject = "wachtwoord vergeten";
-				$headers = "Van:" . "service@we-r-asia.com" . "\n";
-				$body = "";
+				$password .= $vowels[(rand() % strlen($vowels))];
+				$alt = 1;
 			}
 		}
-		$charset='UTF-8';
-		$recipient = $_POST['recipient'];
-		$headers += "Content-Type: text/html; charset=$charset; format=flowed\n"
-		. "MIME-Version: 1.0\n"
-		. "Content-Transfer-Encoding: 8bit\n"
-		. "X-Mailer: PHP\n";
-		mail($recipient, $subject, $body, $headers);
+		return $password;
+	}
+	
+	public function forgotPassword() {
+		$user = $this->mapper('user')->findByEmail($_POST['recipient'];
+		
+		$newPass = generatePassword(9,8);
+        $user->setSalt(hash('sha256',dechex(sin(rand(0,100000))*100000)));
+        $user->setPassword(hash('sha256',hash('sha256',$newPass).$user->getSalt()));
+		
+		if(isset($user))) {
+			if(isset($_SESSION['languageId'])) {
+				if($_SESSION['languageId'] == 1) {
+					$subject = "password forgotten";
+					$headers = "From:" . "service@we-r-asia.com" . "\n";
+					$body = "new password:" + $newPass;
+				} else {
+					$subject = "wachtwoord vergeten";
+					$headers = "Van:" . "service@we-r-asia.com" . "\n";
+					$body = "nieuwe wachtword:" + $newPass;
+				}
+			}
+			$charset='UTF-8';
+			$recipient = $_POST['recipient'];
+			$headers += "Content-Type: text/html; charset=$charset; format=flowed\n"
+			. "MIME-Version: 1.0\n"
+			. "Content-Transfer-Encoding: 8bit\n"
+			. "X-Mailer: PHP\n";
+			mail($recipient, $subject, $body, $headers);
+		} else {
+			
+		}
 	}
 }
 ?>

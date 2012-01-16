@@ -7,7 +7,7 @@ class Right_Mapper extends System_Mapper {
 	protected function doFind($id) {
 		$query = $this->db->prepareCached('findRight',
 				'SELECT id,name
-				FROM right
+				FROM `right`
 				WHERE id = ?');
 		$query->execute(array($id));
 		$row = $query->fetch(PDO::FETCH_ASSOC);

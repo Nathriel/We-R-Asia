@@ -10,6 +10,7 @@ class System_Database_Database extends PDO {
 		}
 		parent::__construct($dsn, $config['username'], $config['password']);
 		$this->prepareCache = array();
+		$this->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 	}
 	
 	public function prepareCached($name, $query) {

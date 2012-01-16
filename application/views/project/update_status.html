@@ -22,15 +22,19 @@
 		</div>
 	</form>
 	
-	<span>Or choose an existing status:</span>
+	<h2>Or choose an existing status:</h2>
 	
 	<form method="post" action="./projects/processAddExistingStatusTo{{ type }}/{{ relevantId }}" id="AddExistingStatusForm">
-		<label for="status">Status:</label>
-		<select name="status" id="status">
-			{% for status in statuses %}
-				<option value="{{ status.id }}">{{ status.name }}</option>
-			{% endfor %}
-		</select>
+		<div id="profile_labels">
+			<label for="status">Status:</label>
+		</div>
+		<div id="profile_input">
+			<select name="status" id="status" class="status_select">
+				{% for status in statuses %}
+					<option value="{{ status.id }}">{{ status.name }}</option>
+				{% endfor %}
+			</select>
+		</div>
 		<input class="center_button" type="submit" name="submit" value="{{ trans('save') }}" />
 	</form>
 	

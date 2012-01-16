@@ -75,9 +75,10 @@ class Product_Mapper extends System_Mapper {
 			$product->setId($this->db->lastInsertId());
 		}
 		
+		$logItems = $product->getLogItems();
 		$deleteQuery = $this->db->prepareCached('deleteAllLogitemRelationsByProduct', 'DELETE FROM product_has_logitem WHERE product_id = ?');
 		$deleteQuery->execute(array($product->getId()));
-		foreach ($product->getLogItems() as $logItem) {
+		foreach ($logItems as $logItem) {
 			if ($logItem) {
 				$logItem->save();
 				$insertQuery = $this->db->prepareCached('insertLogitemRelationByProduct', 'INSERT INTO product_has_logitem SET product_id = ?, logitem_id = ?');
@@ -146,7 +147,7 @@ class Product_Model extends System_Model {
 	}
 	
 	public function getLogItems() {
-		if ($this->logItems == null || count($this->logItems)) {
+		if ($this->logItems == null || !count($this->logItems)) {
 			$this->logItems = $this->mapper->mapper('logItem')->findByProduct($this);
 		}
 		return $this->logItems;

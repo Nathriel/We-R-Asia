@@ -57,6 +57,16 @@ class User_Mapper extends System_Mapper {
 		return $this->find($row['id']);
 	}
 	
+	public function findByEmail($email) {
+		$query = $this->db->prepareCached('findUserByEmail',
+			'SELECT id
+			FROM user
+			WHERE email = ?');
+		$query->execute(array($username));
+		$row = $query->fetch(PDO::FETCH_ASSOC);
+		return $this->find($row['id']);
+	}
+	
 	public function tryLogin($username, $password) {
 		$user = $this->findByUsername($username);
 		if (!$user) {

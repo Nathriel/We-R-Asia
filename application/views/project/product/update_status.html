@@ -1,11 +1,11 @@
 {% include 'header.html' %}
 <div id="content">
 
-	<h1><a href="projects">Projects</a> &gt; <a href="projects/project/{{project.id}}">{{project.name}}</a> &gt; <a href="projects/product/{{product.id}}">{{product.name}}</a> > {{ trans("newStatus") }}</h1>
+	<h1><a href="projects">{{ trans("projects") }}</a> &gt; <a href="projects/project/{{project.id}}">{{project.name}}</a> &gt; <a href="projects/product/{{product.id}}">{{product.name}}</a> > {{ trans("newStatus") }}</h1>
 	
 	<div id="profile_labels">
-		<label for="nl_status">Dutch status:</label>
-		<label for="en_status">English status:</label>
+		<label for="nl_status">{{ trans("dutch") }} status:</label>
+		<label for="en_status">{{ trans("english") }} status:</label>
 	</div>
 	
 	<form method="post" action="./projects/processAddNewStatusTo{{ type }}/{{ relevantId }}" id="AddStatusForm">
@@ -22,7 +22,7 @@
 		</div>
 	</form>
 	
-	<span>Or choose an existing status:</span>
+	<span>{{ trans("existingStatusMessage") }}:</span>
 	
 	<form method="post" action="./projects/processAddExistingStatusTo{{ type }}/{{ relevantId }}" id="AddExistingStatusForm">
 		<label for="status">Status:</label>
