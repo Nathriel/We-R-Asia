@@ -565,9 +565,19 @@ class Projects extends System_Controller {
 		));
 	}
 	
-	public function uploadDocument() {
+	public function uploadDocumentToProject($id = false) {
+		if (!$id) {
+			return;
+		}
+		$project = $this->mapper('project')->find($id);
+		$curProject = array(
+			'id' => $project->getId(),
+			'name' => $project->getName(),
+			'code' => $project->getCode(),
+		);
 		echo $this->t()->render('project/doc_upload.html', array(
 			'pageTitle' => 'We R Asia | Upload Document',
+			'project' => $curProject,
 		));
 	}
 }
