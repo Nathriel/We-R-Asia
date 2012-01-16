@@ -278,7 +278,7 @@ class Projects extends System_Controller {
 			$product->setProjectId($id);
 			$product->setStatusId(1);
 			$product->save();
-			header('location: ' . $this->getUrlPrefix() . 'projects/project/1');
+			header('location: ' . $this->getUrlPrefix() . 'projects/project/'.$id);
 		} else {
 			//leeg
 		};
@@ -336,7 +336,10 @@ class Projects extends System_Controller {
 			
 			$tplStatuses = array();
 			foreach ($statuses as $status) {
-				$tplStatuses[] = $status->getTextForLanguage($this->mapper('user')->getLoggedInUser()->getLanguage());
+				$tplStatuses[] = array(
+					'name' => $status->getTextForLanguage($this->mapper('user')->getLoggedInUser()->getLanguage()),
+					'id' => $status->getId(),
+				);
 			}
 			
 			echo $this->t()->render('project/update_status.html', array(
@@ -356,6 +359,25 @@ class Projects extends System_Controller {
 		$status = $this->mapper('status')->find($_POST['status']);
 		$project = $this->mapper('project')->find($id);
 		$logItemMapper = $this->mapper('logItem');
+		$logItem = new LogItem_Model($logItemMapper);
+		$logItem
+			->setDate(time())
+			->setTranslatableId($this->mapper('translatable')->findBySentence('statusChange')->getId())
+			->setData(serialize(
+				array(
+					'fromStatus' => array(
+						'find', 'Status', $project->getStatus()->getId(), 'TextForLanguage', 'currentLanguage'
+					),
+					'toStatus' => array(
+						'find', 'Status', $_POST['status'], 'TextForLanguage', 'currentLanguage'
+					),
+				)
+			))
+			->save();
+		$project->addLogItem($logItem);
+		$project->setStatus($this->mapper('status')->find($_POST['status']));
+		$project->save();
+		header('location: ' . $this->getUrlPrefix() . 'projects/project/'.$id);
 	}
 	
 	public function addStatusToProduct($id = false) {
