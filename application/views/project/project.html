@@ -1,22 +1,22 @@
 {% include 'header.html' %}
 <div id="content">
 
-	<h1><a href="projects">Projects</a> > {{project.name}}</h1>
+	<h1><a href="projects">{{ trans("projects") }}</a> > {{project.name}}</h1>
 	<p id="project_number">{{project.code}}</p>
 	
 	<p id="project_status">Status: {{project.status}}<a href="projects/addStatusToProject/{{project.id}}" class="regular_button align_left">Update Status</a></p>
 	
 	<div class="clear"></div>
 	
-	<a id="to_invoices" href="projects/invoice/{{ project.id }}">To invoices ></a>
+	<a id="to_invoices" href="projects/invoice/{{ project.id }}">{{ trans("toInvoices") }} ></a>
 	
 	{% if productsCount > 0 %}
 	<table>
 		<thead>
 			<tr>
-				<th>Name</th>
+				<th>{{ trans("name") }}</th>
 				<th>Status</th>
-				<th>Options</th>
+				<th>{{ trans("options") }}</th>
 		</thead>
 		<tbody>
 			{% for product in products %}
@@ -24,43 +24,43 @@
 				<td><a href="projects/product/{{ product.id }}">{{product.name}}</a></td>
 				<td>{{product.status}}</td>
 				<td class="options_td">
-					<a class="option_edit" href="projects/editProduct/{{product.id}}">edit</a>
-					<a class="option_delete" href="product/{{product.id}}">delete</a>
+					<a class="option_edit" href="projects/editProduct/{{product.id}}">{{ trans("edit") }}</a>
+					<a class="option_delete" href="product/{{product.id}}">{{ trans("delete") }}</a>
 				</td>
 			</tr>
 			{% endfor %}
 		</tbody>
 	</table>
 	{% else %}
-	<h2>There are no products yet.</h2>
+	<h2>{{ trans("noProducts") }}</h2>
 	{% endif %}
 	
-	<a class="regular_button" href="projects/addProduct/{{project.id}}">Add Product</a>
+	<a class="regular_button" href="projects/addProduct/{{project.id}}">{{ trans("addProduct") }}</a>
 	
 	<div class="clear"></div>
 	
 	<br />
-	<h2>Documents</h2>
+	<h2>{{ trans("documents") }}</h2>
 	
 	<table class="four_col doc_options">
 		<thead>
 			<tr>
-				<th>Name</th>
-				<th>Date</th>
-				<th>Options</th>
+				<th>{{ trans("name") }}</th>
+				<th>{{ trans("date") }}</th>
+				<th>{{ trans("options") }}</th>
 		</thead>
 		<tbody>
 			<tr>
 				<td>print_logo_tshirt.pdf</td>
 				<td class="date">8-12-2011</td>
 				<td class="options_td">
-					<a class="option_delete" href="#">delete</a>
+					<a class="option_delete" href="#">{{ trans("delete") }}</a>
 				</td>
 			</tr>
 		</tbody>
 	</table>
 	
-	<a class="regular_button" href="projects/uploadDocument/1">Upload</a>
+	<a class="regular_button" href="projects/uploadDocument/1">{{ trans("upload") }}</a>
 	
 	<div class="clear"></div>
 	

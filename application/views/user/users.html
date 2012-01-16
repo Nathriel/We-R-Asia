@@ -1,15 +1,15 @@
 {% include 'header.html' %}
 <div id="content">
 
-	<h1>Users</h1>
+	<h1>{{ trans("users") }}</h1>
 	
 	<table>
 		<thead>
 			<tr>
-				<th>Name</th>
-				<th>Company</th>
+				<th>{{ trans("name") }}</th>
+				<th>{{ trans("company") }}</th>
 				<th>Type</th>
-				<th>Options</th>
+				<th>{{ trans("options") }}</th>
 		</thead>
 		<tbody>
 			{% for user in users %}
@@ -18,15 +18,15 @@
 				<td>{{ user.company }}</td>
 				<td>{{ user.type }}</td>
 				<td class="options_td">
-					<a class="option_edit" href="users/edit/{{ user.id }}">edit</a>
-					<a class="option_delete" href="#">delete</a>
+					<a class="option_edit" href="users/edit/{{ user.id }}">{{ trans("edit") }}</a>
+					<a class="option_delete" href="#">{{ trans("delete") }}</a>
 				</td>
 			</tr>
 			{% endfor %}
 		</tbody>
 	</table>
 	
-	<a href="users/add" class="regular_button">Add</a>
+	<a href="users/add" class="regular_button">{{ trans("add") }}</a>
 	
 	<div class="clear"></div>
 	

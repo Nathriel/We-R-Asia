@@ -1,17 +1,17 @@
 {% include 'header.html' %}
 <div id="content">
 
-	<h1><a href="users">Users</a> > Add User</h1>
+	<h1><a href="users">{{ trans("users") }}</a> > {{ trans("addUser") }}</h1>
 	
 	<form method="post" action="" id="AddUserForm">
 		<div id="profile_labels">
-			<label for="username">Username:</label>
-			<label for="name">Name:</label>
+			<label for="username">{{ trans("username") }}:</label>
+			<label for="name">{{ trans("name") }}:</label>
 			<label for="email">Email:</label>
 			<label for="type">Type:</label>
-			<label for="address">Address:</label>
-			<label for="residence">City:</label>
-			<label for="company">Company:</label>
+			<label for="address">{{ trans("address") }}:</label>
+			<label for="residence">{{ trans("city") }}:</label>
+			<label for="company">{{ trans("company") }}:</label>
 		</div>
 
 		<div id="profile_input">
@@ -19,7 +19,7 @@
 			<input type="text" name="name" id="name" value="{{ name }}" />
 			<input type="text" name="email" id="email" value="{{ email }}" />
 			<select type="text" name="type" id="type" />
-				<option value="user">User</option>
+				<option value="user">{{ trans("user") }}</option>
 				<option value="moderator">Moderator</option>
 				<option value="admin">Admin</option>
 			</select>
@@ -31,8 +31,8 @@
 		<div class="clear"></div>
 	
 		<div id="password_labels">
-			<label for="password">Password:</label>
-			<label for="password_again">Password again:</label>
+			<label for="password">{{ trans("password") }}:</label>
+			<label for="password_again">{{ trans("passwordAgain") }}:</label>
 		</div>
 		
 		<div id="password_input">
@@ -43,8 +43,8 @@
 		<div class="clear"></div>
 		
 		<div id="center_buttons">
-			<input class="center_button" type="submit" name="submit" value="Save"/>
-			<input class="center_button" type="reset" name="reset" value="Cancel"/>
+			<input class="center_button" type="submit" name="submit" value="{{ trans("save") }}"/>
+			<input class="center_button" type="reset" name="reset" value="{{ trans("cancel") }}"/>
 		</div>
 	</form>
 	

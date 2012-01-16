@@ -1,10 +1,10 @@
 {% include 'header.html' %}
 <div id="content">
 
-	<h1><a href="projects">Projects</a> > <a href="projects/project/{{project.id}}">{{project.name}}</a> > Add Product</h1>
+	<h1><a href="projects">{{ trans("projects") }}</a> > <a href="projects/project/{{project.id}}">{{project.name}}</a> > {{ trans("addProduct") }}</h1>
 	
 	<div id="profile_labels">
-		<label for="product">Product Name:</label>
+		<label for="product">{{ trans("productName") }}:</label>
 	</div>
 	
 	<form method="post" action="{{ AddProductForm.action }}" id="AddProductForm">
@@ -15,8 +15,8 @@
 		<div class="clear"></div>
 		
 		<div id="center_buttons">
-			<input class="center_button" type="submit" name="submit" value="Save"/>
-			<input class="center_button" type="reset" name="reset" value="Cancel"/>
+			<input class="center_button" type="submit" name="submit" value="{{ trans("save") }}"/>
+			<input class="center_button" type="reset" name="reset" value="{{ trans("cancel") }}"/>
 		</div>
 	</form>
 	

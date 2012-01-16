@@ -1,13 +1,13 @@
 {% include 'header.html' %}
 <div id="content">
 
-	<h1><a href="projects">Projects</a> > <a href="projects/project/{{ project.id }}">{{ project.name }}</a> > Edit Project</h1>
+	<h1><a href="projects">{{ trans("projects") }}</a> > <a href="projects/project/{{ project.id }}">{{ project.name }}</a> > {{ trans("editProject") }}</h1>
 	
 	<div id="profile_labels">
-		<label for="name">Project Name:</label>
+		<label for="name">{{ trans("projectName") }}:</label>
 		<label for="code">Projectcode:</label>
-		<label for="done">Done?:</label>
-		<label for="permissions">Permissions:</label>
+		<label for="done">{{ trans("done?") }}:</label>
+		<label for="permissions">{{ trans("permissions") }}:</label>
 	</div>
 	
 	<form method="post" action="{{ EditProjectForm.action }}" id="EditProjectForm">
@@ -25,8 +25,8 @@
 		<div class="clear"></div>
 		
 		<div id="center_buttons">
-			<input class="center_button" type="submit" name="submit" value="Save"/>
-			<input class="center_button" type="reset" name="reset" value="Cancel"/>
+			<input class="center_button" type="submit" name="submit" value="{{ trans("save") }}"/>
+			<input class="center_button" type="reset" name="reset" value="{{ trans("cancel") }}"/>
 		</div>
 	</form>
 	

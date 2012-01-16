@@ -2,14 +2,14 @@
 <div id="content">
 
 	{% if productsCount > 0 %}
-	<h1>Projects</h1>
+	<h1>{{ trans("projects") }}</h1>
 	
 	<table>
 		<thead>
 			<tr>
-				<th>Name</th>
+				<th>{{ trans("name") }}</th>
 				<th>Status</th>
-				<th>Options</th>
+				<th>{{ trans("options") }}</th>
 		</thead>
 		<tbody>
 			{% for project in projects %}
@@ -17,19 +17,19 @@
 				<td><a href="projects/project/{{project.id}}">{{project.name}}</a></td>
 				<td>{{project.status}}</td>
 				<td class="options_td">
-					<a class="option_archive" href="#">archive</a>
-					<a class="option_edit" href="projects/editProject/{{project.id}}">edit</a>
-					<a class="option_delete" href="projects/{{project.id}}">delete</a>
+					<a class="option_archive" href="#">{{ trans("toArchive") }}</a>
+					<a class="option_edit" href="projects/editProject/{{project.id}}">{{ trans("edit") }}</a>
+					<a class="option_delete" href="projects/{{project.id}}">{{ trans("delete") }}</a>
 				</td>
 			</tr>
 			{% endfor %}
 		</tbody>
 	</table>
 	{% else %}
-	<h2>There are no projects yet.</h2>
+	<h2>{{ trans("projects") }}</h2>
 	{% endif %}
 	
-	<a href="projects/addProject" class="regular_button">Add Project</a>
+	<a href="projects/addProject" class="regular_button">{{ trans("addProject") }}</a>
 	
 	<div class="clear"></div>
 	

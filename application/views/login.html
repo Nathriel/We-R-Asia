@@ -19,12 +19,12 @@
 		<br />
 		
 		<div id="loginbox">
-			<div id="login_messagebox">You appear to have entered an invalid username or password!</div>
+			<div id="login_messagebox">{{ trans("invalidMessage") }}</div>
 			<form method="post" action="{{ loginForm.action }}" id="loginForm">
-				<input type="text" name="username" placeholder="Username"/>
+				<input type="text" name="username" placeholder="{{ trans("username") }}"/>
 				<input type="password" name="password" placeholder="{{ trans("password") }}" />
 				<input type="submit" name="submit" value="Log in"/>
 			</form>
-			<a href="#" class="forget">Forgot your password?</a>
+			<a href="#" class="forget">{{ trans("forgotPassword") }}</a>
 		</div>
 {% include 'footer.html' %}
