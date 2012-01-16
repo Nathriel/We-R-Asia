@@ -123,6 +123,20 @@ class Project_Mapper extends System_Mapper {
 			$insertQuery = $this->db->prepareCached('insertUserByProject', 'INSERT INTO user_has_project SET project_id = ?, user_id = ?');
 			$insertQuery->execute(array($project->getId(), $user->getId()));
 		}
+		
+		$documents = $project->getDocuments();
+		$deleteQuery = $this->db->prepareCached('deleteAllDocumentsFromProject', 'DELETE FROM project_has_document WHERE project_id = ?');
+		$deleteQuery->execute(array($project->getId()));
+		foreach ($documents as $document) {
+			$document->save();
+			$insertQuery = $this->db->prepareCached('insertDocumentByProject', 'INSERT INTO project_has_document SET project_id = ?, document_id = ?');
+			$insertQuery->execute(array($project->getId(), $document->getId()));
+		}
+		
+		foreach ($project->getInvoices() as $invoice) {
+			$invoice->setProjectId($project->getId());
+			$invoice->save();
+		}
 	}
 }
 
@@ -136,6 +150,8 @@ class Project_Model extends System_Model {
 	private $logItems;
 	private $users;
 	private $products;
+	private $documents;
+	private $invoices;
 	
 	public function getId() {
 		return $this->id;
@@ -247,6 +263,34 @@ class Project_Model extends System_Model {
 			}
 		}
 		return false;
+	}
+	
+	public function getDocuments() {
+		if ($this->documents == null && $this->getId()) {
+			$this->documents = $this->mapper->mapper('document')->findByProject($this);
+		}
+		return $this->documents;
+	}
+	
+	public function addDocument($document) {
+		$documents = $this->getDocuments();
+		$documents[] = $document;
+		$this->documents = $documents;
+		return $this;
+	}
+	
+	public function getInvoices() {
+		if ($this->invoices == null && $this->getId()) {
+			$this->invoices = $this->mapper->mapper('invoice')->findByProject($this);
+		}
+		return $this->invoices;
+	}
+	
+	public function addInvoice($invoice) {
+		$invoices = $this->getInvoices();
+		$invoices[] = $invoice;
+		$this->invoices = $invoices;
+		return $this;
 	}
 }
 ?>
