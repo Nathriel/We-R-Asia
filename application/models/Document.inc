@@ -60,9 +60,40 @@ class Document_Mapper extends System_Mapper {
 	}
 	
 	protected function doDelete($id) {
-		return null;
+		$query = $this->db->prepareCached('deleteDocument',
+			'DELETE FROM document WHERE id = ?'
+		);
+        $query->execute(array($id));
 	}
 	
+    public function getProject($id = false){
+        if($id)
+        {
+            $query = $this->db->prepareCached('findProjectId',
+						'SELECT project_id
+						FROM project_has_document WHERE document_id=?');
+    		$query->execute(array($id));
+    		while ($row = $query->fetch(PDO::FETCH_ASSOC)) {
+    			$result = $this->mapper('project')->find($row['project_id']);
+    		}
+    		return $result;
+        }
+    }
+    
+    public function getProduct($id = false){
+        if($id)
+        {
+            $query = $this->db->prepareCached('findProjectId',
+						'SELECT product_id
+						FROM product_has_document WHERE document_id=?');
+    		$query->execute(array($id));
+    		while ($row = $query->fetch(PDO::FETCH_ASSOC)) {
+    			$result = $this->mapper('product')->find($row['product_id']);
+    		}
+    		return $result;
+        }
+    }
+    
 	protected function doSave(System_Model $document) {
 		$args = array();
 		if ($document->getId()) {

@@ -55,6 +55,7 @@ class Product_Mapper extends System_Mapper {
 		$query->execute(array($id));
 	}
 	
+    
 	protected function doSave(System_Model $product) {
 		$args = array();
 		if ($product->getId()) {
