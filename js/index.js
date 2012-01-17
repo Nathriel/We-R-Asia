@@ -38,6 +38,8 @@ $(function() {
 					window.location = baseHref + 'projects/deleteProductProcess/' + splitOrigin[1];
 				} else if(identifier == 'archive') {
 					window.location = baseHref + 'projects/archiveProjectProcess/' + splitOrigin[1];
+				} else if(identifier == 'deleteArchives') {
+					window.location = baseHref + 'archive/deleteAllArchivesProcess/';
 				} else if(identifier == 'projectDocument') {
 					window.location = baseHref + 'projects/deleteProjectDocumentProcess/' + splitOrigin[1];
 				} else if(identifier == 'productDocument') {
@@ -59,6 +61,11 @@ $(function() {
 	$('.option_delete').click(function(e) {
 		e.preventDefault();
 		showDialog('Are you sure you want to delete this?', 'ok', this);
+	});
+    
+    $('.archive_delete').click(function(e) {
+		e.preventDefault();
+		showDialog('Are you sure you want to delete all archives?', 'ok', this);
 	});
 	
     /* password form */

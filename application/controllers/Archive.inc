@@ -35,6 +35,22 @@ class Archive extends System_Controller {
 			'productsCount' => count($tplProjects),
 		));
 	}
+    
+    public function deleteAllArchivesProcess()
+    {
+        $user = $this->mapper('user')->getLoggedinUser();
+        if (!$user->hasRight('europe')) {
+            echo "Restricted Area";
+            exit;
+        }
+        $projects = $this->mapper('project')->findAll(true);
+        foreach($projects as $project)
+        {
+            $productMapper = $this->mapper('project');
+            $productMapper->delete($project->getId());
+            header('location: ' . $this->getUrlPrefix() . 'archive');
+        }
+    }
 	
 	public function project($id = false) {
 		if($id)

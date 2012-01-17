@@ -1,7 +1,8 @@
 {% include 'header.html' %}
 <div id="content">
-	
-	<h1>{{ trans("archive") }}</h1>
+	<a class="regular_button archive_delete" href="deleteArchives" >{{ trans("delete_all") }}</a><br />
+	<h1>{{ trans("archive") }}</h1> 
+    
 	
 	{% if productsCount > 0 %}
 	<table>
