@@ -49,7 +49,10 @@ class Product_Mapper extends System_Mapper {
 	}
 	
 	protected function doDelete($id) {
-		return null;
+		$query = $this->db->prepareCached('deleteProduct',
+			'DELETE FROM product WHERE id = ?'
+		);
+		$query->execute(array($id));
 	}
 	
 	protected function doSave(System_Model $product) {
