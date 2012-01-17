@@ -38,8 +38,10 @@ $(function() {
 					window.location = baseHref + 'projects/deleteProductProcess/' + splitOrigin[1];
 				} else if(identifier == 'archive') {
 					window.location = baseHref + 'projects/archiveProjectProcess/' + splitOrigin[1];
-				} else if(identifier == 'document') {
-					window.location = baseHref + 'projects/deleteDocumentProcess/' + splitOrigin[1];
+				} else if(identifier == 'projectDocument') {
+					window.location = baseHref + 'projects/deleteProjectDocumentProcess/' + splitOrigin[1];
+				} else if(identifier == 'productDocument') {
+					window.location = baseHref + 'projects/deleteProductDocumentProcess/' + splitOrigin[1];
 				} else if(identifier == 'invoice') {
 					window.location = baseHref + 'projects/deleteInvoiceProcess/' + splitOrigin[1];
 				} else if(identifier == 'user') {
