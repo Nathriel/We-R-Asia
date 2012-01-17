@@ -42,12 +42,11 @@ class User_Mapper extends System_Mapper {
 	
 	public function doDelete($id) {
 		$query = $this->db->prepareCached('deleteProjectByUser',
-				'DELETE FROM user_has_project WHERE userid = ?');
+				'DELETE FROM user_has_project WHERE user_id = ?');
 		$query->execute(array($id));
 		$query = $this->db->prepareCached('deleteUser',
 			'DELETE FROM user WHERE id = ?');
 		$query->execute(array($id));
-        var_dump($query->errorInfo());exit;
 	}
 	
 	public function findByUsername($username) {
