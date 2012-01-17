@@ -78,7 +78,6 @@ class Users extends System_Controller {
             $user->setAddress($_POST['address']);
             $user->setResidence($_POST['residence']);
 			$user->save();
-            exit;
 			header('location: ' . $this->getUrlPrefix() . 'users/edit/'.$id);
 		} else {
 			//leeg
