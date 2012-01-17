@@ -668,6 +668,18 @@ class Projects extends System_Controller {
 		header('location: ' . $this->getUrlPrefix() . 'projects/project/'.$id);
 	}
 	
+	public function deleteProjectDocumentProcess() {
+		if (!$id) {
+			return;
+		}
+			$document = $this->mapper('document')->find($id);
+			$project = $this->mapper('project')->find($document->getProjectId());
+			$this->mapper('document')->delete($id);
+			unlink($document->getFileLocation());
+			header('location: ' . $this->getUrlPrefix() . 'projects/project/' . $project->getId());
+		
+	}
+	
 	public function uploadDocumentToProduct($id = false) {
 		if (!$id) {
 			return;
