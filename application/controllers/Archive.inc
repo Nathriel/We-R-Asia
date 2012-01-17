@@ -11,7 +11,7 @@ class Archive extends System_Controller {
 	public function index() {
 		$user = $this->mapper('user')->getLoggedinUser();
 		$languageModel = $user->getLanguage();
-		if ($user) {
+		if ($user && !$user->hasRight('europe')) {
 			$projects = $user->getProjects(true);
 		} else {
 			$projects = $this->mapper('project')->findAll(true);

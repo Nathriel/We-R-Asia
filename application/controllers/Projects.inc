@@ -834,7 +834,15 @@ class Projects extends System_Controller {
 			return;
 		}
 		$newName = './content/uploads/'.(microtime(true)*1000).'_'.$_FILES['file_input']['name'];
+        if (substr($newName, -4) == '.php') {
+            echo "This filetype 'php' is prohibited";
+            exit;
+        }
 		move_uploaded_file($_FILES['file_input']['tmp_name'], $newName);
+        if (substr($newName, -4) == '.php') {
+            echo "This filetype 'php' is prohibited";
+            exit;
+        }
 		$project = $this->mapper('project')->find($id);
 		$invoiceMapper = $this->mapper('invoice');
 		$invoice = new Invoice_Model($invoiceMapper);
@@ -872,7 +880,12 @@ class Projects extends System_Controller {
 			return;
 		}
 		$newName = './content/uploads/'.(microtime(true)*1000).'_'.$_FILES['file_input']['name'];
+        if (substr($newName, -4) == '.php') {
+            echo "This filetype 'php' is prohibited";
+            exit;
+        }
 		move_uploaded_file($_FILES['file_input']['tmp_name'], $newName);
+        
 		$project = $this->mapper('project')->find($id);
         $user = $this->mapper('user')->getLoggedinUser();
        if(!$user->canViewProject($project) && !$user->hasRight('europe'))
@@ -960,6 +973,10 @@ class Projects extends System_Controller {
 			return;
 		}
 		$newName = './content/uploads/'.(microtime(true)*1000).'_'.$_FILES['file_input']['name'];
+        if (substr($newName, -4) == '.php') {
+            echo "This filetype 'php' is prohibited";
+            exit;
+        }
 		move_uploaded_file($_FILES['file_input']['tmp_name'], $newName);
 		$product = $this->mapper('product')->find($id);
         $user = $this->mapper('user')->getLoggedinUser();
