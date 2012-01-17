@@ -55,8 +55,8 @@ $(function() {
 	}
 	
 	$('.option_delete').click(function(e) {
-		//e.preventDefault();
-		//showDialog('Are you sure you want to delete this?', 'ok', this);
+		e.preventDefault();
+		showDialog('Are you sure you want to delete this?', 'ok', this);
 	});
 	
     /* password form */

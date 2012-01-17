@@ -68,11 +68,14 @@ class Project_Mapper extends System_Mapper {
 	}
 	
 	protected function doDelete($id) {
+		$query = $this->db->prepareCached('deleteUsersFromProject',
+			'DELETE FROM user_has_project WHERE project_id = ?'
+		);
+		$query->execute(array($id));
 		$query = $this->db->prepareCached('deleteProject',
 			'DELETE FROM project WHERE id = ?'
 		);
 		$query->execute(array($id));
-		var_dump($query->errorInfo());exit;
 		return true;
 	}
 	
