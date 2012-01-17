@@ -1,31 +1,46 @@
 <?php
 class Users extends System_Controller {	
 	public function index() {
-		$users = $this->mapper('user')->findAll();
-		$tplUsers = array();
-		foreach ($users as $user) {
-			/* @var $user User_Model */
-			$type = 'Customer';
-			if ($user->hasRight('europe')) {
-				$type = 'Europe';
-			} elseif ($user->hasRight('china')) {
-				$type = 'China';
-			}
-			
-			$tplUsers[] = array(
-				'id' => $user->getId(),
-				'name' => $user->getName(),
-				'company' => $user->getCompany(),
-				'type' => $type, // TODO: multilanguage
-			);
-		}
-		echo $this->t()->render('user/users.html', array(
-			'pageTitle' => 'We R Asia | User',
-			'users' => $tplUsers,
-		));
+        $user = $this->mapper('user')->find($_SESSION['userId']);
+        if($user && $user->hasRight('europe'))
+        {
+    		$users = $this->mapper('user')->findAll();
+    		$tplUsers = array();
+    		foreach ($users as $user) {
+    			/* @var $user User_Model */
+    			$type = 'Customer';
+    			if ($user->hasRight('europe')) {
+    				$type = 'Europe';
+    			} elseif ($user->hasRight('china')) {
+    				$type = 'China';
+    			}
+    			
+    			$tplUsers[] = array(
+    				'id' => $user->getId(),
+    				'name' => $user->getName(),
+    				'company' => $user->getCompany(),
+    				'type' => $type, // TODO: multilanguage
+    			);
+    		}
+    		echo $this->t()->render('user/users.html', array(
+    			'pageTitle' => 'We R Asia | User',
+    			'users' => $tplUsers,
+    		));
+        }
+        else
+        {
+            header('location: ' . $this->getUrlPrefix() . 'Profile');
+        }
 	}
 	
     public function delete($id = false){
+        $user = $this->mapper('user')->find($_SESSION['userId']);
+        if($user && $user->hasRight('europe'))
+        {
+            echo "Restricted Area";
+            exit;
+        }
+        
         if($id){
             $this->mapper('user')->doDelete($id);
             exit;
@@ -34,6 +49,13 @@ class Users extends System_Controller {
     }
     
 	public function edit($id = false) {
+	   $user = $this->mapper('user')->find($_SESSION['userId']);
+	   if(!$user->hasRight('europe'))
+        {
+            echo "Restricted Area";
+            exit;
+        }
+        
 	   if($id)
        {
     	   $args = array(
@@ -59,6 +81,12 @@ class Users extends System_Controller {
 	}
 	
 	public function add() {
+	   $user = $this->mapper('user')->find($_SESSION['userId']);
+	   if(!$user->hasRight('europe'))
+        {
+            echo "Restricted Area";
+            exit;
+        }
 		echo $this->t()->render('user/add_user.html', array(
 			'pageTitle' => 'We R Asia | Add User',
             'AddUserForm' => array(
@@ -68,6 +96,12 @@ class Users extends System_Controller {
 	}
     
     public function editUserProcess($id = false){
+        $user = $this->mapper('user')->find($_SESSION['userId']);
+        if(!$user->hasRight('europe'))
+        {
+            echo "Restricted Area";
+            exit;
+        }
         if($id)
 		{
 			$userMapper = $this->mapper('user');
@@ -85,6 +119,12 @@ class Users extends System_Controller {
     }
     
     public function addUserProcess(){
+        $user = $this->mapper('user')->find($_SESSION['userId']);
+        if(!$user->hasRight('europe'))
+        {
+            echo "Restricted Area";
+            exit;
+        }
         $userMapper = $this->mapper('user');
         $user = new User_Model($userMapper);
         $user->setUsername($_POST['username']);
