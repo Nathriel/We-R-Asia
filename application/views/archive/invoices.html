@@ -1,23 +1,21 @@
 {% include 'header.html' %}
 <div id="content">
 
-	<h1><a href="projects">Archive</a> > <a href="archive/project/1">Project_name</a> > Invoices</h1>
+	<h1><a href="archive">{{ trans("archive") }}</a> &gt; <a href="archive/project/{{ project.id }}">{{ project.name }}</a> &gt; {{ trans("invoices") }}</h1>
 	
-	<table class="single_col">
+	<table>
 		<thead>
 			<tr>
-				<th>Name</th>
+				<th>{{ trans("name") }}</th>
+				<th>{{ trans("date") }}</th>
 		</thead>
 		<tbody>
+		{% for invoice in invoices %}
 			<tr>
-				<td>Invoice_012012.pdf</td>
+				<td><a href="{{invoice.fileUrl}}">{{invoice.name}}</a></td>
+				<td class="date">{{ invoice.date }}</td>
 			</tr>
-			<tr class="evenrow">
-				<td>Invoice_022011.pdf</td>
-			</tr>
-			<tr>
-				<td>Invoice_112011.pdf</td>
-			</tr>
+		{% endfor %}
 		</tbody>
 	</table>
 </div>

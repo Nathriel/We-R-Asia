@@ -1,8 +1,9 @@
 {% include 'header.html' %}
 <div id="content">
-
-	<h1>Archive</h1>
 	
+	<h1>{{ trans("archive") }}</h1>
+	
+	{% if productsCount > 0 %}
 	<table>
 		<thead>
 			<tr>
@@ -18,6 +19,9 @@
 			{% endfor %}
 		</tbody>
 	</table>
+	{% else %}
+	<h2>{{ trans("projects") }}</h2>
+	{% endif %}
 	
 	<div class="clear"></div>
 	

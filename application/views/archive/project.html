@@ -1,49 +1,56 @@
 {% include 'header.html' %}
 <div id="content">
 
-	<h1><a href="archive">Archive</a> > {{ project.name }}</h1>
+	<h1><a href="archive">{{ trans("archive") }}</a> > {{ project.name }}</h1>
 	<p id="project_number">{{ project.code }}</p>
 	
-	<p id="project_status">Status: In development</p>
+	<p id="project_status">Status: {{project.status}}</p>
 	
-	<a id="to_invoices" href="archive/invoice/{{ project.id }}">To invoices ></a>
+	<a id="to_invoices" href="archive/invoice/{{ project.id }}">{{ trans("toInvoices") }} ></a>
+	<div class="clear"></div>
 	
 	{% if productsCount > 0 %}
 	<table>
 		<thead>
 			<tr>
-				<th>Name</th>
+				<th>{{ trans("name") }}</th>
 				<th>Status</th>
 		</thead>
 		<tbody>
 			{% for product in products %}
 			<tr>
-				<td><a href="archive/product/{{ product.id }}">{{ product.name }}</a></td>
-				<td></td>
+				<td><a href="archive/product/{{ product.id }}">{{product.name}}</a></td>
+				<td>{{product.status}}</td>
 			</tr>
 			{% endfor %}
 		</tbody>
 	</table>
 	{% else %}
-	<h2>No products</h2>
+	<h2>{{ trans("noProducts") }}</h2>
 	{% endif %}
 	
+	{% if documentsCount > 0 %}
 	<br />
-	<h2>Documents</h2>
+	<h2>{{ trans("documents") }}</h2>
 	
-	<table >
+	<table>
 		<thead>
 			<tr>
-				<th>Name</th>
-				<th>Date</th>
+				<th>{{ trans("name") }}</th>
+				<th>{{ trans("date") }}</th>
 		</thead>
 		<tbody>
+			{% for document in documents %}
 			<tr>
-				<td>print_logo_tshirt.pdf</td>
-				<td class="date">8-12-2011</td>
+				<td><a href="{{document.fileUrl}}">{{document.name}}</a></td>
+				<td class="date">{{ document.date }}</td>
 			</tr>
+			{% endfor %}
 		</tbody>
 	</table>
+	{% else %}
+	<h2>{{ trans("noDocuments") }}</h2>
+	{% endif %}
 	
 </div>
 {% include 'footer.html' %}
