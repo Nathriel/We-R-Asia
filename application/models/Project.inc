@@ -50,12 +50,12 @@ class Project_Mapper extends System_Mapper {
 		if ($finished === null) {
 			$query = $this->db->prepareCached('findAllProjects',
 				'SELECT id
-				FROM projects');
+				FROM project');
 			$query->execute(array());
 		} else {
 			$query = $this->db->prepareCached('findAllProjectsByFinished',
 				'SELECT id
-				FROM projects
+				FROM project
 				WHERE finished=?');
 			$query->execute(array($finished));
 		}

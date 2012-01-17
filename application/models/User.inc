@@ -41,6 +41,10 @@ class User_Mapper extends System_Mapper {
 	}
 	
 	public function doDelete($id) {
+	   
+       $query = $this->db->prepareCached('deleteRightByUser',
+				'DELETE FROM user_rights WHERE user_id = ?');
+       $query->execute(array($id));
 		$query = $this->db->prepareCached('deleteProjectByUser',
 				'DELETE FROM user_has_project WHERE user_id = ?');
 		$query->execute(array($id));
@@ -116,7 +120,40 @@ class User_Mapper extends System_Mapper {
 		$query->execute($args);
 		if (!$user->getId()) {
 			$user->setId($this->db->lastInsertId());
+            $query = $this->db->prepareCached('insertRight',
+				'INSERT INTO `user_rights`
+				SET user_id=?,right_id=?');
+            $args = array(
+                $user->getId(),
+                $user->getRights()->getId(),
+            );
+            $query->execute($args);
 		}
+        else
+        {
+            if($user->getRights())
+            {
+                if(is_array($user->getRights()))
+                {
+                    $right = $user->getRights();
+                    $right = $right[0];
+                }
+                else
+                {
+                    $right = $user->getRights();
+                }
+                $query = $this->db->prepareCached('updateRight',
+    				'UPDATE `user_rights`
+    				SET right_id=? WHERE user_id= ?');
+                
+                $args = array(
+                    $right->getId(),
+                    $user->getId()
+                );
+                $query->execute($args);
+            }
+        }
+
         //print_r($user);
         //print_r($this->mapper('right'));
         //var_dump($this->mapper->('right')->find(7));  

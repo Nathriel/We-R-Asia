@@ -22,7 +22,7 @@ class Projects extends System_Controller {
 	public function index() {
 		$user = $this->mapper('user')->getLoggedinUser();
 		$languageModel = $user->getLanguage();
-		if ($user) {
+		if ($user && !$user->hasRight('europe')) {
 			$projects = $user->getProjects();
 		} else {
 			$projects = $this->mapper('project')->findAll();
@@ -36,11 +36,35 @@ class Projects extends System_Controller {
 				'status' => $project->getStatus()->getTextForLanguage($languageModel),
 			);
 		}
+        
+        $showArchive= false;
+            $showDelete=false;
+            $showEdit=false;
+            $addProject = false;
+            
+            if($user->hasRight('europe'))
+            {
+                $showArchive = true;
+                $showDelete = true;
+                $showEdit = true;
+                $addProject = true;
+            }
+            elseif($user->hasRight('china'))
+            {
+                $showEdit = true;
+            }
 		
 		echo $this->t()->render('project/projects.html', array(
 			'pageTitle' => 'We R Asia | Projects',
 			'projects' => $tplProjects,
 			'productsCount' => count($tplProjects),
+            'permissions' => array(
+                    'showArchive' => $showArchive,
+                    'showEdit' => $showEdit,
+                    'showDelete' => $showDelete,
+                    'addProject' => $addProject,
+                ),
+            
 		));
 	}
 	
@@ -49,7 +73,13 @@ class Projects extends System_Controller {
 		{
 			$user = $this->mapper('user')->getLoggedinUser();
 			$languageModel = $user->getLanguage();
+            
 			$project = $this->mapper('project')->find($id);
+            if(!$user->canViewProject($project))
+            {
+                echo "Restricted Area";
+                exit;
+            }
 			$curProject = array(
 				'id' => $project->getId(),
 				'name' => $project->getName(),
@@ -81,6 +111,21 @@ class Projects extends System_Controller {
 				}
 			}
 			
+            $showProductDelete=false;
+            $showProductEdit=false;
+            $addProduct = false;
+            $updateStatus = false;
+            $deleteDocument = false;
+            
+            if($user->hasRight('europe'))
+            {
+                $showProductDelete=true;
+                $showProductEdit=true;
+                $addProduct = true;
+                $updateStatus = true;
+                $deleteDocument = true;
+            }
+
 			echo $this->t()->render('project/project.html', array(
 				'pageTitle' => 'We R Asia | Project',
 				'project' => $curProject,
@@ -88,6 +133,13 @@ class Projects extends System_Controller {
 				'documents' => $tplDocuments,
 				'productsCount' => count($tplProducts),
 				'documentsCount' => count($tplDocuments),
+                'permissions' => array(
+                    'showProductDelete' => $showProductDelete,
+                    'showProductEdit' => $showProductEdit,
+                    'addProduct' => $addProduct,
+                    'updateStatus' => $updateStatus,
+                    'deleteDocument' => $deleteDocument,
+                ),
 			));
 		} else {
 			//leeg
@@ -98,6 +150,12 @@ class Projects extends System_Controller {
 		if($id)
 		{
 			$project = $this->mapper('project')->find($id);
+            $user = $this->mapper('user')->getLoggedinUser();
+            if(!$user->hasRight('europe'))
+            {
+                echo "Restricted Area";
+                exit;
+            }
 			$project->setFinished(1);
 			$project->save();
 			header('location: ' . $this->getUrlPrefix() . 'projects');
@@ -109,6 +167,13 @@ class Projects extends System_Controller {
 	public function deleteProjectProcess($id = false) {
 		if($id)
 		{
+            $project = $this->mapper('project')->find($id);
+            $user = $this->mapper('user')->getLoggedinUser();
+		    if(!$user->hasRight('europe'))
+            {
+                echo "Restricted Area";
+                exit;
+            }
 			$this->mapper('project')->delete($id);
 			header('location: ' . $this->getUrlPrefix() . 'projects');
 		} else {
@@ -117,6 +182,12 @@ class Projects extends System_Controller {
 	}
 	
 	public function addProject() {
+	   
+       $user = $this->mapper('user')->getLoggedinUser();
+       if(!$user->hasRight('europe')){
+            echo "Restricted Area";
+            exit;
+       }
 		$users = $this->mapper('user')->findAll();
 		$tplUsers = array();
 		foreach ($users as $user) {
@@ -137,6 +208,12 @@ class Projects extends System_Controller {
 		));
 	}
 	public function addProjectProcess() {
+	   $user = $this->mapper('user')->getLoggedinUser();
+       if(!$user->hasRight('europe'))
+       {
+            echo "restricted Area";
+            exit;
+       }
 		$projectMapper = $this->mapper('project');
 		$project = new Project_Model($projectMapper);
 		$project->setName($_POST['name']);
@@ -149,6 +226,12 @@ class Projects extends System_Controller {
 	}
 	
 	public function editProject($id = false) {
+	   $user = $this->mapper('user')->getLoggedinUser();
+       if(!$user->hasRight('china') && !$user->hasRight('europe'))
+       {
+            echo "restricted Area";
+            exit;
+       }
 		if($id)
 		{
 			$project = $this->mapper('project')->find($id);
@@ -171,6 +254,7 @@ class Projects extends System_Controller {
 				}
 			}
 			
+            
 			echo $this->t()->render('project/edit_project.html', array(
 				'pageTitle' => 'We R Asia | Edit Project',
 				'project' => $curProject,
@@ -184,6 +268,12 @@ class Projects extends System_Controller {
 		}
 	}
 	public function editProjectProcess($id = false) {
+	   $user = $this->mapper('user')->getLoggedinUser();
+       if(!$user->hasRight('china') && !$user->hasRight('europe'))
+       {
+            echo "restricted Area";
+            exit;
+       }
 		if($id)
 		{
 			$projectMapper = $this->mapper('project');
@@ -233,7 +323,13 @@ class Projects extends System_Controller {
 				'name' => $project->getName(),
 				'code' => $project->getCode(),
 			);
-			
+            $user = $this->mapper('user')->getLoggedinUser();
+           if(!$user->canViewProject($project) && !$user->hasRight('china'))
+           {
+                echo "restricted Area";
+                exit;
+           }
+            
 			$documents = $this->mapper('document')->findByProduct($product);
 			$tplDocuments = array();
 			foreach ($documents as $document) {
@@ -248,6 +344,15 @@ class Projects extends System_Controller {
 				}
 			}
 			
+            $updateStatus = false;
+            $deleteDocument = false;
+            
+            if($user->hasRight('europe'))
+            {
+                $updateStatus = true;
+                $deleteDocument = true;
+            }
+            
 			echo $this->t()->render('project/product/product.html', array(
 				'pageTitle' => 'We R Asia | Product',
 				'product' => $curProduct,
@@ -255,6 +360,10 @@ class Projects extends System_Controller {
 				'documents' => $tplDocuments,
 				'productsCount' => count($tplLogItems),
 				'documentsCount' => count($tplDocuments),
+                'permissions' => array(
+                    'updateStatus' => $updateStatus,
+                    'deleteDocument'=> $deleteDocument,
+                ),
 			));
 		} else {
 			//leeg
@@ -264,6 +373,12 @@ class Projects extends System_Controller {
 	public function deleteProductProcess($id = false) {
 		if($id)
 		{
+		  $user = $this->mapper('user')->getLoggedinUser();
+           if(!$user->hasRight('europe'))
+           {
+                echo "restricted Area";
+                exit;
+           }
 			$product = $this->mapper('product')->find($id);
 			$project = $this->mapper('project')->find($product->getProjectId());
 			$this->mapper('product')->delete($id);
@@ -276,6 +391,12 @@ class Projects extends System_Controller {
 	public function addProduct($id = false) {
 		if($id)
 		{
+		  $user = $this->mapper('user')->getLoggedinUser();
+           if(!$user->hasRight('europe'))
+           {
+                echo "restricted Area";
+                exit;
+           }
 			$project = $this->mapper('project')->find($id);
 			$curProject = array(
 				'id' => $project->getId(),
@@ -293,6 +414,12 @@ class Projects extends System_Controller {
 		};
 	}
 	public function addProductProcess($id = false) {
+	   $user = $this->mapper('user')->getLoggedinUser();
+       if(!$user->hasRight('europe'))
+       {
+            echo "restricted Area";
+            exit;
+       }
 		if($id)
 		{
 			$productMapper = $this->mapper('product');
@@ -308,6 +435,12 @@ class Projects extends System_Controller {
 	}
 	
 	public function editProduct($id = false) {
+	   $user = $this->mapper('user')->getLoggedinUser();
+       if(!$user->hasRight('europe'))
+       {
+            echo "restricted Area";
+            exit;
+       }
 		if($id)
 		{
 			$product = $this->mapper('product')->find($id);
@@ -335,6 +468,12 @@ class Projects extends System_Controller {
 		};
 	}
 	public function editProductProcess($id = false) {
+	   $user = $this->mapper('user')->getLoggedinUser();
+       if(!$user->hasRight('europe'))
+       {
+            echo "restricted Area";
+            exit;
+       }
 		if($id)
 		{
 			$productMapper = $this->mapper('product');
@@ -348,6 +487,12 @@ class Projects extends System_Controller {
 	}
 	
 	public function addStatusToProject($id = false) {
+	   $user = $this->mapper('user')->getLoggedinUser();
+       if(!$user->hasRight('china') && !$user->hasRight('europe'))
+       {
+            echo "restricted Area";
+            exit;
+       }
 		if($id)
 		{
 			$project = $this->mapper('project')->find($id);
@@ -378,6 +523,12 @@ class Projects extends System_Controller {
 	}
 	
 	public function processAddExistingStatusToProject($id = false) {
+	   $user = $this->mapper('user')->getLoggedinUser();
+       if(!$user->hasRight('china') && !$user->hasRight('europe'))
+       {
+            echo "restricted Area";
+            exit;
+       }
 		if (!$id) {
 			return;
 		}
@@ -406,6 +557,12 @@ class Projects extends System_Controller {
 	}
 	
 	public function processAddNewStatusToProject($id = false) {
+	   $user = $this->mapper('user')->getLoggedinUser();
+       if(!$user->hasRight('europe'))
+       {
+            echo "restricted Area";
+            exit;
+       }
 		if (!$id) {
 			return;
 		}
@@ -457,6 +614,12 @@ class Projects extends System_Controller {
 	}
 	
 	public function processAddExistingStatusToProduct($id = false) {
+	   $user = $this->mapper('user')->getLoggedinUser();
+       if(!$user->hasRight('china') && !$user->hasRight('europe'))
+       {
+            echo "restricted Area";
+            exit;
+       }
 		if (!$id) {
 			return;
 		}
@@ -485,6 +648,12 @@ class Projects extends System_Controller {
 	}
 	
 	public function processAddNewStatusToProduct($id = false) {
+	   $user = $this->mapper('user')->getLoggedinUser();
+       if(!$user->hasRight('europe'))
+       {
+            echo "restricted Area";
+            exit;
+       }
 		if (!$id) {
 			return;
 		}
@@ -536,6 +705,12 @@ class Projects extends System_Controller {
 	}
 	
 	public function addStatusToProduct($id = false) {
+	   $user = $this->mapper('user')->getLoggedinUser();
+       if(!$user->hasRight('europe'))
+       {
+            echo "restricted Area";
+            exit;
+       }
 		if($id)
 		{
 			$product = $this->mapper('product')->find($id);
@@ -573,10 +748,19 @@ class Projects extends System_Controller {
 	}
 	
 	public function invoice($id = false) {
+	   
 		if (!$id) {
 			return;
 		}
 		$project = $this->mapper('project')->find($id);
+        
+        $user = $this->mapper('user')->getLoggedinUser();
+       if(!$user->canViewProject($project) && !$user->hasRight('europe'))
+       {
+            echo "restricted Area";
+            exit;
+       }
+        
 		$curProject = array(
 				'id' => $project->getId(),
 				'name' => $project->getName(),
@@ -597,14 +781,33 @@ class Projects extends System_Controller {
 			}
 		}
 		
+        $deleteInvoice = false;
+        $uploadInvoice = false;
+            
+            if($user->hasRight('europe'))
+            {
+                $deleteInvoice = true;
+                $uploadInvoice = true;
+            }
+        
 		echo $this->t()->render('project/invoices.html', array(
 			'pageTitle' => 'We R Asia | Invoices',
 			'project' => $curProject,
 			'invoices' => $tplInvoices,
+            'permissions' => array(
+                'deleteInvoice' => $deleteInvoice,
+                'uploadInvoice' => $uploadInvoice,
+            )
 		));
 	}
 	
 	public function uploadInvoice($id = false) {
+	   $user = $this->mapper('user')->getLoggedinUser();
+       if(!$user->hasRight('europe'))
+       {
+            echo "restricted Area";
+            exit;
+       }
 		if (!$id) {
 			return;
 		}
@@ -621,6 +824,12 @@ class Projects extends System_Controller {
 	}
 	
 	public function uploadInvoiceProcess($id = false) {
+	   $user = $this->mapper('user')->getLoggedinUser();
+       if(!$user->hasRight('europe'))
+       {
+            echo "restricted Area";
+            exit;
+       }
 		if (!$id) {
 			return;
 		}
@@ -641,6 +850,12 @@ class Projects extends System_Controller {
 			return;
 		}
 		$project = $this->mapper('project')->find($id);
+        $user = $this->mapper('user')->getLoggedinUser();
+       if(!$user->canViewProject($project) && !$user->hasRight('europe'))
+       {
+            echo "restricted Area";
+            exit;
+       }
 		$curProject = array(
 			'id' => $project->getId(),
 			'name' => $project->getName(),
@@ -659,6 +874,12 @@ class Projects extends System_Controller {
 		$newName = './content/uploads/'.(microtime(true)*1000).'_'.$_FILES['file_input']['name'];
 		move_uploaded_file($_FILES['file_input']['tmp_name'], $newName);
 		$project = $this->mapper('project')->find($id);
+        $user = $this->mapper('user')->getLoggedinUser();
+       if(!$user->canViewProject($project) && !$user->hasRight('europe'))
+       {
+            echo "restricted Area";
+            exit;
+       }
 		$documentMapper = $this->mapper('document');
 		$document = new Document_Model($documentMapper);
 		$document->setFileLocation($newName)->save();
@@ -669,6 +890,12 @@ class Projects extends System_Controller {
 	}
 	
 	public function deleteProjectDocumentProcess($id = false) {
+	   $user = $this->mapper('user')->getLoggedinUser();
+       if(!$user->hasRight('europe'))
+       {
+            echo "restricted Area";
+            exit;
+       }
 		if (!$id) {
 			return;
 		}
@@ -681,6 +908,12 @@ class Projects extends System_Controller {
 	}
     
     public function deleteProductDocumentProcess($id = false){
+        $user = $this->mapper('user')->getLoggedinUser();
+       if(!$user->hasRight('europe'))
+       {
+            echo "restricted Area";
+            exit;
+       }
         if (!$id) {
 			return;
 		}
@@ -692,10 +925,18 @@ class Projects extends System_Controller {
     }
 	
 	public function uploadDocumentToProduct($id = false) {
+	   
 		if (!$id) {
 			return;
 		}
 		$product = $this->mapper('product')->find($id);
+        
+        $user = $this->mapper('user')->getLoggedinUser();
+       if(!$user->canViewProject($product->getProject()) && !$user->hasRight('europe'))
+       {
+            echo "restricted Area";
+            exit;
+       }
 		$curProduct = array(
 			'id' => $product->getId(),
 			'name' => $product->getName(),
@@ -721,6 +962,12 @@ class Projects extends System_Controller {
 		$newName = './content/uploads/'.(microtime(true)*1000).'_'.$_FILES['file_input']['name'];
 		move_uploaded_file($_FILES['file_input']['tmp_name'], $newName);
 		$product = $this->mapper('product')->find($id);
+        $user = $this->mapper('user')->getLoggedinUser();
+       if(!$user->canViewProject($product->getProject()) && !$user->hasRight('europe'))
+       {
+            echo "restricted Area";
+            exit;
+       }
 		$documentMapper = $this->mapper('document');
 		$document = new Document_Model($documentMapper);
 		$document->setFileLocation($newName)->save();

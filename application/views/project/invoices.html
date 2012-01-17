@@ -15,14 +15,17 @@
 				<td><a href="{{invoice.fileUrl}}">{{invoice.name}}</a></td>
 				<td class="date">{{ invoice.date }}</td>
 				<td class="options_td">
+                    {% if permissions.deleteInvoice %}
 					<a class="option_delete" href="invoice/{{invoice.id}}">{{ trans("delete") }}</a>
+                    {% endif %}
 				</td>
 			</tr>
 		{% endfor %}
 		</tbody>
 	</table>
-	
+	{% if permissions.uploadInvoice %}
 	<a class="regular_button" href="projects/uploadInvoice/1">{{ trans("upload") }}</a>
+    {% endif %}
 	
 	<div class="clear"></div>
 </div>

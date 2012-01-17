@@ -17,9 +17,15 @@
 				<td><a href="projects/project/{{project.id}}">{{project.name}}</a></td>
 				<td>{{project.status}}</td>
 				<td class="options_td">
+                    {% if permissions.showArchive %}
 					<a class="option_archive" href="archive/{{project.id}}">{{ trans("archive") }}</a>
+                    {% endif %}
+                    {% if permissions.showEdit %}
 					<a class="option_edit" href="projects/editProject/{{project.id}}">{{ trans("edit") }}</a>
+                    {% endif %}
+                    {% if permissions.showDelete %}
 					<a class="option_delete" href="project/{{project.id}}">{{ trans("delete") }}</a>
+                    {% endif %}
 				</td>
 			</tr>
 			{% endfor %}
@@ -28,9 +34,9 @@
 	{% else %}
 	<h2>{{ trans("projects") }}</h2>
 	{% endif %}
-	
+	{% if permissions.addProject %}
 	<a href="projects/addProject" class="regular_button">{{ trans("addProject") }}</a>
-	
+	{% endif %}
 	<div class="clear"></div>
 	
 </div>

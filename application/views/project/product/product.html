@@ -4,7 +4,11 @@
 	<h1><a href="projects">{{ trans("projects") }}</a> > <a href="projects/project/{{project.id}}">{{project.name}}</a> > {{product.name}}</h1>
 	<p id="project_number">{{project.code}}</p>
 
-	<p id="project_status">Product status: {{product.status}} <a href="projects/addStatusToProduct/{{product.id}}" class="regular_button align_left">Update Status</a></p>
+	<p id="project_status">Product status: {{product.status}} 
+    {% if permissions.updateStatus %}
+    <a href="projects/addStatusToProduct/{{product.id}}" class="regular_button align_left">Update Status</a>
+    {% endif %}
+    </p>
 
 
 	
@@ -50,7 +54,9 @@
 				<td><a href="{{document.fileUrl}}">{{document.name}}</a></td>
 				<td class="date">{{ document.date }}</td>
 				<td class="options_td">
+                    {% if permissions.deleteDocument %}
 					<a class="option_delete" href="productDocument/{{document.id}}">{{ trans("delete") }}</a>
+                    {% endif %}
 				</td>
 			</tr>
 			{% endfor %}

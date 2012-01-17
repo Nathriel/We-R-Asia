@@ -35,7 +35,7 @@ class Users extends System_Controller {
 	
     public function delete($id = false){
         $user = $this->mapper('user')->find($_SESSION['userId']);
-        if($user && $user->hasRight('europe'))
+        if(!$user->hasRight('europe'))
         {
             echo "Restricted Area";
             exit;
@@ -43,7 +43,6 @@ class Users extends System_Controller {
         
         if($id){
             $this->mapper('user')->doDelete($id);
-            exit;
             header('location: ' . $this->getUrlPrefix() . 'users');
         }
     }
@@ -111,6 +110,13 @@ class Users extends System_Controller {
             $user->setEmail($_POST['email']);
             $user->setAddress($_POST['address']);
             $user->setResidence($_POST['residence']);
+            $user->setRights($this->mapper('right')->find($_POST['type']));
+            if($_POST['password'])
+            {
+                $user->setSalt(hash('sha256',dechex(sin(rand(0,100000))*100000)));
+                $user->setPassword(hash('sha256',hash('sha256',$_POST['password']).$user->getSalt()));
+            }
+            
 			$user->save();
 			header('location: ' . $this->getUrlPrefix() . 'users/edit/'.$id);
 		} else {

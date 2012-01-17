@@ -42,6 +42,12 @@ class Archive extends System_Controller {
 			$user = $this->mapper('user')->getLoggedinUser();
 			$languageModel = $user->getLanguage();
 			$project = $this->mapper('project')->find($id);
+           if(!$user->canViewProject($project) && !$user->hasRight('europe'))
+           {
+                echo "restricted Area";
+                exit;
+           }
+            
 			$curProject = array(
 				'id' => $project->getId(),
 				'name' => $project->getName(),
@@ -92,7 +98,11 @@ class Archive extends System_Controller {
 			$user = $this->mapper('user')->getLoggedinUser();
 			$languageModel = $user->getLanguage();
 			$product = $this->mapper('product')->find($id);
-			
+           if(!$user->canViewProject($product->getProject()) && !$user->hasRight('europe'))
+           {
+                echo "restricted Area";
+                exit;
+           }
 			$tplLogItems = array();
 			$logItems = $product->getLogItems();
 			foreach ($logItems as $logItem) {
@@ -145,10 +155,20 @@ class Archive extends System_Controller {
 	}
 	
 	public function invoice($id = false) {
+	   
 		if (!$id) {
 			return;
 		}
 		$project = $this->mapper('project')->find($id);
+        
+        
+        $user = $this->mapper('user')->getLoggedinUser();
+       if(!$user->canViewProject($project) && !$user->hasRight('europe'))
+       {
+            echo "restricted Area";
+            exit;
+       }
+        
 		$curProject = array(
 				'id' => $project->getId(),
 				'name' => $project->getName(),
