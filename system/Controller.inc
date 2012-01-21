@@ -33,6 +33,10 @@ abstract class System_Controller {
 		return $this->system->getTemplateEngineInstance();
 	}
 	
+	protected function mailer() {
+		return $this->system->getMailerInstance();
+	}
+	
 	/**
 	 * Gets called when a method that is called isn't found in this class
 	 */
