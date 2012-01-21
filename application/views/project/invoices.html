@@ -24,9 +24,9 @@
 		</tbody>
 	</table>
 	{% if permissions.uploadInvoice %}
-	<a class="regular_button" href="projects/uploadInvoice/1">{{ trans("upload") }}</a>
+	<a class="regular_button" href="projects/uploadInvoice/{{invoiceID}}">{{ trans("upload") }}</a>
     {% endif %}
-	
+
 	<div class="clear"></div>
 </div>
 {% include 'footer.html' %}

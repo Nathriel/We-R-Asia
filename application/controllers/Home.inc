@@ -110,56 +110,51 @@ class Home extends System_controller{
     }
     
 	public function forgotPassword() {
-        require_once('/libraries/phpMailer/class.phpmailer.php');
-        $mail = new PHPMailer(true);
-        $mail->IsSMTP();
-
 		$user = $this->mapper('user')->findByEmail($_POST['recipient']);
 		$newPass = $this->generatePassword(9,8);
         $user->setSalt(hash('sha256',dechex(sin(rand(0,100000))*100000)));
         $user->setPassword(hash('sha256',hash('sha256',$newPass).$user->getSalt()));
 		
+        
+        $mail_body = $this->m()->translate('newPasswordEmail', $user->getLanguage());
+        $subject = $this->m()->translate('newPasswordSubjectEmail', $user->getLanguage());
+        $mail_body = str_replace("{user}", $user->getUsername(), $mail_body);
+        $mail_body = str_replace("{username}", $user->getUsername(), $mail_body);
+        $mail_body = str_replace("{password}", $newPass, $mail_body);
+        $mail_body = nl2br($mail_body);
+        $messages = array();
 		if(isset($user)) {
-			if(isset($_SESSION['languageId'])) {
-				if($_SESSION['languageId'] == 1) {
-					$subject = "password forgotten";
-					$headers = "From:" . "service@we-r-asia.com" . "\n";
-					$body = "new password:" . $newPass;
-				} else {
-					$subject = "wachtwoord vergeten";
-					$headers = "Van:" . "service@we-r-asia.com" . "\n";
-					$body = "nieuwe wachtwoord:" . $newPass;
-				}
-			}else
-            {
-                $body = "new password:" . $newPass;
+            $mail = $this->mailer();
+            $mail->AddReplyTo('wra@bequtest.nl', 'WeAreAsia');
+            $mail->AddAddress($_POST['recipient'],$user->getUsername());
+            $mail->SetFrom('wra@bequtest.nl', 'WeAreAsia');
+            $mail->AddReplyTo('wra@bequtest.nl', 'WeAreAsia');
+            $mail->Subject = $subject;
+            $mail->AltBody = 'To view the message, please use an HTML compatible email viewer!'; // optional - MsgHTML will create an alternate automatically
+            $mail->MsgHTML($mail_body);
+            try{
+                $mail->Send();
+                $user->save();
+            } catch (phpmailerException $e) {
+                $msg[] = $this->m()->translate('emailNotSendError', $user->getLanguage());
+                $msg[] = $e->errorMessage();
+            } catch (Exception $e) {
+                $msg[] = $this->m()->translate('emailNotSendError', $user->getLanguage());
+                $msg[] = $e->errorMessage();
             }
-            
-            $mail->Host       = "mail.bequtest.nl"; // SMTP server                  
-          $mail->SMTPAuth   = true;                  // enable SMTP authentication
-          $mail->Host       = "mail.bequtest.nl"; // sets the SMTP server
-          $mail->Port       = 26;                    // set the SMTP port for the GMAIL server
-          $mail->Username   = "wra@bequtest.nl"; // SMTP account username
-          $mail->Password   = "wra";        // SMTP account password
-          $mail->AddReplyTo('wra@bequtest.nl', 'First Last');
-          $mail->AddAddress($_POST['recipient'],$user->getUsername());
-          $mail->SetFrom('wra@bequtest.nl', 'We Are Asia');
-          $mail->AddReplyTo('wra@bequtest.nl', 'We Are Asia');
-          $mail->Subject = $subject;
-          $mail->AltBody = 'To view the message, please use an HTML compatible email viewer!'; // optional - MsgHTML will create an alternate automatically
-          $mail->MsgHTML($body);
-          try{
-            $mail->Send();
-            $user->save();
-          } catch (phpmailerException $e) {
-            //echo $e->errorMessage(); //Pretty error messages from PHPMailer
-          } catch (Exception $e) {
-            //echo $e->getMessage(); //Boring error messages from anything else!
-          }
-          header('Location: '.$this->getUrlPrefix());
 		} else {
-			
+			$msg[] = $this->m()->translate('userByEmailNotFound', $user->getLanguage());
+            $msg[] = $e->errorMessage();
 		}
+        $msg[] = $this->m()->translate('NewPasswordEmailSent', $user->getLanguage());
+        echo $this->t()->render('forgotPassword.html', array(
+    			'pageTitle' => 'We R Asia | Forgot Password',
+    			'passwordForm' => array(
+    				'action' => './home/sendPassword/',
+    			),
+            	'languageSwitchReturnUrl' => urlencode(''),
+                'messages' => $msg,
+    		));
 	}
 }
 ?>

@@ -6,12 +6,14 @@
 	<div id="profile_labels">
 		<label for="nl_status">Dutch status:</label>
 		<label for="en_status">English status:</label>
+        <label for="sendemail">{{ trans("sent_email") }}:</label>
 	</div>
 	
 	<form method="post" action="./projects/processAddNewStatusTo{{ type }}/{{ relevantId }}" id="AddStatusForm">
 		<div id="profile_input">
 			<input type="text" name="nl_status" id="nl_status" value="" />
 			<input type="text" name="en_status" id="en_status" value="" />
+            <input type="checkbox" name="sendemail" id="sendemail" /><br />
 		</div>
 		
 		<div class="clear"></div>
@@ -20,6 +22,7 @@
 			<input class="center_button" type="submit" name="submit" value="{{ trans('save') }}" />
 			<input class="center_button" type="reset" name="reset" value="{{ trans('cancel') }}" />
 		</div>
+        
 	</form>
 	
 	<h2>Or choose an existing status:</h2>
@@ -27,6 +30,7 @@
 	<form method="post" action="./projects/processAddExistingStatusTo{{ type }}/{{ relevantId }}" id="AddExistingStatusForm">
 		<div id="profile_labels">
 			<label for="status">Status:</label>
+            <label for="sendemail">{{ trans("sent_email") }}:</label>
 		</div>
 		<div id="profile_input">
 			<select name="status" id="status" class="status_select">
@@ -34,6 +38,7 @@
 					<option value="{{ status.id }}">{{ status.name }}</option>
 				{% endfor %}
 			</select>
+            <input type="checkbox" name="sendemail" id="sendemail" /><br />
 		</div>
 		<input class="center_button" type="submit" name="submit" value="{{ trans('save') }}" />
 	</form>

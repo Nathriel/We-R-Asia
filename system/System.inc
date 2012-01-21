@@ -128,8 +128,19 @@ class System {
 	
 	public function getMailerInstance() {
 		if ($this->mailer == null) {
-			// require_once './pad/naar/mailer';
-			$this->mailer = null; // @AB: ZET JE MAILER INIT CODE HIER NEER
+			require_once './'.$this->baseConfig['libraryPath'].'/phpMailer/class.phpmailer.php';
+            $mail = new PHPMailer(true);
+            $Mail_config = include './'.$this->baseConfig['applicationPath'].'config/mail.inc';
+            $mail->IsSMTP();
+            
+            $mail->Host       = $Mail_config['host']; // SMTP server                  
+            $mail->SMTPAuth   = $Mail_config['SMTPAuth'];                  // enable SMTP authentication
+            $mail->Host       = $Mail_config['host']; // sets the SMTP server
+            $mail->Port       = $Mail_config['port'];                    // set the SMTP port for the GMAIL server
+            $mail->Username   = $Mail_config['username']; // SMTP account username
+            $mail->Password   = $Mail_config['password'];        // SMTP account password
+            
+			$this->mailer = $mail;
 		}
 		return $this->mailer;
 	}

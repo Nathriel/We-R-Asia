@@ -6,12 +6,14 @@
 	<div id="profile_labels">
 		<label for="nl_status">{{ trans("dutch") }} status:</label>
 		<label for="en_status">{{ trans("english") }} status:</label>
+        <label for="sendemail">{{ trans("sent_email") }}:</label>
 	</div>
 	
 	<form method="post" action="./projects/processAddNewStatusTo{{ type }}/{{ relevantId }}" id="AddStatusForm">
 		<div id="profile_input">
 			<input type="text" name="nl_status" id="nl_status" value="" />
 			<input type="text" name="en_status" id="en_status" value="" />
+            <input type="checkbox" name="sendemail" id="sendemail" /><br />
 		</div>
 		
 		<div class="clear"></div>
@@ -31,6 +33,7 @@
 				<option value="{{ status.id }}">{{ status.name }}</option>
 			{% endfor %}
 		</select>
+        <input type="checkbox" name="sendemail" id="sendemail" /><br />
 		<input class="center_button" type="submit" name="submit" value="{{ trans('save') }}" />
 	</form>
 	

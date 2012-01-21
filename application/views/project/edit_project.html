@@ -7,6 +7,7 @@
 		<label for="name">{{ trans("projectName") }}:</label>
 		<label for="code">Projectcode:</label>
 		<label for="done">{{ trans("done?") }}:</label>
+        <label for="sendemail">{{ trans("sent_email") }}:</label>
 		<label for="permissions">{{ trans("permissions") }}:</label>
 	</div>
 	
@@ -15,6 +16,7 @@
 			<input type="text" name="name" id="name" value="{{ project.name }}" />
 			<input type="text" name="code" id="code" value="{{ project.code }}" />
 			<input type="checkbox" name="done" id="done" {% if project.done == 1 %} checked="true" {% endif %} /><br />
+            <input type="checkbox" name="sendemail" id="sendemail" /><br />
 			<div id="permissions_bg">
 				{% for user in users %}
 				<input type="checkbox" name="permissions[]" value="{{user.id}}" {% if user.permission %} checked="true" {% endif %} /><label>{{user.name}}</label><br />

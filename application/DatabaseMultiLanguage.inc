@@ -11,7 +11,7 @@ class DatabaseMultiLanguage extends System_MultiLanguage {
 		}
 	}
 	
-	protected function translate($string, $language) {
+	public function translate($string, $language) {
 		$translatable = $this->mapper('translatable')->findBySentence($string);
 		if ($translatable && $translation = $translatable->getTranslationForLanguage($language)) {
 			return $translation->getTranslation();

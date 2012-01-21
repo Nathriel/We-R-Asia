@@ -5,12 +5,13 @@
 	
 	<div id="profile_labels">
 		<label for="name">{{ trans("productName") }}:</label>
-		<label for="done">{{ trans("done?") }}:</label>
+        <label for="sendemail">{{ trans("sent_email") }}:</label>
 	</div>
 	
 	<form method="post" action="{{ EditProductForm.action }}" id="ProfileForm">
 		<div id="profile_input">
 			<input type="text" name="name" id="name" value="{{ product.name }}" />
+            <input type="checkbox" name="sendemail" id="sendemail" /><br />
 		</div>
 		
 		<div class="clear"></div>

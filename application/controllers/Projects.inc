@@ -75,6 +75,9 @@ class Projects extends System_Controller {
 			$languageModel = $user->getLanguage();
             
 			$project = $this->mapper('project')->find($id);
+            if(!$project){
+                $product = $this->mapper('product')->find($id);
+            }
             if(!$user->canViewProject($project))
             {
                 echo "Restricted Area";
@@ -222,6 +225,21 @@ class Projects extends System_Controller {
 		$project->setStatusId(1);
 		$project->setUsersAsIdArray($_POST['permissions']);
 		$project->save();
+        if($_POST['sendemail'])
+            {
+                $users = $project->getUsers();
+                foreach($users as $user)
+                {
+                    $mail_body = $this->m()->translate('projectNotificationChange', $user->getLanguage());
+                    $mail_body = str_replace('{user}',$user->getUsername(),$mail_body);
+                    $mail_body = str_replace('{project}', $project->getName(), $mail_body);
+                    $mail_body = nl2br($mail_body);
+                    
+                    $subject = $this->m()->translate('projectNotificationChangeSubject', $user->getLanguage());
+                    $msg = $this->sendNotificationEmail($user->getEmail(), $user->getName(), 'info@bequtest.nl','WeAreAsia',$subject, $mail_body);
+                    //print_r($msg);
+                }
+            }
 		header('location: ' . $this->getUrlPrefix() . 'projects');
 	}
 	
@@ -287,11 +305,51 @@ class Projects extends System_Controller {
 			}
 			$project->setUsersAsIdArray($_POST['permissions']);
 			$project->save();
+            
+            if($_POST['sendemail'])
+            {
+                $users = $project->getUsers();
+                foreach($users as $user)
+                {
+                    $mail_body = $this->m()->translate('projectNotificationChange', $user->getLanguage());
+                    $mail_body = str_replace('{user}',$user->getUsername(),$mail_body);
+                    $mail_body = str_replace('{project}', $project->getName(), $mail_body);
+                    $mail_body = nl2br($mail_body);
+                    
+                    $subject = $this->m()->translate('projectNotificationChangeSubject', $user->getLanguage());
+                    $msg = $this->sendNotificationEmail($user->getEmail(), $user->getName(), 'info@bequtest.nl','WeAreAsia',$subject, $mail_body);
+                    //print_r($msg);
+                }
+            }
 			header('location: ' . $this->getUrlPrefix() . 'projects');
 		} else {
 			//leeg
 		}
 	}
+    
+    public function sendNotificationEmail($to, $to_name, $from, $from_name, $subject, $message)
+    {
+        $msg = array();
+        $user = $this->mapper('user')->getLoggedInUser();
+        
+        $mail = $this->mailer();
+        $mail->AddReplyTo($from, $from_name);
+        $mail->AddAddress($to,$to_name);
+        $mail->SetFrom($from, $from_name);
+        $mail->Subject = $subject;
+        $mail->AltBody = 'To view the message, please use an HTML compatible email viewer!'; // optional - MsgHTML will create an alternate automatically
+        $mail->MsgHTML($message);
+        try{
+            $mail->Send();
+        } catch (phpmailerException $e) {
+            $msg[] = $this->m()->translate('emailNotSendError', $user->getLanguage());
+            $msg[] = $e->errorMessage();
+        } catch (Exception $e) {
+            $msg[] = $this->m()->translate('emailNotSendError', $user->getLanguage());
+            $msg[] = $e->errorMessage();
+        }
+        return $msg;
+    }
 	
 	public function product($id = false) {
 		if($id)
@@ -428,6 +486,24 @@ class Projects extends System_Controller {
 			$product->setProjectId($id);
 			$product->setStatusId(1);
 			$product->save();
+            
+            $project = $product->getProject();
+            if($_POST['sendemail'])
+            {
+                $users = $project->getUsers();
+                foreach($users as $user)
+                {
+                    $mail_body = $this->m()->translate('projectNotificationChange', $user->getLanguage());
+                    $mail_body = str_replace('{user}',$user->getUsername(),$mail_body);
+                    $mail_body = str_replace('{project}', $project->getName(), $mail_body);
+                    $mail_body = nl2br($mail_body);
+                    
+                    $subject = $this->m()->translate('projectNotificationChangeSubject', $user->getLanguage());
+                    $msg = $this->sendNotificationEmail($user->getEmail(), $user->getName(), 'info@bequtest.nl','WeAreAsia',$subject, $mail_body);
+                    //print_r($msg);
+                }
+            }
+            
 			header('location: ' . $this->getUrlPrefix() . 'projects/project/'.$id);
 		} else {
 			//leeg
@@ -480,7 +556,25 @@ class Projects extends System_Controller {
 			$product = $productMapper->find($id);
 			$product->setName($_POST['name']);
 			$product->save();
-			header('location: ' . $this->getUrlPrefix() . 'projects/project/1');
+            
+            $project = $product->getProject();
+            if($_POST['sendemail'])
+            {
+                $users = $project->getUsers();
+                foreach($users as $user)
+                {
+                    $mail_body = $this->m()->translate('projectNotificationChange', $user->getLanguage());
+                    $mail_body = str_replace('{user}',$user->getUsername(),$mail_body);
+                    $mail_body = str_replace('{project}', $project->getName(), $mail_body);
+                    $mail_body = nl2br($mail_body);
+                    
+                    $subject = $this->m()->translate('projectNotificationChangeSubject', $user->getLanguage());
+                    $msg = $this->sendNotificationEmail($user->getEmail(), $user->getName(), 'info@bequtest.nl','WeAreAsia',$subject, $mail_body);
+                    //print_r($msg);
+                }
+            }
+            
+			header('location: ' . $this->getUrlPrefix() . 'projects/project/'.$project->getId());
 		} else {
 			//leeg
 		}
@@ -553,6 +647,24 @@ class Projects extends System_Controller {
 		$project->addLogItem($logItem);
 		$project->setStatus($status);
 		$project->save();
+        
+        if($_POST['sendemail'])
+            {
+                $users = $project->getUsers();
+                foreach($users as $user)
+                {
+                    $mail_body = $this->m()->translate('statusNotificationChange', $user->getLanguage());
+                    $mail_body = str_replace('{user}',$user->getUsername(),$mail_body);
+                    $mail_body = str_replace('{project}', $project->getName(), $mail_body);
+                    $mail_body = str_replace('{status}', $status->getTranslationForLanguage($user->getLanguage())->getTranslation(), $mail_body);
+                    $mail_body = nl2br($mail_body);
+                    
+                    $subject = $this->m()->translate('statusNotificationChangeSubject', $user->getLanguage());
+                    $msg = $this->sendNotificationEmail($user->getEmail(), $user->getName(), 'info@bequtest.nl','WeAreAsia',$subject, $mail_body);
+                    //print_r($msg);
+                }
+            }
+        
 		header('location: ' . $this->getUrlPrefix() . 'projects/project/'.$id);
 	}
 	
@@ -610,6 +722,23 @@ class Projects extends System_Controller {
 		$project->addLogItem($logItem);
 		$project->setStatus($status);
 		$project->save();
+        
+        if($_POST['sendemail'])
+            {
+                $users = $project->getUsers();
+                foreach($users as $user)
+                {
+                    $mail_body = $this->m()->translate('statusNotificationChange', $user->getLanguage());
+                    $mail_body = str_replace('{user}',$user->getUsername(),$mail_body);
+                    $mail_body = str_replace('{project}', $project->getName(), $mail_body);
+                    $mail_body = str_replace('{status}', $status->getTranslationForLanguage($user->getLanguage())->getTranslation(), $mail_body);
+                    $mail_body = nl2br($mail_body);
+                    
+                    $subject = $this->m()->translate('statusNotificationChangeSubject', $user->getLanguage());
+                    $msg = $this->sendNotificationEmail($user->getEmail(), $user->getName(), 'info@bequtest.nl','WeAreAsia',$subject, $mail_body);
+                    //print_r($msg);
+                }
+            }
 		header('location: ' . $this->getUrlPrefix() . 'projects/project/'.$id);
 	}
 	
@@ -644,6 +773,22 @@ class Projects extends System_Controller {
 		$product->addLogItem($logItem);
 		$product->setStatus($status);
 		$product->save();
+        $project = $product->getProject();
+        if($_POST['sendemail'])
+            {
+                $users = $project->getUsers();
+                foreach($users as $user)
+                {
+                    $mail_body = $this->m()->translate('statusNotificationChange', $user->getLanguage());
+                    $mail_body = str_replace('{user}',$user->getUsername(),$mail_body);
+                    $mail_body = str_replace('{project}', $project->getName(), $mail_body);
+                    $mail_body = nl2br($mail_body);
+                    
+                    $subject = $this->m()->translate('statusNotificationChangeSubject', $user->getLanguage());
+                    $msg = $this->sendNotificationEmail($user->getEmail(), $user->getName(), 'info@bequtest.nl','WeAreAsia',$subject, $mail_body);
+                    //print_r($msg);
+                }
+            }
 		header('location: ' . $this->getUrlPrefix() . 'projects/product/'.$id);
 	}
 	
@@ -701,6 +846,22 @@ class Projects extends System_Controller {
 		$product->addLogItem($logItem);
 		$product->setStatus($status);
 		$product->save();
+        $project = $product->getProject();
+        if($_POST['sendemail'])
+            {
+                $users = $project->getUsers();
+                foreach($users as $user)
+                {
+                    $mail_body = $this->m()->translate('projectNotificationChange', $user->getLanguage());
+                    $mail_body = str_replace('{user}',$user->getUsername(),$mail_body);
+                    $mail_body = str_replace('{project}', $project->getName(), $mail_body);
+                    $mail_body = nl2br($mail_body);
+                    
+                    $subject = $this->m()->translate('projectNotificationChangeSubject', $user->getLanguage());
+                    $msg = $this->sendNotificationEmail($user->getEmail(), $user->getName(), 'info@bequtest.nl','WeAreAsia',$subject, $mail_body);
+                    //print_r($msg);
+                }
+            }
 		header('location: ' . $this->getUrlPrefix() . 'projects/product/'.$id);
 	}
 	
@@ -794,6 +955,7 @@ class Projects extends System_Controller {
 			'pageTitle' => 'We R Asia | Invoices',
 			'project' => $curProject,
 			'invoices' => $tplInvoices,
+            'invoiceID' => $id,
             'permissions' => array(
                 'deleteInvoice' => $deleteInvoice,
                 'uploadInvoice' => $uploadInvoice,
@@ -850,6 +1012,21 @@ class Projects extends System_Controller {
 	
 		$project->addInvoice($invoice);
 		$project->save();
+        if($_POST['sendemail'])
+            {
+                $users = $project->getUsers();
+                foreach($users as $user)
+                {
+                    $mail_body = $this->m()->translate('projectNotificationChange', $user->getLanguage());
+                    $mail_body = str_replace('{user}',$user->getUsername(),$mail_body);
+                    $mail_body = str_replace('{project}', $project->getName(), $mail_body);
+                    $mail_body = nl2br($mail_body);
+                    
+                    $subject = $this->m()->translate('projectNotificationChangeSubject', $user->getLanguage());
+                    $msg = $this->sendNotificationEmail($user->getEmail(), $user->getName(), 'info@bequtest.nl','WeAreAsia',$subject, $mail_body);
+                    //print_r($msg);
+                }
+            }
 		header('location: ' . $this->getUrlPrefix() . 'projects/invoice/'.$id);
 	}
 	

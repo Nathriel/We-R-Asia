@@ -48,8 +48,8 @@ class Archive extends System_Controller {
         {
             $productMapper = $this->mapper('project');
             $productMapper->delete($project->getId());
-            header('location: ' . $this->getUrlPrefix() . 'archive');
         }
+        header('location: ' . $this->getUrlPrefix() . 'archive');
     }
 	
 	public function project($id = false) {
