@@ -6,6 +6,7 @@ class System {
 	private $db;
 	private $templateEngine;
 	private $multiLanguage;
+	private $mailer;
 
 	/**
 	 * @param $config array an array with the configuration of the System, only the info it needs to even run, the rest should be configured in the application itself
@@ -123,6 +124,14 @@ class System {
 			}
 		}
 		return $this->templateEngine;
+	}
+	
+	public function getMailerInstance() {
+		if ($this->mailer == null) {
+			// require_once './pad/naar/mailer';
+			$this->mailer = null; // @AB: ZET JE MAILER INIT CODE HIER NEER
+		}
+		return $this->mailer;
 	}
 	
 	public function getMultiLanguage() {
