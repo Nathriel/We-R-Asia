@@ -1097,8 +1097,11 @@ class Projects extends System_Controller {
 		}
         
         $newName = './content/uploads/'.(microtime(true)*1000).'_'.$_FILES['file_input']['name'];
-        $allowed_files = array('.PSD','.PDF','.DOC','.DOCX','.EPS','.AI','.PNG');
-        if (!in_array(strtoupper(substr($newName, -4)), $allowed_files)) {
+        $exploded = explode('.', $newName);
+        $extension = $exploded[count($exploded)-1];
+        
+        $allowed_files = array('PSD','PDF','DOC','DOCX','EPS','AI','PNG');
+        if (!in_array(strtoupper($extension), $allowed_files)) {
             $messages = array();
             $messages[] = "The filetype '".strtoupper(substr($newName, -4))."' is prohibited!";
             $this->uploadDocumentToProject($id, $messages);
@@ -1200,8 +1203,11 @@ class Projects extends System_Controller {
 			return;
 		}
 		$newName = './content/uploads/'.(microtime(true)*1000).'_'.$_FILES['file_input']['name'];
-        $allowed_files = array('.PSD','.PDF','.DOC','.DOCX','.EPS','.AI','.PNG');
-        if (!in_array(strtoupper(substr($newName, -4)), $allowed_files)) {
+        $exploded = explode('.', $newName);
+        $extension = $exploded[count($exploded)-1];
+        
+        $allowed_files = array('PSD','PDF','DOC','DOCX','EPS','AI','PNG');
+        if (!in_array(strtoupper($extension), $allowed_files)) {
             $messages = array();
             $messages[] = "The filetype '".strtoupper(substr($newName, -4))."' is prohibited!";
             $this->uploadDocumentToProduct($id, $messages);
