@@ -1064,10 +1064,14 @@ class Projects extends System_Controller {
 		header('location: ' . $this->getUrlPrefix() . 'projects/invoice/'.$id);
 	}
 	
-	public function uploadDocumentToProject($id = false) {
+	public function uploadDocumentToProject($id = false, $messages = false) {
 		if (!$id) {
 			return;
 		}
+        if(!$messages)
+        {
+            $messages = array();
+        }
 		$project = $this->mapper('project')->find($id);
         $user = $this->mapper('user')->getLoggedinUser();
         if(!$user->canViewProject($project) && !$user->hasRight('europe'))
@@ -1083,6 +1087,7 @@ class Projects extends System_Controller {
 		echo $this->t()->render('project/doc_upload.html', array(
 			'pageTitle' => 'We R Asia | Upload Document',
 			'project' => $curProject,
+            'messages' => $messages,
 		));
 	}
 	
@@ -1090,11 +1095,16 @@ class Projects extends System_Controller {
 		if (!$id) {
 			return;
 		}
-		$newName = './content/uploads/'.(microtime(true)*1000).'_'.$_FILES['file_input']['name'];
-        if (substr($newName, -4) == '.php') {
-            echo "This filetype 'php' is prohibited";
+        
+        $newName = './content/uploads/'.(microtime(true)*1000).'_'.$_FILES['file_input']['name'];
+        $allowed_files = array('.PSD','.PDF','.DOC','.DOCX','.EPS','.AI','.PNG');
+        if (!in_array(strtoupper(substr($newName, -4)), $allowed_files)) {
+            $messages = array();
+            $messages[] = "The filetype '".strtoupper(substr($newName, -4))."' is prohibited!";
+            $this->uploadDocumentToProject($id, $messages);
             exit;
         }
+        
 		move_uploaded_file($_FILES['file_input']['tmp_name'], $newName);
         
 		$project = $this->mapper('project')->find($id);
