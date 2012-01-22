@@ -343,5 +343,14 @@ class User_Model extends System_Model {
 	public function canViewProject(Project_Model $project) {
 		return ($project->hasUser($this) || $this->hasRight('europe'));
 	}
+	
+	public function canViewDocument(Document_Model $document) {
+		foreach ($this->getRights() as $right) {
+			if ($document->hasRight($right)) {
+				return true;
+			}
+		}
+		return $this->hasRight('europe');
+	}
 }
 ?>

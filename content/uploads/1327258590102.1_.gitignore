@@ -1,0 +1,11 @@
+# Eclipse stuff
+/.classpath
+/.project
+/.settings
+/.buildpath
+
+# netbeans
+/nbproject
+
+/content/cache/
+/application/config/db.inc # prevent accidental password submission

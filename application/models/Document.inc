@@ -114,12 +114,24 @@ class Document_Mapper extends System_Mapper {
 		if (!$document->getId()) {
 			$document->setId($this->db->lastInsertId());
 		}
+		
+		$query = $this->db->prepareCached('deleteDocumentRights', 'DELETE FROM document_rights WHERE document_id = ?');
+		$query->execute(array($document->getId()));
+		$addedRights = array();
+		foreach ($document->getRights() as $right) {
+			if (!in_array($right->getId(), $addedRights)) {
+				$addedRights[] = $right->getId();
+				$query = $this->db->prepareCached('addDocumentRights', 'INSERT INTO document_rights SET document_id = ?, right_id = ?');
+				$query->execute(array($document->getId(), $right->getId()));
+			}
+		}
 	}
 }
 
 class Document_Model extends System_Model {
 	private $id;
 	private $fileLocation;
+	private $rights;
 	
 	public function getId() {
 		return $this->id;
@@ -137,6 +149,42 @@ class Document_Model extends System_Model {
 	public function setFileLocation($fileLocation) {
 		$this->fileLocation = $fileLocation;
 		return $this;
+	}
+	
+	public function createFromUser(User_Model $user) {
+		if ($user->hasRight('europe')) {
+			$rights = $this->mapper->mapper('right')->findAll();
+		} else {
+			$rights = $user->getRights();
+		}
+		foreach ($rights as $right) {
+			$this->addRight($right);
+		}
+		return $this;
+	}
+	
+	public function getRights() {
+		if ($this->rights == null) {
+			$this->rights = $this->mapper->mapper('right')->findByDocument($this);
+		}
+		return $this->rights;
+	}
+	
+	public function addRight(Right_Model $right) {
+		$rights = $this->getRights();
+		$rights[] = $right;
+		$this->rights = $rights;
+		return $this;
+	}
+	
+	public function hasRight(Right_Model $right) {
+		$rights = $this->getRights();
+		foreach ($rights as $yeahRight) {
+			if ($yeahRight->getId() == $right->getId()) {
+				return true;
+			}
+		}
+		return false;
 	}
 }
 ?>
