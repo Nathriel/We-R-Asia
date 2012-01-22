@@ -238,6 +238,15 @@ input, select {
 	float: left;
 	margin-right: 20px;
 }
+.option_approve {
+	background-image: url('../content/images/approve.png');
+	text-indent: -9000px;
+	display: block;
+	width: 16px;
+	height: 16px;
+	float: left;
+	margin-right: 20px;
+}
 
 .regular_button {
 	float: right;
