@@ -1149,11 +1149,15 @@ class Projects extends System_Controller {
 			header('location: ' . $this->getUrlPrefix() . 'projects/product/' . $product->getId());
     }
 	
-	public function uploadDocumentToProduct($id = false) {
+	public function uploadDocumentToProduct($id = false, $messages = false) {
 	   
 		if (!$id) {
 			return;
 		}
+        if($messages==false)
+        {
+            $messages = array();
+        }
 		$product = $this->mapper('product')->find($id);
         
         $user = $this->mapper('user')->getLoggedinUser();
@@ -1177,6 +1181,7 @@ class Projects extends System_Controller {
 				'pageTitle' => 'We R Asia | Upload Document',
 				'project' => $curProject,
 				'product' => $curProduct,
+                'messages' => $messages,
 		));
 	}
 	
@@ -1185,8 +1190,11 @@ class Projects extends System_Controller {
 			return;
 		}
 		$newName = './content/uploads/'.(microtime(true)*1000).'_'.$_FILES['file_input']['name'];
-        if (substr($newName, -4) == '.php') {
-            echo "This filetype 'php' is prohibited";
+        $allowed_files = array('.PSD','.PDF','.DOC','.DOCX','.EPS','.AI','.PNG');
+        if (!in_array(strtoupper(substr($newName, -4)), $allowed_files)) {
+            $messages = array();
+            $messages[] = "The filetype '".strtoupper(substr($newName, -4))."' is prohibited!";
+            $this->uploadDocumentToProduct($id, $messages);
             exit;
         }
 		move_uploaded_file($_FILES['file_input']['tmp_name'], $newName);

@@ -72,7 +72,7 @@ class Document_Mapper extends System_Mapper {
     public function getProject($id = false){
         if($id)
         {
-            $query = $this->db->prepareCached('findProjectId',
+            $query = $this->db->prepareCached('findProjectByDocumentId',
 						'SELECT project_id
 						FROM project_has_document WHERE document_id=?');
     		$query->execute(array($id));
@@ -86,7 +86,7 @@ class Document_Mapper extends System_Mapper {
     public function getProduct($id = false){
         if($id)
         {
-            $query = $this->db->prepareCached('findProjectId',
+            $query = $this->db->prepareCached('findProductByDocumentId',
 						'SELECT product_id
 						FROM product_has_document WHERE document_id=?');
     		$query->execute(array($id));

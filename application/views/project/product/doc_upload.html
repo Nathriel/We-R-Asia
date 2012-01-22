@@ -3,9 +3,13 @@
 
 	<h1><a href="projects">{{ trans("projects") }}</a> &gt; <a href="projects/project/{{ project.id }}">{{ project.name }}</a> &gt; <a href="projects/product/{{ product.id }}">{{ product.name }}</a> &gt; {{ trans("upload") }}</h1>
 	<p id="project_number">{{ project.code }}</p>
-	
+	{% if messages %}
+                {% for message in messages %}
+                    <p>{{message}}</p>
+                {% endfor %}
+            {% endif %}
 	<h2>{{ trans("uploadNewDocument") }}</h2>
-
+    
 	<form method="post" action="./projects/uploadDocumentToProductProcess/{{ product.id }}" id="uploadDocForm" enctype="multipart/form-data">
 		<input name="file_upload" id="file_upload" type="text" />
 		<input name="file_input" id="file_input" type="file" />
