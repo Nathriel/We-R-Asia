@@ -112,15 +112,24 @@ class Projects extends System_Controller {
 			}
 			
 			$documents = $this->mapper('document')->findByProject($project);
+			$rights = $this->mapper('right')->findAll();
 			$tplDocuments = array();
 			foreach ($documents as $document) {
-				if ($document) {
+				if ($document && $user->canViewDocument($document)) {
 					$splitFileLocation = explode('_', $document->getFileLocation());
+					$approved = true;
+					foreach ($rights as $right) {
+						if (!$document->hasRight($right)) {
+							$approved = false;
+							break;
+						}
+					}
 					$tplDocuments[] = array(
 						'id' => $document->getId(),
 						'name' => (isset($splitFileLocation[1])?$splitFileLocation[1]:'Unknown'),
 						'date' => date('d-m-Y H:i:s', filemtime($document->getFileLocation())),
 						'fileUrl' => $document->getFileLocation(),
+						'approved' => $approved,
 					);
 				}
 			}
@@ -130,6 +139,7 @@ class Projects extends System_Controller {
             $addProduct = false;
             $updateStatus = false;
             $deleteDocument = false;
+            $approveDocument = false;
             
             if($user->hasRight('europe'))
             {
@@ -138,6 +148,7 @@ class Projects extends System_Controller {
                 $addProduct = true;
                 $updateStatus = true;
                 $deleteDocument = true;
+                $approveDocument = true;
             }
 
 			echo $this->t()->render('project/project.html', array(
@@ -154,6 +165,7 @@ class Projects extends System_Controller {
                     'addProduct' => $addProduct,
                     'updateStatus' => $updateStatus,
                     'deleteDocument' => $deleteDocument,
+                	'approveDocument' => $approveDocument,
                 ),
 			));
 		} else {
@@ -394,33 +406,37 @@ class Projects extends System_Controller {
 				'code' => $project->getCode(),
 			);
             $user = $this->mapper('user')->getLoggedinUser();
-           if(!$user->canViewProject($project) && !$user->hasRight('china'))
-           {
+            if(!$user->canViewProject($project) && !$user->hasRight('china'))
+            {
                 echo "restricted Area";
                 exit;
-           }
+            }
             
 			$documents = $this->mapper('document')->findByProduct($product);
 			$tplDocuments = array();
+			$europeRight = $this->mapper('right')->findByName('europe');
 			foreach ($documents as $document) {
-				if ($document) {
+				if ($document && $user->canViewDocument($document)) {
 					$splitFileLocation = explode('_', $document->getFileLocation());
 					$tplDocuments[] = array(
 						'id' => $document->getId(),
 						'name' => (isset($splitFileLocation[1])?$splitFileLocation[1]:'Unknown'),
 						'date' => date('d-m-Y H:i:s', filemtime($document->getFileLocation())),
 						'fileUrl' => $document->getFileLocation(),
+						'approved' => $document->hasRight($europeRight),
 					);
 				}
 			}
 			
             $updateStatus = false;
             $deleteDocument = false;
+            $approveDocument = false;
             
             if($user->hasRight('europe'))
             {
                 $updateStatus = true;
                 $deleteDocument = true;
+                $approveDocument = true;
             }
             
 			echo $this->t()->render('project/product/product.html', array(
@@ -433,6 +449,7 @@ class Projects extends System_Controller {
                 'permissions' => array(
                     'updateStatus' => $updateStatus,
                     'deleteDocument'=> $deleteDocument,
+                	'approveDocument' => $approveDocument,
                 ),
 			));
 		} else {
@@ -928,11 +945,11 @@ class Projects extends System_Controller {
 		$project = $this->mapper('project')->find($id);
         
         $user = $this->mapper('user')->getLoggedinUser();
-       if(!$user->canViewProject($project) && !$user->hasRight('europe'))
-       {
+        if(!$user->canViewProject($project) && !$user->hasRight('europe'))
+        {
             echo "restricted Area";
             exit;
-       }
+        }
         
 		$curProject = array(
 				'id' => $project->getId(),
@@ -943,25 +960,28 @@ class Projects extends System_Controller {
 		$invoices = $project->getInvoices();
 		$tplInvoices = array();
 		foreach ($invoices as $invoice) {
-			if ($invoice) {
+			if ($invoice && $user->canViewInvoice($invoice)) {
 				$splitFileLocation = explode('_', $invoice->getFileLocation());
 				$tplInvoices[] = array(
 						'id' => $invoice->getId(),
 						'name' => (isset($splitFileLocation[1])?$splitFileLocation[1]:'Unknown'),
 						'date' => date('d-m-Y H:i:s', filemtime($invoice->getFileLocation())),
 						'fileUrl' => $invoice->getFileLocation(),
+						'approved' => $invoice->getApproved(),
 				);
 			}
 		}
 		
         $deleteInvoice = false;
         $uploadInvoice = false;
+        $approveInvoice = false;
             
-            if($user->hasRight('europe'))
-            {
-                $deleteInvoice = true;
-                $uploadInvoice = true;
-            }
+        if($user->hasRight('europe'))
+        {
+            $deleteInvoice = true;
+            $uploadInvoice = true;
+            $approveInvoice = true;
+        }
         
 		echo $this->t()->render('project/invoices.html', array(
 			'pageTitle' => 'We R Asia | Invoices',
@@ -972,6 +992,7 @@ class Projects extends System_Controller {
             'permissions' => array(
                 'deleteInvoice' => $deleteInvoice,
                 'uploadInvoice' => $uploadInvoice,
+            	'approveInvoice' => $approveInvoice,
             )
 		));
 	}
@@ -999,12 +1020,12 @@ class Projects extends System_Controller {
 	}
 	
 	public function uploadInvoiceProcess($id = false) {
-	   $user = $this->mapper('user')->getLoggedinUser();
-       if(!$user->hasRight('europe'))
-       {
+	    $user = $this->mapper('user')->getLoggedinUser();
+        if(!$user->hasRight('europe'))
+        {
             echo "restricted Area";
             exit;
-       }
+        }
 		if (!$id) {
 			return;
 		}
@@ -1049,11 +1070,11 @@ class Projects extends System_Controller {
 		}
 		$project = $this->mapper('project')->find($id);
         $user = $this->mapper('user')->getLoggedinUser();
-       if(!$user->canViewProject($project) && !$user->hasRight('europe'))
-       {
+        if(!$user->canViewProject($project) && !$user->hasRight('europe'))
+        {
             echo "restricted Area";
             exit;
-       }
+        }
 		$curProject = array(
 			'id' => $project->getId(),
 			'name' => $project->getName(),
@@ -1078,13 +1099,14 @@ class Projects extends System_Controller {
         
 		$project = $this->mapper('project')->find($id);
         $user = $this->mapper('user')->getLoggedinUser();
-       if(!$user->canViewProject($project) && !$user->hasRight('europe'))
-       {
+        if(!$user->canViewProject($project) && !$user->hasRight('europe'))
+        {
             echo "restricted Area";
             exit;
-       }
+        }
 		$documentMapper = $this->mapper('document');
 		$document = new Document_Model($documentMapper);
+		$document->createFromUser($user);
 		$document->setFileLocation($newName)->save();
 		
 		$project->addDocument($document);
@@ -1135,11 +1157,11 @@ class Projects extends System_Controller {
 		$product = $this->mapper('product')->find($id);
         
         $user = $this->mapper('user')->getLoggedinUser();
-       if(!$user->canViewProject($product->getProject()) && !$user->hasRight('europe'))
-       {
+        if(!$user->canViewProject($product->getProject()) && !$user->hasRight('europe'))
+        {
             echo "restricted Area";
             exit;
-       }
+        }
 		$curProduct = array(
 			'id' => $product->getId(),
 			'name' => $product->getName(),
@@ -1170,13 +1192,14 @@ class Projects extends System_Controller {
 		move_uploaded_file($_FILES['file_input']['tmp_name'], $newName);
 		$product = $this->mapper('product')->find($id);
         $user = $this->mapper('user')->getLoggedinUser();
-       if(!$user->canViewProject($product->getProject()) && !$user->hasRight('europe'))
-       {
+        if(!$user->canViewProject($product->getProject()) && !$user->hasRight('europe'))
+        {
             echo "restricted Area";
             exit;
-       }
+        }
 		$documentMapper = $this->mapper('document');
 		$document = new Document_Model($documentMapper);
+		$document->createFromUser($user);
 		$document->setFileLocation($newName)->save();
 	
 		$product->addDocument($document);
@@ -1199,6 +1222,36 @@ class Projects extends System_Controller {
 		$this->mapper('invoice')->delete($id);
 		unlink($invoice->getFileLocation());
 		header('location: ' . $this->getUrlPrefix() . 'projects/invoice/' . $project->getId());
+    }
+    
+    public function approveDocument($documentId, $type, $id) {
+    	$user = $this->mapper('user')->getLoggedinUser();
+		if(!$user->hasRight('europe'))
+		{
+			echo "restricted Area";
+			exit;
+		}
+		/* @var $document Document_Model */
+		$document = $this->mapper('document')->find($documentId);
+		$rights = $this->mapper('right')->findAll();
+		foreach ($rights as $right) {
+			$document->addRight($right);
+		}
+		$document->save();
+    	header('location: ' . $this->getUrlPrefix() . 'projects/'.$type.'/' . $id);
+    }
+    
+    public function approveInvoice($invoiceId) {
+    	$user = $this->mapper('user')->getLoggedinUser();
+    	if(!$user->hasRight('europe'))
+    	{
+    		echo "restricted Area";
+    		exit;
+    	}
+    	/* @var $invoice Invoice_Model */
+    	$invoice = $this->mapper('invoice')->find($invoiceId);
+    	$invoice->setApproved(true)->save();
+    	header('location: ' . $this->getUrlPrefix() . 'projects/invoice/' . $invoice->getProjectId());
     }
 }
 ?>

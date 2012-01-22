@@ -1,0 +1,5 @@
+Truukje om iets uit je eclipse workspace makkelijk in xampp te krijgen:
+*Start cmd op als adminstrator
+*ga naar je htdocs van xampp
+*typ: mklink /D WeRAsia "C:/workspace/WeRAsia"
+*profit!

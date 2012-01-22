@@ -21,12 +21,47 @@ class Right_Mapper extends System_Mapper {
 		return $right;
 	}
 	
+	public function findAll() {
+		$query = $this->db->prepareCached('findAllRights',
+				'SELECT id
+				FROM `right`');
+		$query->execute(array());
+		$result = array();
+		while ($row = $query->fetch(PDO::FETCH_ASSOC)) {
+			$result[] = $this->find($row['id']);
+		}
+		return $result;
+	}
+	
+	public function findByName($name) {
+		$query = $this->db->prepareCached('findRightByName',
+				'SELECT id
+				FROM `right`
+				WHERE name = ?');
+		$query->execute(array($name));
+		$row = $query->fetch(PDO::FETCH_ASSOC);
+		return $this->find($row['id']);
+	}
+	
 	public function findByUser(User_Model $user) {
 		$query = $this->db->prepareCached('findRightByUser',
 				'SELECT right_id
 				FROM user_rights
 				WHERE user_id = ?');
 		$query->execute(array($user->getId()));
+		$result = array();
+		while ($row = $query->fetch(PDO::FETCH_ASSOC)) {
+			$result[] = $this->find($row['right_id']);
+		}
+		return $result;
+	}
+	
+	public function findByDocument(Document_Model $document) {
+		$query = $this->db->prepareCached('findRightByDocument',
+				'SELECT right_id
+				FROM document_rights
+				WHERE document_id = ?');
+		$query->execute(array($document->getId()));
 		$result = array();
 		while ($row = $query->fetch(PDO::FETCH_ASSOC)) {
 			$result[] = $this->find($row['right_id']);
