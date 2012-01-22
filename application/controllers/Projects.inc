@@ -83,11 +83,22 @@ class Projects extends System_Controller {
                 echo "Restricted Area";
                 exit;
             }
+			
+			$tplLogItems = array();
+			$logItems = $project->getLogItems();
+			foreach ($logItems as $logItem) {
+				$tplLogItems[] = array(
+					'date' => $logItem->getDate(),
+					'text' => $logItem->getTextForLanguage($languageModel),
+				);
+			}
+			
 			$curProject = array(
 				'id' => $project->getId(),
 				'name' => $project->getName(),
 				'code' => $project->getCode(),
 				'status' => $project->getStatus()->getTextForLanguage($languageModel),
+				'logitems' => $tplLogItems,
 			);
 			
 			$products = $this->mapper('product')->findByProject($project);
@@ -134,6 +145,7 @@ class Projects extends System_Controller {
 				'project' => $curProject,
 				'products' => $tplProducts,
 				'documents' => $tplDocuments,
+				'logCount' => count($tplLogItems),
 				'productsCount' => count($tplProducts),
 				'documentsCount' => count($tplDocuments),
                 'permissions' => array(
@@ -416,7 +428,7 @@ class Projects extends System_Controller {
 				'product' => $curProduct,
 				'project' => $curProject,
 				'documents' => $tplDocuments,
-				'productsCount' => count($tplLogItems),
+				'logCount' => count($tplLogItems),
 				'documentsCount' => count($tplDocuments),
                 'permissions' => array(
                     'updateStatus' => $updateStatus,

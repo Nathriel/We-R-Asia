@@ -14,6 +14,28 @@
 	
 	<a id="to_invoices" href="projects/invoice/{{ project.id }}">{{ trans("toInvoices") }} ></a>
 	
+	{% if logCount > 0 %}
+	<h2>Status Log</h2>
+
+	<table>
+		<thead>
+			<tr>
+				<th>Status</th>
+				<th>{{ trans("date") }}</th>
+		</thead>
+		<tbody>
+			{% for logItem in product.logItems %}
+			<tr>
+				<td>{{ logItem.text }}</td>
+				<td>{{ logItem.date }}</td>
+			</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+	{% else %}
+	<h2>{{ trans("noStatusLog") }}</h2>
+	{% endif %}
+	
 	{% if productsCount > 0 %}
 	<table>
 		<thead>
