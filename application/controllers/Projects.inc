@@ -944,6 +944,7 @@ class Projects extends System_Controller {
 						'name' => (isset($splitFileLocation[1])?$splitFileLocation[1]:'Unknown'),
 						'date' => date('d-m-Y H:i:s', filemtime($invoice->getFileLocation())),
 						'fileUrl' => $invoice->getFileLocation(),
+						'approved' => $invoice->getApproved(),
 				);
 			}
 		}

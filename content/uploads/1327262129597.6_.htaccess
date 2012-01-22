@@ -1,0 +1,9 @@
+RewriteEngine On
+
+RewriteRule ^(application|libraries|system) - [F,L]
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_URI} !\.(jpg|png|css|js|php)$
+
+RewriteRule .* index.php/$0 [PT,L]
