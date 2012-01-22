@@ -48,7 +48,10 @@ class Invoice_Mapper extends System_Mapper {
 	}
 	
 	protected function doDelete($id) {
-		return null;
+		$query = $this->db->prepareCached('deleteInvoice',
+			'DELETE FROM invoices WHERE id = ?'
+		);
+        $query->execute(array($id));
 	}
 	
 	protected function doSave(System_Model $invoice) {

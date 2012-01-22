@@ -955,6 +955,7 @@ class Projects extends System_Controller {
 			'pageTitle' => 'We R Asia | Invoices',
 			'project' => $curProject,
 			'invoices' => $tplInvoices,
+			'invoicesCount' => count($tplInvoices),
             'invoiceID' => $id,
             'permissions' => array(
                 'deleteInvoice' => $deleteInvoice,
@@ -1098,7 +1099,7 @@ class Projects extends System_Controller {
 	}
     
     public function deleteProductDocumentProcess($id = false){
-        $user = $this->mapper('user')->getLoggedinUser();
+       $user = $this->mapper('user')->getLoggedinUser();
        if(!$user->hasRight('europe'))
        {
             echo "restricted Area";
@@ -1171,6 +1172,21 @@ class Projects extends System_Controller {
 		header('location: ' . $this->getUrlPrefix() . 'projects/product/'.$id);
 	}
     
-    
+    public function deleteInvoiceProcess($id = false){
+		$user = $this->mapper('user')->getLoggedinUser();
+		if(!$user->hasRight('europe'))
+		{
+			echo "restricted Area";
+			exit;
+		}
+		if (!$id) {
+			return;
+		}
+		$invoice = $this->mapper('invoice')->find($id);
+		$project = $this->mapper('project')->find($invoice->getProjectId());
+		$this->mapper('invoice')->delete($id);
+		unlink($invoice->getFileLocation());
+		header('location: ' . $this->getUrlPrefix() . 'projects/invoice/' . $project->getId());
+    }
 }
 ?>
