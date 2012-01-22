@@ -60,6 +60,9 @@ class Document_Mapper extends System_Mapper {
 	}
 	
 	protected function doDelete($id) {
+		
+		$query = $this->db->prepareCached('deleteDocumentRights', 'DELETE FROM document_rights WHERE document_id = ?');
+		$query->execute(array($id));
 		$query = $this->db->prepareCached('deleteDocument',
 			'DELETE FROM document WHERE id = ?'
 		);
