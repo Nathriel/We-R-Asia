@@ -57,7 +57,7 @@
                     {% if permissions.deleteDocument %}
 					<a class="option_delete" href="productDocument/{{document.id}}">{{ trans("delete") }}</a>
                     {% endif %}
-                    {% if permissions.approveDocument %}
+                    {% if permissions.approveDocument and not document.approved %}
                     <a href="projects/approveDocument/{{document.id}}/product/{{product.id}}">Approve</a>
                     {% endif %}
 				</td>

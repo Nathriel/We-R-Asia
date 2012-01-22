@@ -33,6 +33,16 @@ class Right_Mapper extends System_Mapper {
 		return $result;
 	}
 	
+	public function findByName($name) {
+		$query = $this->db->prepareCached('findRightByName',
+				'SELECT id
+				FROM `right`
+				WHERE name = ?');
+		$query->execute(array($name));
+		$row = $query->fetch(PDO::FETCH_ASSOC);
+		return $this->find($row['id']);
+	}
+	
 	public function findByUser(User_Model $user) {
 		$query = $this->db->prepareCached('findRightByUser',
 				'SELECT right_id
