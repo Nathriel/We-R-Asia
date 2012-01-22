@@ -1,11 +1,11 @@
 {% include 'header.html' %}
 <div id="content">
 
-	<h1><a href="projects">{{ trans("projects") }}</a> &gt; <a href="projects/project/1">{{project.name}}</a> &gt; {{ trans("newStatus") }}</h1>
+	<h1><a href="projects">{{ trans("projects") }}</a> &gt; <a href="projects/project/{{project.id}}">{{project.name}}</a> &gt; {{ trans("newStatus") }}</h1>
 	
 	<div id="profile_labels">
-		<label for="nl_status">Dutch status:</label>
-		<label for="en_status">English status:</label>
+		<label for="nl_status">{{ trans("dutch") }} status:</label>
+		<label for="en_status">{{ trans("english") }} status:</label>
         <label for="sendemail">{{ trans("sent_email") }}:</label>
 	</div>
 	

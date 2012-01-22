@@ -24,16 +24,21 @@
 		</div>
 	</form>
 	
-	<span>{{ trans("existingStatusMessage") }}:</span>
+	<h2>Or choose an existing status:</h2>
 	
 	<form method="post" action="./projects/processAddExistingStatusTo{{ type }}/{{ relevantId }}" id="AddExistingStatusForm">
-		<label for="status">Status:</label>
-		<select name="status" id="status">
-			{% for status in statuses %}
-				<option value="{{ status.id }}">{{ status.name }}</option>
-			{% endfor %}
-		</select>
-        <input type="checkbox" name="sendemail" id="sendemail" /><br />
+		<div id="profile_labels">
+			<label for="status">Status:</label>
+            <label for="sendemail">{{ trans("sent_email") }}:</label>
+		</div>
+		<div id="profile_input">
+			<select name="status" id="status" class="status_select">
+				{% for status in statuses %}
+					<option value="{{ status.id }}">{{ status.name }}</option>
+				{% endfor %}
+			</select>
+            <input type="checkbox" name="sendemail" id="sendemail" /><br />
+		</div>
 		<input class="center_button" type="submit" name="submit" value="{{ trans('save') }}" />
 	</form>
 	

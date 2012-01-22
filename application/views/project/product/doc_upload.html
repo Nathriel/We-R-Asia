@@ -9,7 +9,10 @@
 	<form method="post" action="./projects/uploadDocumentToProductProcess/{{ product.id }}" id="uploadDocForm" enctype="multipart/form-data">
 		<input name="file_upload" id="file_upload" type="text" />
 		<input name="file_input" id="file_input" type="file" />
-		<input name="file_submit" class="regular_button" type="submit" value="{{ trans("upload") }}" />
+		<div id="center_buttons">
+			<input class="center_button" type="submit" name="file_submit" value="{{ trans('upload') }}"/>
+			<input class="center_button" type="reset" name="reset" value="{{ trans('cancel') }}"/>
+		</div>
 	</form>
 	
 	<div class="clear"></div>

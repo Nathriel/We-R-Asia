@@ -13,8 +13,6 @@ $(function() {
 		$('#drop_menu').hide();
 	});
 	
-    
-    
 	/* dialog_box */
 	function showDialog(text, type, origin) {
 		$dialogBox.empty();
@@ -122,6 +120,11 @@ $(function() {
 			}
 		});
 	});
+	
+	$("input[type=reset]").click(function() {
+		history.back();
+		return false;
+	})
 });
 
 jQuery.fn.vibrate = function(conf) {

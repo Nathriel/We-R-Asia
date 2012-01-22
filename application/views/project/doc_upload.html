@@ -9,26 +9,13 @@
 	<form method="post" action="./projects/uploadDocumentToProjectProcess/{{ project.id }}" id="uploadDocForm" enctype="multipart/form-data">
 		<input name="file_upload" id="file_upload" type="text" />
 		<input name="file_input" id="file_input" type="file" />
-		<input name="file_submit" class="regular_button" type="submit" value="{{ trans("upload") }}" />
+		<div id="center_buttons">
+			<input class="center_button" type="submit" name="file_submit" value="{{ trans('upload') }}"/>
+			<input class="center_button" type="reset" name="reset" value="{{ trans('cancel') }}"/>
+		</div>
 	</form>
 	
 	<div class="clear"></div>
-	
-	<!-- <h2>{{ trans("latestDocuments") }}</h2>
-	
-	<table>
-		<thead>
-			<tr>
-				<th>{{ trans("name") }}</th>
-				<th>{{ trans("date") }}</th>
-		</thead>
-		<tbody>
-			<tr>
-				<td>print_logo_tshirt.pdf</td>
-				<td>8-12-2011</td>
-			</tr>
-		</tbody>
-	</table> -->
 	
 	<script type="text/javascript">
 		jsl.load('./js/upload.js');

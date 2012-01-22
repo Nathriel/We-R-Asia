@@ -4,18 +4,21 @@
 	<h1><a href="projects">{{ trans("projects") }}</a> &gt; <a href="projects/project/{{ project.id }}">{{ project.name }}</a> &gt; <a href="project/invoice/{{ project.id }}">{{ trans("invoices") }}</a> &gt; {{ trans("upload") }}</h1>
 	<p id="project_number">{{ project.code }}</p>
     <form method="post" action="./projects/uploadInvoiceProcess/{{ project.id }}" id="uploadDocForm" enctype="multipart/form-data" >
-		<div id="profile_input">
-        <input type="checkbox" name="sendemail" id="sendemail" /><br />
-        </div>
-    <div id="profile_labels">
-	<label for="sendemail">{{ trans("sent_email") }}:</label>
-    </div>
 	<h2>{{ trans("uploadNewInvoice") }}</h2>
-
-	
         <input name="file_upload" id="file_upload" type="text" />
+		<div id="profile_input">
+			<input type="checkbox" name="sendemail" id="sendemail" /><br />
+        </div>
+		<div id="profile_labels">
+			<label for="sendemail">{{ trans("sent_email") }}:</label>
+		</div>
+
 		<input name="file_input" id="file_input" type="file" />
-		<input name="file_submit" class="regular_button" type="submit" value="{{ trans("upload") }}" />
+		<div class="clear"></div>
+		<div id="center_buttons">
+			<input class="center_button" type="submit" name="file_submit" value="{{ trans('upload') }}"/>
+			<input class="center_button" type="reset" name="reset" value="{{ trans('cancel') }}"/>
+		</div>
 	</form>
 	<script type="text/javascript">
 		jsl.load('./js/upload.js');

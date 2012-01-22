@@ -681,7 +681,3 @@ input:not([type="submit"]) .wrong {
 	opacity: 0;
 	background-color: #d3d3d3;
 }
-#uploadDocForm input[type=submit] {
-	height: 40px;
-	padding-top: 3px;
-}
