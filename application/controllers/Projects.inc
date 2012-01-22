@@ -98,7 +98,7 @@ class Projects extends System_Controller {
 				'name' => $project->getName(),
 				'code' => $project->getCode(),
 				'status' => $project->getStatus()->getTextForLanguage($languageModel),
-				'logitems' => $tplLogItems,
+				'logItems' => $tplLogItems,
 			);
 			
 			$products = $this->mapper('product')->findByProject($project);
