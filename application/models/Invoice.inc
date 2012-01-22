@@ -6,7 +6,7 @@ class Invoice_Mapper extends System_Mapper {
 	
 	protected function doFind($id) {
 		$query = $this->db->prepareCached('findInvoice',
-				'SELECT id,file_location,project_id
+				'SELECT id,file_location,project_id,approved
 				FROM invoices
 				WHERE id = ?');
 		$query->execute(array($id));
@@ -18,7 +18,8 @@ class Invoice_Mapper extends System_Mapper {
 		$invoice
 			->setId($row['id'])
 			->setFileLocation($row['file_location'])
-			->setProjectId($row['project_id']);
+			->setProjectId($row['project_id'])
+			->setApproved($row['approved']);
 		return $invoice;
 	}
 	
@@ -60,16 +61,17 @@ class Invoice_Mapper extends System_Mapper {
 			$args[] = $invoice->getId();
 			$query = $this->db->prepareCached('updateInvoice',
 				'UPDATE invoices
-				SET file_location=?,project_id=?
+				SET file_location=?,project_id=?,approved=?
 				WHERE id=?');
 		} else {
 			$query = $this->db->prepareCached('insertInvoice',
 				'INSERT INTO invoices
-				SET file_location=?,project_id=?');
+				SET file_location=?,project_id=?,approved=?');
 		}
 		$args = array_merge(array(
 			$invoice->getFileLocation(),
 			$invoice->getProjectId(),
+			$invoice->getApproveD(),
 		), $args);
 		$query->execute($args);
 		if (!$invoice->getId()) {
@@ -82,6 +84,7 @@ class Invoice_Model extends System_Model {
 	private $id;
 	private $fileLocation;
 	private $projectId;
+	private $approved = false;
 	
 	public function getId() {
 		return $this->id;
@@ -107,6 +110,15 @@ class Invoice_Model extends System_Model {
 	
 	public function setProjectId($projectId) {
 		$this->projectId = $projectId;
+		return $this;
+	}
+	
+	public function getApproved() {
+		return $this->approved;
+	}
+	
+	public function setApproved($approved) {
+		$this->approved = $approved;
 		return $this;
 	}
 }

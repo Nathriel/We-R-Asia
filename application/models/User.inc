@@ -352,5 +352,9 @@ class User_Model extends System_Model {
 		}
 		return $this->hasRight('europe');
 	}
+	
+	public function canViewInvoice(Invoice_Model $invoice) {
+		return ($invoice->getApproved() || ($this->hasRight('europe') || $this->hasRight('china')));
+	}
 }
 ?>

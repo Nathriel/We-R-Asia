@@ -922,11 +922,11 @@ class Projects extends System_Controller {
 		$project = $this->mapper('project')->find($id);
         
         $user = $this->mapper('user')->getLoggedinUser();
-       if(!$user->canViewProject($project) && !$user->hasRight('europe'))
-       {
+        if(!$user->canViewProject($project) && !$user->hasRight('europe'))
+        {
             echo "restricted Area";
             exit;
-       }
+        }
         
 		$curProject = array(
 				'id' => $project->getId(),
@@ -937,7 +937,7 @@ class Projects extends System_Controller {
 		$invoices = $project->getInvoices();
 		$tplInvoices = array();
 		foreach ($invoices as $invoice) {
-			if ($invoice) {
+			if ($invoice && $user->canViewInvoice($invoice)) {
 				$splitFileLocation = explode('_', $invoice->getFileLocation());
 				$tplInvoices[] = array(
 						'id' => $invoice->getId(),
@@ -950,12 +950,14 @@ class Projects extends System_Controller {
 		
         $deleteInvoice = false;
         $uploadInvoice = false;
+        $approveInvoice = false;
             
-            if($user->hasRight('europe'))
-            {
-                $deleteInvoice = true;
-                $uploadInvoice = true;
-            }
+        if($user->hasRight('europe'))
+        {
+            $deleteInvoice = true;
+            $uploadInvoice = true;
+            $approveInvoice = true;
+        }
         
 		echo $this->t()->render('project/invoices.html', array(
 			'pageTitle' => 'We R Asia | Invoices',
@@ -966,6 +968,7 @@ class Projects extends System_Controller {
             'permissions' => array(
                 'deleteInvoice' => $deleteInvoice,
                 'uploadInvoice' => $uploadInvoice,
+            	'approveInvoice' => $approveInvoice,
             )
 		));
 	}
@@ -1212,6 +1215,19 @@ class Projects extends System_Controller {
 		}
 		$document->save();
     	header('location: ' . $this->getUrlPrefix() . 'projects/'.$type.'/' . $id);
+    }
+    
+    public function approveInvoice($invoiceId) {
+    	$user = $this->mapper('user')->getLoggedinUser();
+    	if(!$user->hasRight('europe'))
+    	{
+    		echo "restricted Area";
+    		exit;
+    	}
+    	/* @var $invoice Invoice_Model */
+    	$invoice = $this->mapper('invoice')->find($invoiceId);
+    	$invoice->setApproved(true)->save();
+    	header('location: ' . $this->getUrlPrefix() . 'projects/invoice/' . $invoice->getProjectId());
     }
 }
 ?>

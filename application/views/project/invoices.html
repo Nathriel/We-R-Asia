@@ -20,6 +20,9 @@
                     {% if permissions.deleteInvoice %}
 					<a class="option_delete" href="invoice/{{invoice.id}}">{{ trans("delete") }}</a>
                     {% endif %}
+                    {% if permissions.approveInvoice %}
+                    <a href="approveInvoice/{{invoice.id}}">Approve</a>
+                    {% endif %}
 				</td>
 			</tr>
 		{% endfor %}
