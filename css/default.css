@@ -275,7 +275,7 @@ input, select {
 }
 
 #dialog_box {
-	position: absolute;
+	position: fixed;
 	border-radius: 5px;
 	border: 2px solid #9e9e9e;
 	background-color: white;
@@ -312,7 +312,7 @@ input, select {
 	background-color: black;
 	opacity: 0.3;
 	display: none;
-	position: absolute;
+	position: fixed;
 	top: 0;
 }
 
