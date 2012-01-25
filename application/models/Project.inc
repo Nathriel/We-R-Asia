@@ -119,9 +119,10 @@ class Project_Mapper extends System_Mapper {
 			$product->save();
 		}
 		
-		$users = $project->getUsers();
+		
 		$deleteQuery = $this->db->prepareCached('deleteAllUsersFromProject', 'DELETE FROM user_has_project WHERE project_id = ?');
 		$deleteQuery->execute(array($project->getId()));
+        $users = $project->getUsers();
 		foreach ($users as $user) {
 			$insertQuery = $this->db->prepareCached('insertUserByProject', 'INSERT INTO user_has_project SET project_id = ?, user_id = ?');
 			$insertQuery->execute(array($project->getId(), $user->getId()));
@@ -253,6 +254,7 @@ class Project_Model extends System_Model {
 	}
 	
 	public function setUsersAsIdArray(array $userIds = array()) {
+	       
 		$this->users = array();
 		foreach ($userIds as $userId) {
 			$this->users[] = $this->mapper->mapper('user')->find($userId);

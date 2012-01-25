@@ -327,7 +327,13 @@ class Projects extends System_Controller {
 			} else {
 				$project->setFinished(0);
 			}
-			$project->setUsersAsIdArray($_POST['permissions']);
+            if(isset($_POST['permissions']))
+            {
+			     $project->setUsersAsIdArray($_POST['permissions']);
+            }else
+            {
+                $project->setUsersAsIdArray(array());
+            }
 			$project->save();
             
             if($_POST['sendemail'])
