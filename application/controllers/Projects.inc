@@ -76,7 +76,8 @@ class Projects extends System_Controller {
             
 			$project = $this->mapper('project')->find($id);
             if(!$project){
-                $product = $this->mapper('product')->find($id);
+                echo 'Project doesn\'t exist anymore';
+                exit;
             }
             if(!$user->canViewProject($project))
             {
@@ -389,6 +390,10 @@ class Projects extends System_Controller {
 			$user = $this->mapper('user')->getLoggedinUser();
 			$languageModel = $user->getLanguage();
 			$product = $this->mapper('product')->find($id);
+			if (!$product) {
+				echo 'product doesn\'t exist anymore';exit;
+			}
+			
 			
 			$tplLogItems = array();
 			$logItems = $product->getLogItems();
@@ -953,6 +958,9 @@ class Projects extends System_Controller {
 			return;
 		}
 		$project = $this->mapper('project')->find($id);
+		if (!$project) {
+			echo 'project doesn\'t exist anymore';exit;
+		}
         
         $user = $this->mapper('user')->getLoggedinUser();
         if(!$user->canViewProject($project) && !$user->hasRight('europe'))
