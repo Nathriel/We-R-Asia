@@ -53,9 +53,11 @@ class System {
 					array_shift($args);array_shift($args);
 					call_user_func_array(array($controller, $function),  $args);
 				} catch (Exception $e) {
-					echo '<pre>';
-					var_dump($e);
-					var_dump($e->getTraceAsString());
+					if (false) {
+						echo '<pre>';
+						var_dump($e);
+						var_dump($e->getTraceAsString());
+					}
 					header('HTTP/1.0 500 Internal Server Error');
 				}
 			} else {
