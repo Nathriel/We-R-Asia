@@ -28,11 +28,18 @@ class Archive extends System_Controller {
 				'status' => $project->getStatus()->getTextForLanguage($languageModel),
 			);
 		}
-		
+        
+        $showDeleteAll = false;
+		if($this->mapper('user')->getLoggedInUser()->hasRight('europe'))
+        {
+            $showDeleteAll = true;
+        }
+        
 		echo $this->t()->render('archive/archive.html', array(
 			'pageTitle' => 'We R Asia | Archive',
 			'projects' => $tplProjects,
 			'productsCount' => count($tplProjects),
+            'showDeleteAll' => $showDeleteAll,
 		));
 	}
     

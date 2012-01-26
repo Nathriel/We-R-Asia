@@ -1,6 +1,8 @@
 {% include 'header.html' %}
 <div id="content">
+    {% if showDeleteAll %}
 	<a class="regular_button archive_delete" href="deleteArchives" >{{ trans("delete_all") }}</a><br />
+    {% endif %}
 	<h1>{{ trans("archive") }}</h1> 
     
 	
