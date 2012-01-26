@@ -216,6 +216,7 @@ class Archive extends System_Controller {
 			'pageTitle' => 'We R Asia | Invoices',
 			'project' => $curProject,
 			'invoices' => $tplInvoices,
+			'invoicesCount' => count($tplInvoices),
 		));
 	}
 }

@@ -3,6 +3,7 @@
 
 	<h1><a href="archive">{{ trans("archive") }}</a> &gt; <a href="archive/project/{{ project.id }}">{{ project.name }}</a> &gt; {{ trans("invoices") }}</h1>
 	
+	{% if invoicesCount > 0 %}
 	<table>
 		<thead>
 			<tr>
@@ -18,5 +19,8 @@
 		{% endfor %}
 		</tbody>
 	</table>
+	{% else %}
+	<h2>{{ trans("noInvoices") }}</h2>
+	{% endif %}
 </div>
 {% include 'footer.html' %}
