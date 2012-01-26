@@ -19,7 +19,9 @@
 				<td>{{ user.type }}</td>
 				<td class="options_td">
 					<a class="option_edit" href="users/edit/{{ user.id }}">{{ trans("edit") }}</a>
-					<a class="option_delete" href="user/{{ user.id }}">{{ trans("delete") }}</a>
+                    {% if user.candelete %}
+					   <a class="option_delete" href="user/{{ user.id }}">{{ trans("delete") }}</a>
+                    {% endif %}
 				</td>
 			</tr>
 			{% endfor %}

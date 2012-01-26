@@ -14,12 +14,16 @@ class Users extends System_Controller {
     			} elseif ($user->hasRight('china')) {
     				$type = 'China';
     			}
-    			
+    			if($user->getId() ==  $this->mapper('user')->getLoggedInUser()->getId())
+                    $canDelete = false;
+                else
+                    $canDelete = true;
     			$tplUsers[] = array(
     				'id' => $user->getId(),
     				'name' => $user->getName(),
     				'company' => $user->getCompany(),
     				'type' => $type, // TODO: multilanguage
+                    'candelete' => $canDelete,
     			);
     		}
     		echo $this->t()->render('user/users.html', array(
@@ -42,7 +46,10 @@ class Users extends System_Controller {
         }
         
         if($id){
-            $this->mapper('user')->doDelete($id);
+            if($id !=  $this->mapper('user')->getLoggedInUser()->getId())
+            {
+                $this->mapper('user')->doDelete($id);
+            }
             header('location: ' . $this->getUrlPrefix() . 'users');
         }
     }
@@ -64,7 +71,8 @@ class Users extends System_Controller {
                     )
 	      );
            $user = $this->mapper('user')->find($id);
-           
+           $rightarray = $user->getRights();
+           $permission = $rightarray[0]->getId();
            $args += array(
     				'username' => $user->getUsername(),
     				'name' => $user->getName(),
@@ -72,6 +80,7 @@ class Users extends System_Controller {
     				'address' => $user->getAddress(),
     				'residence' => $user->getResidence(),
     				'company' => $user->getCompany(),
+                    'permission' => $permission,
     			);
     		echo $this->t()->render('user/edit_user.html', $args);
         }else{

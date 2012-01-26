@@ -14,7 +14,9 @@
 			<ul id="drop_menu">
 				<li><a href="Projects">{{ trans("projects") }}</a></li>
 				<li><a href="Archive">{{ trans("archive") }}</a></li>
+                {% if showMenuUsers %}
 				<li><a href="Users">{{ trans("users") }}</a></li>
+                {% endif %}
 				<li><a href="Profile">{{ trans("profile") }}</a></li>
                 <li><a href="Contact">{{ trans("contact_us") }}</a></li>
                 <li><a href="Home/logout">{{ trans("logout") }}</a></li>

@@ -116,7 +116,11 @@ class System {
 			$this->templateEngine->addExtension(new System_Twig_SystemTwigExtension($this));
 			$this->templateEngine->addGlobal('baseHref', 'http://'.$_SERVER['HTTP_HOST'].str_replace('index.php','',$_SERVER['SCRIPT_NAME']));
 			$this->templateEngine->addGlobal('languageSwitchReturnUrl', (isset($_SERVER['PATH_INFO'])?urlencode(str_replace('/','|',$_SERVER['PATH_INFO'])):''));
-			
+			if($this->getMapper('user')->getLoggedInUser())
+            {
+                if($this->getMapper('user')->getLoggedInUser()->hasRight('europe'))
+                    $this->templateEngine->addGlobal('showMenuUsers', true);
+            }
 			foreach (new RecursiveIteratorIterator(new RecursiveDirectoryIterator($tplDir), RecursiveIteratorIterator::LEAVES_ONLY) as $file)
 			{
 				// force compilation

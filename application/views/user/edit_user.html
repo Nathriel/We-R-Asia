@@ -18,10 +18,11 @@
 			<input type="text" name="username" id="username" value="{{ username }}" />
 			<input type="text" name="name" id="name" value="{{ name }}" />
 			<input type="text" name="email" id="email" value="{{ email }}" />
+            
 			<select type="text" name="type" id="type" >
-				<option value="5">Client</option>
-				<option value="6">China</option>
-				<option value="7">Europe</option>
+				<option value="5" {% if permission==5 %} selected="selected" {% endif %} >Client</option>
+				<option value="6" {% if permission==6 %} selected="selected" {% endif %}>China</option>
+				<option value="7" {% if permission==7 %} selected="selected" {% endif %}>Europe</option>
 			</select>
 			<input type="text" name="address" id="address" value="{{ address }}" />
 			<input type="text" name="residence" id="residence" value="{{ residence }}" />

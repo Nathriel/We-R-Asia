@@ -31,6 +31,7 @@ class Profile extends System_Controller {
             $user->setEmail($_POST['email']);
             $user->setAddress($_POST['address']);
             $user->setResidence($_POST['residence']);
+            $user->setCompany($_POST['company']);
             
             if($_POST['password'] && $_POST['password'] !="")
             {
