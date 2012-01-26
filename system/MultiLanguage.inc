@@ -14,7 +14,7 @@ abstract class System_MultiLanguage {
 		return $this->translate($string, $this->getCurrentLanguage());
 	}
 	
-	protected abstract function getCurrentLanguage();
+	public abstract function getCurrentLanguage();
 	protected abstract function translate($string, $language);
 	
 	protected function mapper($modelName) {

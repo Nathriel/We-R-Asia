@@ -106,11 +106,26 @@ class Home extends System_controller{
     }
     
     public function sendPassword(){
+        if(!$_POST)
+        {
+            $msg = array();
+            echo $this->t()->render('forgotPassword.html', array(
+    			'pageTitle' => 'We R Asia | Forgot Password',
+    			'passwordForm' => array(
+    				'action' => './home/sendPassword/',
+    			),
+            	'languageSwitchReturnUrl' => urlencode(''),
+                'messages' => $msg,
+    		));
+            exit;
+        }
         $this->forgotPassword();
     }
     
 	public function forgotPassword() {
 		$user = $this->mapper('user')->findByEmail($_POST['recipient']);
+        if($user)
+        {
 		$newPass = $this->generatePassword(9,8);
         $user->setSalt(hash('sha256',dechex(sin(rand(0,100000))*100000)));
         $user->setPassword(hash('sha256',hash('sha256',$newPass).$user->getSalt()));
@@ -147,6 +162,10 @@ class Home extends System_controller{
             $msg[] = $e->errorMessage();
 		}
         $msg[] = $this->m()->translate('NewPasswordEmailSent', $user->getLanguage());
+        }
+        else{
+            $msg[] = $this->m()->translate('emailNotValid', $this->m()->getCurrentLanguage());
+        }
         echo $this->t()->render('forgotPassword.html', array(
     			'pageTitle' => 'We R Asia | Forgot Password',
     			'passwordForm' => array(
